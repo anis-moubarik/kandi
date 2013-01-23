@@ -5,4 +5,11 @@ MICHEL BALINSKIy ANDGUILLAUME RATIER
 -Mik‰ on "vakaa-avioliitto ongelma"?
 -Esimerkkiongelmia
 -Miten n‰it‰ ratkaistaan
--Voiko ongelmaa yleist‰‰ isommille joukoille?
+-Gale/Shapley algoritmi (miehet kosii, naiset p‰‰tt‰‰)
+-Sovellukset
+-Vakaitten sovitusten vertailu
+-Vakaitten sovitusten ominaisuudet
+-Vakaitten sovitusten lˆyt‰minen
+-Vakaitten sovitusten m‰‰r‰
+-Strategia peleiss‰
+  -Reaalimailmassa vilppi paremman "kumppanin" saamiseksi
