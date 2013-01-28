@@ -44,6 +44,7 @@
 
 % add bibliography to the table of contents
 \usepackage[nottoc,numbib]{tocbibind}
+\usepackage{MnSymbol}
 % tocbibind renames the bibliography, use the following to change it back
 \settocbibname{Lähteet}
 
@@ -100,7 +101,6 @@
 % \city{Helsinki}
 %
 
-
 \begin{document}
 
 % --- Front matter ---
@@ -117,7 +117,8 @@
 
 % Write some science here.
 
-Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta, kutsutaan niitä $N$:ksi ja $M$:ksi, naisiki ja miehiksi. Molempien joukkojen jäsenillä on mieltymykset joiden mukaan he haluavat pariutua toisen joukon jäsenien kanssa. Vakaudella näiden joukkojen välisessä parituksessa tarkoitetaan sitä, että alkioille $n \in N$ ja $m \in M$ ei löydy vaihtoehtoista paritusta, jossa $n$ ja $m$ olisivat paremmassa asemassa, kun mitä he ovat pariutettuna keskenään. Artikkelin paino on vakaitten parien analyysissä.
+Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta, kutsutaan niitä $N$:ksi ja $M$:ksi, naisiki ja miehiksi. Molempien joukkojen jäsenillä on mieltymykset joiden mukaan he haluavat pariutua toisen joukon jäsenien kanssa. Tätä kutsutaan avioliitto peliksi.
+Vakaudella näiden joukkojen välisessä parituksessa tarkoitetaan sitä, että alkioille $n \in N$ ja $m \in M$ ei löydy vaihtoehtoista paritusta, jossa $n$ ja $m$ olisivat paremmassa asemassa, kun mitä he ovat pariutettuna keskenään. Artikkelin paino on vakaitten parien analyysissä.
 
 On myös matemaattisesti osoitettu ja todistettu, että vakaa pariutus löytyy aina. Artikkelin tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta.
 
@@ -127,9 +128,23 @@ Jos haluamme esittää ongelman suunnattuna verkkona, meillä on kaksi joukkoa �
 $M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Paritus verkossa $\gamma$ on parit $(m, w)$ $m \in M$, $n \in N$, niin että $w$ on $m$:lle sopiva pari ja päinvastoin. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.
 Siis jos $m$ ja $w$, jotka eivät ole pari, estävät pariutuksen, jos he olisivat yhdessä paremmassa asemassa kun erillään.
 
-Esitellään artikkelin \emph{Lemma 1.} Olkoon meillä avioliitto verkko $\gamma$, joka on seuraavanlainen: $m_{1}$ mieltymykset, $w_{1} >_{m_{1}} w_{2} >_{m_{1}} w_{3} >_{m_{1}} w_{4}$.
+Esitellään artikkelin \emph{Lemma 1.} Olkoon meillä avioliitto verkko $\gamma$, joka on seuraavanlainen:
 \\
-$m_{2}$ mieltymykset, $w_{4} >_{m_{2}} w_{3} >_{m_{2}} w_{4}$.
+
+$\begin{vmatrix}
+  & & & & w^{*}
+  \\
+  & & & & \uparrow
+  \\
+  m^{*} & \blacksquare & \rightarrow & \rightarrow & \blacksquare
+  \\
+  & & & & \uparrow
+  \\
+  & & & & \uparrow
+  \\
+  m& & & & \blacksquare
+\end{vmatrix}$
+
 \\
 
 
