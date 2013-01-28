@@ -128,7 +128,9 @@ Jos haluamme esittää ongelman suunnattuna verkkona, meillä on kaksi joukkoa �
 $M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Paritus verkossa $\gamma$ on parit $(m, w)$ $m \in M$, $n \in N$, niin että $w$ on $m$:lle sopiva pari ja päinvastoin. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.
 Siis jos $m$ ja $w$, jotka eivät ole pari, estävät pariutuksen, jos he olisivat yhdessä paremmassa asemassa kun erillään.
 
-Esitellään artikkelin \emph{Lemma 1.} Olkoon meillä avioliitto verkko $\gamma$, joka on seuraavanlainen:
+\subsection{Vakaa paritus}
+Haluamme todistaa, että jokaiselle avioliitto pelille löytyy vakaa paritus.
+Esitellään artikkelin \emph{Lemma 1.} \\Olkoon meillä avioliitto verkko $\Gamma$, joka on seuraavanlainen:
 \\
 
 $\begin{vmatrix}
@@ -144,10 +146,17 @@ $\begin{vmatrix}
   \\
   m& & & & \blacksquare
 \end{vmatrix}$
-
 \\
+\\
+Nyt avioliitto verkko $\Gamma^{'}$, josta on poistettu pari $(m, w^{*})$, on verkon $\Gamma$ kanssa ekvivalentti.
 
+\emph{Todistus.} Olkoon $\mu$ vakaa paritus joukossa $\Gamma$. Näinollen jokainen alkio $x \in \Gamma$ kuuluu $\mu$:n tai sisältää seuraajan $\mu$:ssä, ja tämä ominaisuus periytyy $\Gamma^{'}$:lle. Koska $\mu \in \Gamma^{'}$, sen täytyy olla myös siellä vakaa pari.
+\\
+Olkoon vakaa pari $\mu^{'} \in \Gamma^{'}$,  Jokainen alkio $x \in \Gamma^{'}$ kuuluu $\mu^{'}$:lle tai sillä on seuraaja $\mu^{'}$:ssä, ja tämä ominaisuus periytyy alkioille $x \in (\Gamma^{'} \cap \Gamma)$.Koska $(m, w^{*})$ on seuraaja $(m^{*}, w^{*})$, joka tyydyttää ominaisuuden, säilyy se poistetulla alkiolla $(m, w^{*})$ $\Gamma$:ssa. Nyt $\mu^{'}$ on paritus $\Gamma$:ssa, sen täytyy olla myös sitä $\Gamma^{'}$:ssa. $\square$ \cite[p. 579]{Balinski}
 
+\emph{Teoreema 1.} Jokaisesta avioliitto pelistä löytyy vakaa paritus.
+\\
+\emph{Todistus.} Lemman 1 kaltainen alkioiden poisto ei voi jatkua loputtomiin, joten niiden täytyy suuntautua ekvivalentiksi avioliitto verkoksi, joka ei sisällä paras-miehelle ylivaltaa äärellisessä määrässä vaiheita. Mutta tälläisessä avioliitto verkoss, ainakin yksi vakaa paritus on ilmeinen. $\square$ \cite[p. 580]{Balinski}
 
 \section{Gale-Shapley algoritmi}
 
@@ -160,12 +169,13 @@ $\begin{vmatrix}
 % will generate numeric references (e.g. [1]) appropriate for theoretical
 % computer science. If you need alphanumeric references (e.g [Tur90]), use
 %
-% \bibliographystyle{babalpha}
+ \bibliographystyle{babalpha}
 %
 % instead.
 
-\bibliographystyle{babplain}
+%\bibliographystyle{babplain}
 \bibliography{ref}
 
+\lastpage
 
 \end{document}
