@@ -131,7 +131,7 @@ Paras-miehelle solmu on pari, jossa mies saa haluamansa naisen, ja paras-naisell
 
 
 \section{Vakaitten parien löytäminen ja Gale-Shapley algoritmi}
-Esitämme ensin alkuperäisen Gale-Shapley algoritmin.
+Esitämme alkuperäisen Gale-Shapley algoritmin.
 Miehet aloittavat kosimalla suosikki naistaan. Jokainen nainen joka saa enemmän kuin yhden kosinnan hylkää kaikki paitsi suosikkinsa, miehistä jotka kosi häntä. Nainen ei kuitenkaan hyväksy miestä vielä, vaan pitää häntä "langan päässä" salliakseen mahdollisuuden sille, että parempi mies tulisi vielä kosimaan.
 
 Seuraavassa vaiheessa miehet jotka hylättiin kosivat seuraavia vaihtoehtoja, ja naiset taas hylkäävät kaikki paitsi parhaan vaihtoehdon.
@@ -140,7 +140,7 @@ Koska niin kauan kun joku naisista ei ole saanut kosintaa tulee hylkäyksiä ja 
 
 \subsection{Vakaa paritus}
 Haluamme todistaa, että aiemman pelin avioliitot ovat vakaita.
-Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a}
+Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a} Algoritmin aikavaativuus on $O(n^2)$. Täytyy myös huomauttaa, että algoritmi tuottaa tälläisenaan naisille optimaalisia tuloksia, jos halutaan tuottaa miehille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissa ja aloittaa alusta.
 
 % --- Back matter ---
 %
