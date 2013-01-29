@@ -120,48 +120,27 @@
 Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta, kutsutaan niitä $N$:ksi ja $M$:ksi, naisiki ja miehiksi. Molempien joukkojen jäsenillä on mieltymykset joiden mukaan he haluavat pariutua toisen joukon jäsenien kanssa. Tätä kutsutaan avioliitto peliksi.
 Vakaudella näiden joukkojen välisessä parituksessa tarkoitetaan sitä, että alkioille $n \in N$ ja $m \in M$ ei löydy vaihtoehtoista paritusta, jossa $n$ ja $m$ olisivat paremmassa asemassa, kun mitä he ovat pariutettuna keskenään. Artikkelin paino on vakaitten parien analyysissä.
 
-On myös matemaattisesti osoitettu ja todistettu, että vakaa pariutus löytyy aina. Artikkelin tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta.
+On myös matemaattisesti todistettu, että vakaa pariutus löytyy aina. Artikkelin tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta. Verkot voidaan ajatella matriiseina, joissa riveinä ovat miehet ja sarakkeina naiset ja nuoli osoittaa solusta soluun, huonoimmasta parista parhaimpaan.
 
 
 \section{Vakaat parit}
-Jos haluamme esittää ongelman suunnattuna verkkona, meillä on kaksi joukkoa ääreellistä joukkoa, 
-$M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Paritus verkossa $\gamma$ on parit $(m, w)$ $m \in M$, $n \in N$, niin että $w$ on $m$:lle sopiva pari ja päinvastoin. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.
-Siis jos $m$ ja $w$, jotka eivät ole pari, estävät pariutuksen, jos he olisivat yhdessä paremmassa asemassa kun erillään.
+Jos haluamme esittää ongelman suunnattuna verkkona, meillä on kaksi ääreellistä joukkoa, 
+$M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Paritus verkossa $\Gamma$ on parit $(m, w)$ $m \in M$, $n \in N$, niin että $w$ on $m$:lle sopiva pari ja päinvastoin. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.
+Estepari on $m$ ja $w$, jotka eivät ole pari, mutta estävät pariutuksen, jos he olisivat yhdessä paremmassa asemassa kun erillään.
+Paras-miehelle solmu on pari, jossa mies saa haluamansa naisen, ja paras-naiselle solmu, jossa nainen saa haluamansa miehen.
+
+
+\section{Vakaitten parien löytäminen ja Gale-Shapley algoritmi}
+Esitämme ensin alkuperäisen Gale-Shapley algoritmin.
+Miehet aloittavat kosimalla suosikki naistaan. Jokainen nainen joka saa enemmän kuin yhden kosinnan hylkää kaikki paitsi suosikkinsa, miehistä jotka kosi häntä. Nainen ei kuitenkaan hyväksy miestä vielä, vaan pitää häntä "langan päässä" salliakseen mahdollisuuden sille, että parempi mies tulisi vielä kosimaan.
+
+Seuraavassa vaiheessa miehet jotka hylättiin kosivat seuraavia vaihtoehtoja, ja naiset taas hylkäävät kaikki paitsi parhaan vaihtoehdon.
+
+Koska niin kauan kun joku naisista ei ole saanut kosintaa tulee hylkäyksiä ja uusia kosintoja, ja mies ei voi kuin kerran kosia samaa naista, niin lopuksi jokaista naista on kosittu. Kun viimeinen nainen on saanut kosinnan, on kosimisvaihe päättynyt ja jokaisen naisen on hyväksyttävä langan päässä oleva mies. \cite[p. 12-13]{gale62a}
 
 \subsection{Vakaa paritus}
-Haluamme todistaa, että jokaiselle avioliitto pelille löytyy vakaa paritus.
-Esitellään artikkelin \emph{Lemma 1.} \\Olkoon meillä avioliitto verkko $\Gamma$, joka on seuraavanlainen:
-\\
-
-$\begin{vmatrix}
-  & & & & w^{*}
-  \\
-  & & & & \uparrow
-  \\
-  m^{*} & \blacksquare & \rightarrow & \rightarrow & \blacksquare
-  \\
-  & & & & \uparrow
-  \\
-  & & & & \uparrow
-  \\
-  m& & & & \blacksquare
-\end{vmatrix}$
-\\
-\\
-Nyt avioliitto verkko $\Gamma^{'}$, josta on poistettu pari $(m, w^{*})$, on verkon $\Gamma$ kanssa ekvivalentti.
-
-\emph{Todistus.} Olkoon $\mu$ vakaa paritus joukossa $\Gamma$. Näinollen jokainen alkio $x \in \Gamma$ kuuluu $\mu$:n tai sisältää seuraajan $\mu$:ssä, ja tämä ominaisuus periytyy $\Gamma^{'}$:lle. Koska $\mu \in \Gamma^{'}$, sen täytyy olla myös siellä vakaa pari.
-\\
-Olkoon vakaa pari $\mu^{'} \in \Gamma^{'}$,  Jokainen alkio $x \in \Gamma^{'}$ kuuluu $\mu^{'}$:lle tai sillä on seuraaja $\mu^{'}$:ssä, ja tämä ominaisuus periytyy alkioille $x \in (\Gamma^{'} \cap \Gamma)$.Koska $(m, w^{*})$ on seuraaja $(m^{*}, w^{*})$, joka tyydyttää ominaisuuden, säilyy se poistetulla alkiolla $(m, w^{*})$ $\Gamma$:ssa. Nyt $\mu^{'}$ on paritus $\Gamma$:ssa, sen täytyy olla myös sitä $\Gamma^{'}$:ssa. $\square$ \cite[p. 579]{Balinski}
-
-\emph{Teoreema 1.} Jokaisesta avioliitto pelistä löytyy vakaa paritus.
-\\
-\emph{Todistus.} Lemman 1 kaltainen alkioiden poisto ei voi jatkua loputtomiin, joten niiden täytyy suuntautua ekvivalentiksi avioliitto verkoksi, joka ei sisällä paras-miehelle ylivaltaa äärellisessä määrässä vaiheita. Mutta tälläisessä avioliitto verkoss, ainakin yksi vakaa paritus on ilmeinen. $\square$ \cite[p. 580]{Balinski}
-
-\section{Gale-Shapley algoritmi}
-
-
-
+Haluamme todistaa, että aiemman pelin avioliitot ovat vakaita.
+Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a}
 
 % --- Back matter ---
 %
