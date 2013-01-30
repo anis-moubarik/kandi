@@ -147,13 +147,22 @@ Aiemmista tuloksista näemme, että jokaisesta avioliitto pelistä löytyy ainak
 Olkoon meillä joukko $M = \{A, B, C\}$ ja $N = \{X, Y, Z\}$. Heidän preferenssit menevät seuraavanlaisesti:\\
 $A: Y \leftarrow X \leftarrow Z$, $B: Z \leftarrow Y \leftarrow X$, $C: X \leftarrow Z \leftarrow Y$ \\
 $X: B \leftarrow A \leftarrow C$, $Y: C \leftarrow B \leftarrow A$, $Z: A \leftarrow C \leftarrow B$ \\
-Meillä on nyt kolme mahdollista vakaata paritusta. $M$ saa ykkösvalintansa ja $N$ kolmannen, $(A, Y), (B, Z), (C, X)$. Molemmat saavat toiseksi parhaan valinnan, $(A, X), (B, Y), (C, Z)$. $N$ saa ykkösvalinnan ja $M$ kolmannen, $(A, Z), (B, X), (C, Y)$. Tässä tapauksessa algoritmi antaa $M$ optimaalisen tuloksen, sillä jokainen joukon $N$ elementti saa tasan yhden kosinnan joka sen täytyy hyväksyä (koska se tulee olemaan paras vaihtoehto mitä se tulee saamaan). Tämä johtuu siitä, että joukolla $M$ on valittavanaan koko joukko $N$, kun taas $N$ joutuu karsimaan kosijoistaan.
+Meillä on nyt kolme mahdollista vakaata paritusta. $M$ saa ykkösvalintansa ja $N$ kolmannen, $(A, Y), (B, Z), (C, X)$. Molemmat saavat toiseksi parhaan valinnan, $(A, X), (B, Y), (C, Z)$. $N$ saa ykkösvalinnan ja $M$ kolmannen, $(A, Z), (B, X), (C, Y)$. Tässä tapauksessa algoritmi antaa $M$ optimaalisen tuloksen, sillä jokainen joukon $N$ elementti saa tasan yhden kosinnan joka sen täytyy hyväksyä (koska se tulee olemaan paras vaihtoehto mitä se tulee saamaan). Tämä johtuu siitä, että joukon $M$ elementillä on valittavanaan koko joukko $N$, kun taas $N$ joutuu karsimaan kosijoistaan.
 
 \section{Sovellukset}
+Vakaa avioliitto algoritmin sovellukset ovat laajat. Sitä voidaan käyttää kaksipuolisissa markkinoissa, kuten vuokra-asunnon hakemisessa, jossa vuokraajat ja hakijat ovat pelaavat joukot.
+
+Toinen esimerkki on elinluvotus tapaukset, jossa suurin tekijä on elimen sopivuus vastaanottajalle. Tässä tapauksessa on siis kaksi joukkoa, luovuttajat ja vastaanottajat, ja haemme vastaanottaja-optimaalista paritusta.
+
 
 \section{Avioliitto pelien strategia}
+Algoritmille annettu alkion preferenssi ei välttämättä vastaa alkion oikeita mieltymyksiä. Algoritmin toispuolisuus johtaa tähän, yksittäinen alkio voi parannella omaa pariutumista antamalla vääriä preferenssejä, kun käytämme "miehet kosii, naiset tarkastelee" -algoritmiä.
+Esimerkkinä, neljän miehen ja neljän naisen avioliitto peli, missä naisella $w_{1}$ on seuraavanlainen todellinen mieltymys:
+$(m_{1} <_{w1} m_{2} <_{w1} m_{3} <_{w1} m_{4})$, nyt hän voi joutua paritetuksi kenenkä tahansa kansa. Kuitenkin jos hän ilmoittaa seuraavanlaisen mieltymyksen: \\
+$(m_{3} <_{w1} m_{4})$ Hän varmistaa parikseen ainakin $m_{3}$:n, selvä parannus aikaisempaan.
 
- 
+Mekanismi on yhden vakaan parituksen valinta. Eikä yhtäkään mekanismia ole olemassa, jossa totuus olisi paras strategia, aikasempi esimerkki riittää todistukseksi.
+
 
 % --- Back matter ---
 %
