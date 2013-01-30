@@ -44,7 +44,6 @@
 
 % add bibliography to the table of contents
 \usepackage[nottoc,numbib]{tocbibind}
-\usepackage{MnSymbol}
 % tocbibind renames the bibliography, use the following to change it back
 \settocbibname{Lähteet}
 
@@ -117,10 +116,9 @@
 
 % Write some science here.
 
-Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta, kutsutaan niitä $N$:ksi ja $M$:ksi, naisiki ja miehiksi. Molempien joukkojen jäsenillä on mieltymykset joiden mukaan he haluavat pariutua toisen joukon jäsenien kanssa. Tätä kutsutaan avioliitto peliksi.
-Vakaudella näiden joukkojen välisessä parituksessa tarkoitetaan sitä, että alkioille $n \in N$ ja $m \in M$ ei löydy vaihtoehtoista paritusta, jossa $n$ ja $m$ olisivat paremmassa asemassa, kun mitä he ovat pariutettuna keskenään. Artikkelin paino on vakaitten parien analyysissä.
+Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta ja näiden joukkojen keskinäisestä parituksesta, ongelmana on löytää paritus joka on vakaa. Paritus on vakaa, kun ei löydy paria $(m, w)$ jossa $m$ ja $w$ olisivat erikseen paremmassa asemassa kuin yhdessä.
 
-On myös matemaattisesti todistettu, että vakaa pariutus löytyy aina. Artikkelin tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta. Verkot voidaan ajatella matriiseina, joissa riveinä ovat miehet ja sarakkeina naiset ja nuoli osoittaa solusta soluun, huonoimmasta parista parhaimpaan.
+Tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta. Verkot voidaan ajatella matriiseina, joissa riveinä ovat miehet ja sarakkeina naiset ja nuoli osoittaa solusta soluun, huonoimmasta parista parhaimpaan.
 
 
 \section{Vakaat parit}
@@ -130,7 +128,7 @@ Estepari on $m$ ja $w$, jotka eivät ole pari, mutta estävät pariutuksen, jos 
 Paras-miehelle solmu on pari, jossa mies saa haluamansa naisen, ja paras-naiselle solmu, jossa nainen saa haluamansa miehen.
 
 
-\section{Vakaitten parien löytäminen ja Gale-Shapley algoritmi}
+\subsection{Vakaitten parien löytäminen}
 Esitämme alkuperäisen Gale-Shapley algoritmin.
 Miehet aloittavat kosimalla suosikki naistaan. Jokainen nainen joka saa enemmän kuin yhden kosinnan hylkää kaikki paitsi suosikkinsa, miehistä jotka kosi häntä. Nainen ei kuitenkaan hyväksy miestä vielä, vaan pitää häntä "langan päässä" salliakseen mahdollisuuden sille, että parempi mies tulisi vielä kosimaan.
 
@@ -141,6 +139,19 @@ Koska niin kauan kun joku naisista ei ole saanut kosintaa tulee hylkäyksiä ja 
 \subsection{Vakaa paritus}
 Haluamme todistaa, että aiemman pelin avioliitot ovat vakaita.
 Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a} Algoritmin aikavaativuus on $O(n^2)$. Täytyy myös huomauttaa, että algoritmi tuottaa tälläisenaan naisille optimaalisia tuloksia, jos halutaan tuottaa miehille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissa ja aloittaa alusta.
+
+\subsection{Vakaitten parien määrä}
+Aiemmista tuloksista näemme, että jokaisesta avioliitto pelistä löytyy ainakin yksi vakaa paritus. Tapauksissa joissa pari mieltymykset menevät yhteen, on tasan yksi vakaa paritus. Muissa tapauksissa näitä voi olla maksimissaan eksponentiaalinen määrä. \cite[p. 591]{Balinski}
+
+\subsection{Vakaitten parien vertailu}
+Olkoon meillä joukko $M = \{A, B, C\}$ ja $N = \{X, Y, Z\}$. Heidän preferenssit menevät seuraavnlaisesti:
+$A: Y \leftarrow X \leftarrow Z$, $B: Z \leftarrow Y \leftarrow X$, $C: X \leftarrow Z \leftarrow Y$ \\
+
+\section{Sovellukset}
+
+\section{Avioliitto pelien strategia}
+
+ 
 
 % --- Back matter ---
 %
