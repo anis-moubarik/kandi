@@ -68,7 +68,7 @@
 % The following commands define the information used to generate title and
 % abstract pages. The following entries should be always specified:
 
-\title{Vakaa avioliitto ongelma}
+\title{Vakaa avioliitto -ongelma}
 \author{Anis Moubarik}
 \date{\today}
 \level{Referaatti}
@@ -76,7 +76,7 @@
 
 % The following can be used to specify keywords and classification of the paper:
 
-\keywords{vakaa avioliitto ongelma, vakaat parit}
+\keywords{vakaa avioliitto -ongelma, vakaat parit}
 \classification{} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
                   % This is probably mostly relevant for computer scientists
 
@@ -112,56 +112,42 @@
 
 % --- Main matter ---
 
-\section{Mikä on vakaa avioliitto ongelma}
+\section{Mikä on vakaa avioliitto -ongelma}
 
-% Write some science here.
-
-Avioliitto ongelmassa on kyse kahdesta erillisestä joukosta ja näiden joukkojen keskinäisestä parituksesta, ongelmana on löytää paritus joka on vakaa. Paritus on vakaa, kun ei löydy paria $(m, w)$ jossa $m$ ja $w$ olisivat erikseen paremmassa asemassa kuin yhdessä.
+Teksti pohjautuu Michel Balinskin ja Guillaume Ratierin, Of Stable Marriages and Graphs, And Strategy and Polytopes, artikkeliin.\\
+Kun puhumme avioliitosta tässä kontekstissa, tarkoitamme kahden alkion pariutumista kahdesta erillisestä joukosta. $m \in M$ \emph{"miehet"} ja $n \in N$ \emph{"naiset"}, pariutus on $(m, n)$.
+Kutsutaan peliä avioliitto peliksi, kun kummankin joukon alkiot sijottavat vastapuolisen joukon alkion mieltymys järjestykseen $1 \ldots n$, missä $n$ on vastapuolisen joukon alkioiden määrä. Pelin tarkoitus on löytää pari jokaiselle alkiolle. Vakaa avioliitto -ongelman kysymys on, voiko mille tahansa alkioiden mieltymyksille löytää vakaat pariutukset? Pariutus $(m_{1}, w_{1})$ on vakaa, joss ei ole olemassa alkiota $w_{2}$ tai $m_{2}$, jossa $m_{1}$ ja $w_{2}$ pariutuisivat mieluummin keskenään, kuin omien pariensa kanssa, ja $m_{2}$ ja $w_{1}$ pariutuisivat mieluummin keskenään, kuin omien pariensa kanssa, tälläisiä pareja kutsutaan estepareiksi. Haluamme siis välttää epävakautta, jotta pariutukset olisivat mahdollisimman kestäviä.
 
 Tarkoituksena on lähestyä ongelmaa suunnattujen verkkojen kautta. Verkot voidaan ajatella matriiseina, joissa riveinä ovat miehet ja sarakkeina naiset ja nuoli osoittaa solusta soluun, huonoimmasta parista parhaimpaan.
 
 
-\section{Vakaat parit}
+\section{Vakaa pari}
 Jos haluamme esittää ongelman suunnattuna verkkona, meillä on kaksi ääreellistä joukkoa, 
-$M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Paritus verkossa $\Gamma$ on parit $(m, w)$ $m \in M$, $n \in N$, niin että $w$ on $m$:lle sopiva pari ja päinvastoin. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.
-$(m, w)$ on estepari paritukselle $\mu$, jos he suosivat toisiaan enemmeän kuin parejaan parituksessa $\mu$.\\
-Paras-miehelle solmu on pari, jossa mies saa haluamansa naisen, ja paras-naiselle solmu, jossa nainen saa haluamansa miehen.
+$M = \{m_{1}, m_{2},..., m_{|M|}\}$, ja $N = \{n_{1}, n_{2},...,n_{|N|}\}$. Jokaisella joukon jäsenellä on selvät mieltymykset toisen joukon jäsenistä, ja sijoitus parhaasta parista huonoimpaan. Joukkojen jäsenten on mahdollista jäädä selibaateiksi, mutta jos tälläistä jäsentä ei ole ollenkaan vakaus on ekvivalentti esteparin $(m, w)$ poissaololle.\\
+Paras-miehelle solmu on pari, jossa mies saa haluamansa naisen, ja paras-naiselle solmu, jossa nainen saa haluamansa miehen. Paras-miehelle tai -naiselle ylivalta tapahtuu, kun jokainen mies pariutuksessa $\mu$ saa haluamansa naisen, tai päinvastoin, jokainen nainen saa pariutuksessa $\mu$ haluamansa miehen. Jos tälläistä ylivaltaa ei tapahdu, pariutusta voidaan kutsua ylivalta vapaaksi.\\
+Voidaan puhua myös huonoin-miehelle tai -naiselle pariutuksesta, jossa mies tai nainen saa vähiten haluamansa parin.
 
 
-\subsection{Vakaitten parien löytäminen}
-Esitämme alkuperäisen Gale-Shapley algoritmin.
-Miehet aloittavat kosimalla suosikki naistaan. Jokainen nainen joka saa enemmän kuin yhden kosinnan hylkää kaikki paitsi suosikkinsa, miehistä jotka kosi häntä. Nainen ei kuitenkaan hyväksy miestä vielä, vaan pitää häntä "langan päässä" salliakseen mahdollisuuden sille, että parempi mies tulisi vielä kosimaan.
+\section{Vakaitten parien löytäminen}
+Esitämme alkuperäisen Gale-Shapley \emph{"miehet kosii, naiset määrää"} algoritmin.
+Miehet aloittavat kosimalla suosikki naistaan. Jokainen nainen joka saa enemmän kuin yhden kosinnan hylkää kosineista miehistä kaikki paitsi suosikkinsa. Nainen ei kuitenkaan hyväksy miestä vielä, vaan pitää häntä odottavassa tilassa salliakseen mahdollisuuden sille, että parempi mies tulisi vielä kosimaan seuraavilla kierroksilla.
 
 Seuraavassa vaiheessa miehet jotka hylättiin kosivat seuraavia vaihtoehtoja, ja naiset taas hylkäävät kaikki paitsi parhaan vaihtoehdon.
 
-Koska niin kauan kun joku naisista ei ole saanut kosintaa tulee hylkäyksiä ja uusia kosintoja, ja mies ei voi kuin kerran kosia samaa naista, niin lopuksi jokaista naista on kosittu. Kun viimeinen nainen on saanut kosinnan, on kosimisvaihe päättynyt ja jokaisen naisen on hyväksyttävä langan päässä oleva mies. \cite[p. 12-13]{gale62a}
+Koska niin kauan kun joku naisista ei ole saanut kosintaa tulee hylkäyksiä ja uusia kosintoja, ja mies ei voi kuin kerran kosia samaa naista, niin lopuksi jokaista naista on kosittu. Kun viimeinen nainen on saanut kosinnan, on kosimisvaihe päättynyt ja jokaisen naisen on hyväksyttävä langan päässä oleva mies. \cite[p. 12-13]{gale62a} On myös ilmeistä, että algoritmi päättyy.
 
-\subsection{Vakaa paritus}
 Haluamme todistaa, että aiemman pelin avioliitot ovat vakaita.
-Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a} Algoritmin aikavaativuus on $O(n^2)$. Täytyy myös huomauttaa, että algoritmi tuottaa tälläisenaan miehille optimaalisia tuloksia, jos halutaan tuottaa naisille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissa ja aloittaa alusta.
+Oletetaan, että Matti ja Mari eivät ole naimisissa keskenään, mutta Matti suosii Mariaa hänen oman vaimonsa yli. Matin on siis jossain vaiheessa peliä pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti jonkun toisen, paremman parin, edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta synny. \cite[p. 13]{gale62a} Algoritmin aikavaativuus on $O(n^2)$ \cite[p. 588]{Balinski}, ja vakaitten pariutusten määrä on eksponentiaalinen pelissä. \cite[p. 591]{Balinski} Täytyy myös huomauttaa, että algoritmi tuottaa tälläisenaan miehille optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseisille miehille paras mahdollinen mitä he siinä kyseisessä avioliitto pelissä tulevat saamaan.\\
+Jos halutaan tuottaa naisille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissa ja aloittaa alusta.
 
-\subsection{Vakaitten parien määrä}
-Aiemmista tuloksista näemme, että jokaisesta avioliitto pelistä löytyy ainakin yksi vakaa paritus. Tapauksissa joissa pari mieltymykset menevät yhteen, on tasan yksi vakaa paritus. Muissa tapauksissa näitä voi olla maksimissaan eksponentiaalinen määrä. \cite[p. 591]{Balinski}
-
-\subsection{Vakaitten parien vertailu}
-Olkoon meillä joukko $M = \{A, B, C\}$ ja $N = \{X, Y, Z\}$. Heidän preferenssit menevät seuraavanlaisesti:\\
-$A: Y \leftarrow X \leftarrow Z$, $B: Z \leftarrow Y \leftarrow X$, $C: X \leftarrow Z \leftarrow Y$ \\
-$X: B \leftarrow A \leftarrow C$, $Y: C \leftarrow B \leftarrow A$, $Z: A \leftarrow C \leftarrow B$ \\
-Meillä on nyt kolme mahdollista vakaata paritusta. $M$ saa ykkösvalintansa ja $N$ kolmannen, $(A, Y), (B, Z), (C, X)$. Molemmat saavat toiseksi parhaan valinnan, $(A, X), (B, Y), (C, Z)$. $N$ saa ykkösvalinnan ja $M$ kolmannen, $(A, Z), (B, X), (C, Y)$. Tässä tapauksessa algoritmi antaa $M$ optimaalisen tuloksen, sillä jokainen joukon $N$ elementti saa tasan yhden kosinnan joka sen täytyy hyväksyä (koska se tulee olemaan paras vaihtoehto mitä se tulee saamaan). Tämä johtuu siitä, että joukon $M$ elementillä on valittavanaan koko joukko $N$, kun taas $N$ joutuu karsimaan kosijoistaan.
 
 \section{Sovellukset}
-Vakaa avioliitto algoritmin sovellukset ovat laajat. Sitä voidaan käyttää kaksipuolisissa markkinoissa, kuten vuokra-asunnon hakemisessa, jossa vuokraajat ja hakijat ovat pelaavat joukot.
+Vakaa avioliitto algoritmin sovellukset ovat laajat. Sitä voidaan käyttää kaksipuolisissa markkinoissa, kuten vuokra-asunnon hakemisessa, jossa vuokraajat ja hakijat ovat pelaavat joukot, vuokraajat hakevat vuokraaja-optimaalisinta pariutusta. Vuokraajat lähettävät "pelin" alussa "kosinnan" suosikki vuokralaisehdokkaalleen, peli toimii täsmälleen samalla tavalla kuin naisten ja miesten kanssa.
+Vuokralaisehdokas voi myös pelata peliä, jossa saadaan tulokseksi vuokralais-optimaalinen tulos, kun hän hakee asuntoa ja aloittaa suosikki kohteestaan.
 
-Toinen esimerkki on elinluvotus tapaukset, jossa suurin tekijä on elimen sopivuus vastaanottajalle. Tässä tapauksessa on siis kaksi joukkoa, luovuttajat ja vastaanottajat, ja haemme vastaanottaja-optimaalista paritusta.
+Toinen esimerkki on elinluvotus tapaukset, jossa suurin tekijä on elimen sopivuus vastaanottajalle. Tässä tapauksessa on siis kaksi joukkoa, luovuttajat ja vastaanottajat, ja haemme vain vastaanottaja-optimaalista pariutusta.
 
-
-\section{Avioliitto pelien strategia}
-Algoritmille annettu alkion preferenssi ei välttämättä vastaa alkion oikeita mieltymyksiä. Algoritmin toispuolisuus johtaa tähän, yksittäinen alkio voi parannella omaa pariutumista antamalla vääriä preferenssejä, kun käytämme "miehet kosii, naiset tarkastelee" -algoritmiä.
-Esimerkkinä, neljän miehen ja neljän naisen avioliitto peli, missä naisella $w_{1}$ on seuraavanlainen todellinen mieltymys:
-$(m_{1} <_{w1} m_{2} <_{w1} m_{3} <_{w1} m_{4})$, nyt hän voi joutua paritetuksi kenenkä tahansa kansa. Kuitenkin jos hän ilmoittaa seuraavanlaisen mieltymyksen: \\
-$(m_{3} <_{w1} m_{4})$ Hän varmistaa parikseen ainakin $m_{3}$:n, selvä parannus aikaisempaan.
-
-Mekanismi on yhden vakaan parituksen valinta. Eikä yhtäkään mekanismia ole olemassa, jossa totuus olisi paras strategia, aikasempi esimerkki riittää todistukseksi.
+Yleisesti ongelmaa ja sen ratkaisua voidaan soveltaa kaksipuolisissa markkinoissa, nämä ovat taloudellisia alustoja joilla on kaksi erillistä käyttäjäryhmää, jotka tarjoavat toisilleen tavaroita tai palveluita.
 
 
 % --- Back matter ---
@@ -170,11 +156,11 @@ Mekanismi on yhden vakaan parituksen valinta. Eikä yhtäkään mekanismia ole o
 % will generate numeric references (e.g. [1]) appropriate for theoretical
 % computer science. If you need alphanumeric references (e.g [Tur90]), use
 %
- \bibliographystyle{babalpha}
+% \bibliographystyle{babalpha}
 %
 % instead.
 
-%\bibliographystyle{babplain}
+\bibliographystyle{babplain}
 \bibliography{ref}
 
 \lastpage
