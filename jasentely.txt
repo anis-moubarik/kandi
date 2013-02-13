@@ -1,0 +1,23 @@
+-. Kansilehti
+|
+-. Tiivistelmä
+|
+-. Sisällysluettelo
+|
+-. Johdanto (Mikä on avioliitto -ongelma)
+|
+-. Vakaitten paritusten löytäminen (Gale-Shapley algoritmi)
+|
+-. Vakaitten pariutuksien joukko
+ |
+  -. Vakaitten paritusten määrä
+|
+-. Yksinkertaiset laajennukset ongelmaan
+|
+-. Sovellukset
+ |
+  -. Asukas ongelma
+ |
+  -. Elinluovutus
+-. Vilppi ja Strategiat avioliitto pelissä
+-. Avoimet ongelmat

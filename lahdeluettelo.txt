@@ -1,0 +1,22 @@
+COLLEGE  ADMISSIONS  AND  THE  STABILITY  OF  MARRIAGE 
+D.  GALE*  AND L.  S.  SHAPLEY,  Brown  University  and  the  RAND  Corporation 
+
+OF STABLE MARRIAGES AND GRAPHS, AND STRATEGY
+AND POLYTOPES
+MICHEL BALINSKIy ANDGUILLAUME RATIER
+
+Gusfield, D. and Irving, R. W. The Stable Marriage Problem: Structure and Algorithms. Cambridge, MA: MIT Press,
+
+Almost Stable Matchings by
+Truncating the Gale{Shapley Algorithm
+Patrik Floreen, Petteri Kaski,
+Valentin Polishchuk, and Jukka Suomela
+
+The Stable Marriage Problem
+by Harry Mairson
+orginally appeared in "The Brandeis Review" Vol. 12, No. 1 (Summer 1992)
+
+The Evolution of the Labor Market
+for Medical Interns and Residents:
+A Case Study in Game Theory
+Alvin E. Roth
