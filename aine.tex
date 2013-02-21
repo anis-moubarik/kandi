@@ -144,7 +144,7 @@ Jos löydämme tälläisen miehen, tarkastelemme jos nainen jota hän suosii, su
 Huonoimmassa tapauksessa käymme läpi kaikki miehet ja kaikki naiset paitsi yhden, eli $x*(x-1)$, tästä saamme aikavaativuudeksi $O(x^2)$.
 
 \section{Gale-Shapley algoritmi}
-Avioliitto pelistä löytyy aina ainkin yksi vakaa pariutus. Gale-Shapley algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliitto pelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
+Avioliitto pelistä löytyy aina ainakin yksi vakaa pariutus. Gale-Shapley algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliitto pelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
 \begin{itemize}
 	\item Miehet aloittavat kosimalla mieltymyksiltään parasta naista.
 	\item Naiset hylkäävät kaikki paitsi parhaiten sijoitetun miehen.
@@ -155,7 +155,14 @@ Avioliitto pelistä löytyy aina ainkin yksi vakaa pariutus. Gale-Shapley algori
 	\item Viimeinen nainen on saanut kosinnan ja kosimisvaihe on päättynyt. Jokainen nainen hyväksyy langan päässä olevan kosijan \cite[p. 13]{gale62a}.
 \end{itemize}
 
-Mies ei voi jäädä ilman paria. Nainen voi hylätä vain jos hänellä on langan päässä mies (ensimäisellä kierroksella naisen on siis valittava paras vaihtoehto langan päähän, hän ei voi hylätä kaikkia kosijoita), ja kun hänellä on langan päässä mies hänestä ei tule missään vaiheessa vapaata algoritmin suorittamisessa. 
+Mies ei voi jäädä ilman paria. Nainen voi hylätä vain jos hänellä on langan päässä mies (ensimäisellä kierroksella naisen on siis valittava paras vaihtoehto langan päähän, hän ei voi hylätä kaikkia kosijoita), ja kun hänellä on langan päässä mies hänestä ei tule missään vaiheessa vapaata algoritmin suorittamisessa.
+Jos viimeinen nainen jota kositaan hylkää miehen, tarkoittaisi tämä sitä, että jokaisella naisella olisi mies jo langan päässä. Mutta naisia ja miehiä on sama määrä ja yksikään mies ei voi olla kahden naisen langan päässä, niin jokainen miehistäkin pitäisi olla lankojen päässä, mikä on ristiriita.
+Jokainen iteraatio sisältää yhden kosinnan eikä yksikään mies kosi samaa naista kahta kertaa, joten iteraatioiden määrä on $n^2$, kun $n = $ miesten lukumäärä $ = $ naisten lukumäärä. Algoritmi siis on päättyvä.
+
+Nyt siis päättyminen on selvää, mutta onko pariutukset aina vakaita? Todistetaan se nyt.
+Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Mariaa hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä \cite[p. 588]{Balinski}.
+Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliitto pelissä tulevat saamaan.
+Naisille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissä.
 
 
 
