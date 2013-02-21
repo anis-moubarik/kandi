@@ -1,4 +1,6 @@
 % --- Template for thesis / report with tktltiki2 class ---
+% 
+% last updated 2013/02/15 for tkltiki2 v1.02
 
 \documentclass[finnish]{tktltiki2}
 
@@ -24,10 +26,12 @@
 % --- General packages ---
 
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{amsfonts,amsmath,amssymb,amsthm,booktabs,color,enumitem,graphicx}
 \usepackage[pdftex,hidelinks]{hyperref}
+ \usepackage{algpseudocode}
 
 % Automatically set the PDF metadata fields
 \makeatletter
@@ -43,7 +47,7 @@
 \selectbiblanguage{finnish}
 
 % add bibliography to the table of contents
-\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[nottoc]{tocbibind}
 % tocbibind renames the bibliography, use the following to change it back
 \settocbibname{Lähteet}
 
@@ -76,7 +80,7 @@
 
 % The following can be used to specify keywords and classification of the paper:
 
-\keywords{vakaa avioliitto -ongelma, vakaat parit}
+\keywords{pariutus, gale-shapley, avioliitto-peli}
 \classification{} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
                   % This is probably mostly relevant for computer scientists
 
@@ -89,7 +93,7 @@
 % your department, faculty and subject by hand:
 %
 % \faculty{Matemaattis-luonnontieteellinen}
-% \department{Tietojenkäsittelytieteen laitos} 
+% \department{Tietojenkäsittelytieteen laitos}
 % \subject{Tietojenkäsittelytiede}
 %
 % If you are not from the University of Helsinki, then you will most likely want to set these also:
@@ -99,13 +103,14 @@
 % \city{Helsinki}
 %
 
+
 \begin{document}
 
 % --- Front matter ---
 
 \maketitle        % title page
 \makeabstract     % abstract page
-\makeabstract     % abstract page
+
 \tableofcontents  % table of contents
 \newpage          % clear page after the table of contents
 
@@ -116,9 +121,41 @@
 Kun puhumme avioliitosta tarkoitamme kahden alkion $n \in N$ ja $m \in M$ paria, siten että $N$ ja $M$ ovat samansuuruiset erilliset joukot, avioliitto merkitään $(n, m)$.
 Kun joukon alkiot asettavat toisen joukon alkiot mieltymys järjestykseen $1 \ldots k$, missä $k$ on joukkojen alkioiden määrä, kutsutaan tätä avioliitto-peliksi, jonka tarkoituksena on löytää jokaiselle joukkojen alkioille pari. Notaatio on seuraavanlainen pariutuksissa, olkoon meillä alkiot $\{x, y, z\} \subset N$ mieltymykset $m$:lle voidaan kuvata seuraavasti; $x >_m y >_m z$ mieltymykset ovat myös transitiivisia eli $x >_m z$ pätee.
 
-\emph{Vakaa} pariutus on ekvivalentti \emph{esteparin} poissaololle. Esteparin määritelmä; olkoon meillä neljä alkiota avioliitto-pelistä $\{n_1, n_2\} \subset N, \{m_1, m_2\} \subset M$ ja pariutus $\{(n_1, m_1), (n_2, m_2)\} \subset \mu$. Jos $m_2 >_{n_1} m_1$ ja $n_1 >_{m_2} n_2$, niin $(n_1, m_2)$ on estepari. Ongelma on löytää paritus $\delta$, joka olisi vakaa.
+\emph{Vakaa} pariutus on ekvivalentti \emph{esteparin} poissaololle. Esteparin määritelmä; olkoon meillä neljä alkiota avioliitto-pelistä $\{n_1, n_2\} \subset N, \{m_1, m_2\} \subset M$ ja pariutus $\{(n_1, m_1), (n_2, m_2)\} \subset \mu$. Jos $m_2 >_{n_1} m_1$ ja $n_1 >_{m_2} n_2$,niin $(n_1, m_2)$ on estepari. Haluamme välttää epävakautta, jotta pariutukset olisivat mahdollisimman kestäviä. Ongelma on löytää pariutus $\delta$ joukoille $N$ ja $M$, joka olisi vakaa.
+Pariutuksilla ja pareilla on erillaisia ominaisuuksia. Paras-miehelle pari on pari, jossa mies saa haluamansa naisen ja vastaavasti paras-naiselle pari on pari, jossa nainen saa haluamansa miehen. Pariutuksissa voi esiintyä jommankumman joukon ylivaltaa, jos $\forall j \in N$, $j$ saavat haluamansa parin, tätä kutsutaan $N$-joukon ylivallaksi ja samoin $\forall i \in M$, $i$ saavat haluamansa parin, tällöin se on $M$-joukon ylivalta. Joskus ylivaltoja kutsutaan myös \emph{Nais}- tai \emph{Miesylivallaksi}. Jos ylivaltaa ei synny pariutuksessa, voidaan pariutusta kutsua ylivaltavapaaksi.
+Päinvastoin jos mies tai nainen saa huonoimman tai vähiten haluamansa parin, kutsutaan sitä \emph{huonoin-naiselle} tai -\emph{miehelle} pariksi. Samoin pariutusta kutsutaan huonoin-naiselle tai -miehelle pariksi jos kaikki jommankumman joukon alkioista saavat vähiten haluamansa parit.
 
+Esittelemme myöhemmin teoreeman, jonka mukaan jokaisesta avioliitto pelistä löytyy ainakin yksi vakaa pariutus. Ensin kuitenkin esittelemme algoritmin joka tarkastaa pariutuksen vakauden.
+Olkoon $x = |M|$, $m \in M$ ja $n \in N$. Olkoon $\mu$ meidän pariutus ja jos $n$ ja $m$ on pariutettu $\mu$:ssa, niin merkitään sitä $n = p_\mu(m)$.
+\begin{algorithmic}
+	\For{$i = 1$ to $x$}
+		\ForAll {$n$ niin että $m$ suosii $n$:ää ennemmin kuin $p_\mu(m)$}
+			\If{$n$ suosii $m$:ää ennemmin kuin $p_\mu(n)$}
+				\State \Return pariutus on epävakaa
+			\EndIf
+		\EndFor
+	\EndFor\\
+	\Return pariutus on vakaa
+	\cite[p. 8]{gusfield1989stable}.
+\end{algorithmic}
 
+Etsimme siis tapauksia jossa mies suosii naista enemmän kuin omaa pariaan pariutuksessa $p_\mu$.
+Jos löydämme tälläisen miehen, tarkastelemme jos nainen jota hän suosii, suosii myös miestä enemmän kuin pariaan, jos tämä pitää paikkansa, ei pariutus voi olla vakaa.
+Huonoimmassa tapauksessa käymme läpi kaikki miehet ja kaikki naiset paitsi yhden, eli $x*(x-1)$, tästä saamme aikavaativuudeksi $O(x^2)$.
+
+\section{Gale-Shapley algoritmi}
+Avioliitto pelistä löytyy aina ainkin yksi vakaa pariutus. Gale-Shapley algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliitto pelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
+\begin{itemize}
+	\item Miehet aloittavat kosimalla mieltymyksiltään parasta naista.
+	\item Naiset hylkäävät kaikki paitsi parhaiten sijoitetun miehen.
+	\item Nainen ei hyväksy miestä vaan odottaa, jos parempi mies kosisi häntä
+	\item Hylätyt miehet kosivat mieltymyksiltään toisiksi parasta naista.
+	\item Naiset hylkäävät kaikki paitsi parhaan vaihtoehdon
+	\item Niin kauan kuin joku naisista ei ole saanut kosintaa, tulee hylkäyksiä ja uusia kosintoja. Lopuksi jokaista naista on kosittu, koska mies ei voi kuin kerran kosia samaa naista.
+	\item Viimeinen nainen on saanut kosinnan ja kosimisvaihe on päättynyt. Jokainen nainen hyväksyy langan päässä olevan kosijan \cite[p. 13]{gale62a}.
+\end{itemize}
+
+Mies ei voi jäädä ilman paria. Nainen voi hylätä vain jos hänellä on langan päässä mies (ensimäisellä kierroksella naisen on siis valittava paras vaihtoehto langan päähän, hän ei voi hylätä kaikkia kosijoita), ja kun hänellä on langan päässä mies hänestä ei tule missään vaiheessa vapaata algoritmin suorittamisessa. 
 
 
 
@@ -129,13 +166,12 @@ Kun joukon alkiot asettavat toisen joukon alkiot mieltymys järjestykseen $1 \ld
 % will generate numeric references (e.g. [1]) appropriate for theoretical
 % computer science. If you need alphanumeric references (e.g [Tur90]), use
 %
-% \bibliographystyle{babalpha}
+% \bibliographystyle{babalpha-lf}
 %
 % instead.
 
-\bibliographystyle{babplain}
+\bibliographystyle{babplain-lf}
 \bibliography{ref}
 
-\lastpage
 
 \end{document}
