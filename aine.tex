@@ -118,8 +118,12 @@
 % --- Main matter ---
 
 \section{Johdanto}
-Kun puhumme avioliitosta tarkoitamme kahden alkion $n \in N$ ja $m \in M$ paria, siten että $N$ ja $M$ ovat samansuuruiset erilliset joukot, avioliitto merkitään $(n, m)$.
-Kun joukon alkiot asettavat toisen joukon alkiot mieltymys järjestykseen $1 \ldots k$, missä $k$ on joukkojen alkioiden määrä, kutsutaan tätä avioliitto-peliksi, jonka tarkoituksena on löytää jokaiselle joukkojen alkioille pari. Notaatio on seuraavanlainen pariutuksissa, olkoon meillä alkiot $\{x, y, z\} \subset N$ mieltymykset $m$:lle voidaan kuvata seuraavasti; $x >_m y >_m z$ mieltymykset ovat myös transitiivisia eli $x >_m z$ pätee.
+Kun puhumme avioliitosta tarkoitamme kahden alkion, \emph{"nainen"} $n \in N$ ja \emph{"mies"} $m \in M$ paria, siten että $N$ ja $M$ ovat samansuuruiset erilliset joukot, avioliitto merkitään $(n, m)$. Alkioita kutsutaan myöhemmin myös henkilöiksi.
+Kun joukon alkiot asettavat toisen joukon alkiot mieltymys järjestykseen $1 \ldots k$, missä $k$ on joukkojen alkioiden määrä, kutsutaan tätä avioliitto-peliksi, jonka tarkoituksena on löytää jokaiselle joukkojen alkioille pari. 
+
+
+\section{Vakaat parit}
+Notaatio on seuraavanlainen pariutuksissa, olkoon meillä alkiot $\{x, y, z\} \subset N$ mieltymykset $m$:lle voidaan kuvata seuraavasti; $x >_m y >_m z$ mieltymykset ovat myös transitiivisia eli $x >_m z$ pätee.
 
 \emph{Vakaa} pariutus on ekvivalentti \emph{esteparin} poissaololle. Esteparin määritelmä; olkoon meillä neljä alkiota avioliitto-pelistä $\{n_1, n_2\} \subset N, \{m_1, m_2\} \subset M$ ja pariutus $\{(n_1, m_1), (n_2, m_2)\} \subset \mu$. Jos $m_2 >_{n_1} m_1$ ja $n_1 >_{m_2} n_2$,niin $(n_1, m_2)$ on estepari. Haluamme välttää epävakautta, jotta pariutukset olisivat mahdollisimman kestäviä. Ongelma on löytää pariutus $\delta$ joukoille $N$ ja $M$, joka olisi vakaa.
 Pariutuksilla ja pareilla on erillaisia ominaisuuksia. Paras-miehelle pari on pari, jossa mies saa haluamansa naisen ja vastaavasti paras-naiselle pari on pari, jossa nainen saa haluamansa miehen. Pariutuksissa voi esiintyä jommankumman joukon ylivaltaa, jos $\forall j \in N$, $j$ saavat haluamansa parin, tätä kutsutaan $N$-joukon ylivallaksi ja samoin $\forall i \in M$, $i$ saavat haluamansa parin, tällöin se on $M$-joukon ylivalta. Joskus ylivaltoja kutsutaan myös \emph{Nais}- tai \emph{Miesylivallaksi}. Jos ylivaltaa ei synny pariutuksessa, voidaan pariutusta kutsua ylivaltavapaaksi.
@@ -163,6 +167,50 @@ Nyt siis päättyminen on selvää, mutta onko pariutukset aina vakaita? Todiste
 Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Mariaa hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä \cite[p. 588]{gale62a}.
 Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliitto pelissä tulevat saamaan.
 Naisille optimaalisia tuloksia voidaan osat vaihtaa päittäin algoritmissä.
+
+\section{Vakaitten pariutuksien joukko}
+Gale-Shapley algoritmi tuottaa meille yhden vakaan pariutuksen, mutta niitä voi olla enemmän.
+Olkoon meillä pariutus $\mu$ ja $\mu^{'}$. Henkilö $x$ suosii pariutusta $\mu$ pariutukseen $\mu^{'}$ nähden, jos $x$ suosii enemmän pariaan $\mu$ pariutuksessa kuin $\mu^{'}$ pariutuksessa. Henkilölle voi olla myös välinpitämätön pariutuksista, jos molemmat antavat hänelle yhtä hyvän parin.
+
+Olkoon nyt $\mu$ ja $\mu^{'}$ vakaat pariutukset. Olkoon $m$ ja $w$ pari pariutuksesssa $\mu$, mutta ei $\mu^{'}$:ssa. Nyt toinen suosii pariutusta $\mu$ ja toinen pariutusta $\mu^{'}$ \cite[p. 18]{gusfield1989stable}.
+Tästä seuraa nyt, se että jos $\mu$ ja $\mu^{'}$ ovat vakaita pariutuksia samalle avioliitto pelille, niin henkilöiden määrä jotka suosivat pariutusta $\mu$ on sama kuin henkilöiden määrä jotka suosivat pariutusta $\mu^{'}$.
+Esitellään hieman myös notaatiota ylivaloille, tässä yhteydessä keskitymme miesylivaltaan.
+Vakaa pariutus $\mu$ dominoi vakaata pariutusta $\mu^{'}$, merkitään $\mu \preceq \mu^{'}$, jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\mu^{'}$.
+Jos meillä on yo. miesylivalta, se tarkoittaa että toiseen suuntaan meillä on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \mu^{'}$. Käytämme symbolia $\mathcal{M}$ kuvaamaan kaikkia vakaita pariutuksia avioliitto pelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko. Naisylivalta $(\mathcal{M}, \succeq)$ on kaksinkertainen osittain järjestetty joukko.
+
+\subsection{Vakaitten paritusten määrä}
+Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä. Joten jos käytämme brute-force algoritmia löytääksemme kaikki vakaat pariutukset, joudumme tyytymään eksponentiaaliseen aikavaativuuteen.
+\begin{lem}
+Olkoon meillä avioliittopelit kooltaan $i$ ja $k$, ja vastaavasti niissä on $x$ ja $y$ määrä vakaita pariutuksia. On olemassa peli $ik$ jolla on vähintään $max(xy^{i}, yx^{k})$ määrä vakaita pariutuksia.
+\end{lem}
+Miehet ja naiset ovat merkitty seuraavasti $a_{1},\ldots, a_{i}$, $b_{1},\ldots,b_{i}$ ja $c_{1},\ldots,c_{k}$, $d_{1},\ldots,d_{k}$. ik kokoisessa pelissä missä
+\begin{enumerate}
+	\item miehet on merkitty $(a_{z}, c_{j}), z = 1,\ldots,i, j = 1,\ldots,k$
+	\item naiset on merkitty $(b_{z}, d_{j}), z = 1,\ldots,i, j = 1,\ldots,k$
+	\item mies $(a_{z}, c_{j})$ suosii enemmän $(b_{n}, d_{m})$ kuin $(b_{n^{'}}, d_{m^{'}})$, jos $c_{j}$ suosii enemmän $d_{n}$ kuin $d_{n^{'}}$, tai jos $m = m^{'}$ ja $a_{z}$ suosii enemmän $b_{n}$ kuin $b_{n^{'}}$.
+	\item nainen $(b_{z}, d_{j})$ suosii enemmän $(a_{n}, c_{m})$ kuin $(a_{n^{'}}, c_{m^{'}})$, jos $d_{j}$ suosii enemmän $c_{n}$ kuin $c_{n^{'}}$, tai jos $m = m^{'}$ ja $b_{z}$ suosii enemmän $a_{n}$ kuin $a_{n^{'}}$. 
+\end{enumerate}
+
+Olkoon $M_1,\ldots,M_n$ mikä tahansa sekvenssi vakaita pariutuksia pelissä jonka koko on $i$, ja olkoon $M$ mikä tahansa vakaa pariutus pelissä jonka koko on $i$. Vaihtoehtojen määrä pariutuksille $M_1,\ldots,M_n$ ja $M$ on $yx^{k}$. Kuvaus
+$$ (a_{z}, c_{j}) \longrightarrow (p_{M_{j}}(a_{z},p_{M}(c_{j})) $$
+on yhdistetyssä pelissä.
+Koska $M_j$ ja $M$ ovat pariutuksia, niin myös kuvaus on myös pariutus. Jos meillä on estepari $((a, c), (b, d))$, niin seuraavista ehdoista, 1. tai 2. täytyy päteä joko 3. tai 4. ehdon kanssa.
+
+\begin{enumerate}
+	\item $c$ suosii enemmän $d$ kuin $p_M(c)$
+	\item $d = p_M(c)$ ja $a$ suosii enemmän $b$ kuin $p_{M_{j}}(a)$
+	\item $d$ suosii enemmän $c$ kuin $p_M(d)$
+	\item $c = p_M(d)$ ja $b$ suosii enemmän $a$ kuin $p_{M_{j}}(b)$
+\end{enumerate}
+Neljästä vaihtoehdoista, jos 1. ja 3. toteutuvat estävät $M$:n vakauden. 2. ja 4. ehdon toteutuessa ne estävät $M_{j}$:n vakauden.
+
+Nyt Meidän alkuperäinen väite on oikeutettu ja olemme näyttäneet pelin missä on vähintään $yx^{k}$ vakaata paritusta \cite[p. 23]{gusfield1989stable}. $\square$
+
+\begin{lem}
+Jokaiselle $n \geq 0$, $n$ kahden potenssi, on olemassa vakaa avioliitto peli jonka koko on $n$ ja sisältää vähintään $2^{n-1}$ vakaata pariutusta
+\end{lem}
+Todistus induktiolla. Kun pelin koko on 1, niin $n = 2^0$, eli meillä on yksi vakaa pariutus. Induktio-oletus $n = 2^k$, käytämme Lemmaa 1, missä $i = 2$. Löydämme kaksi vakaata pariutusta, joten $x = 2$ ja induktio-oletuksen mukaan $y = 2^{2^{k-1}}$. Joten Lemman 1. perusteella on olemassa peli jonka koko on $2 \cdot 2^k = 2^{k+1}$, jolla on vähintään $max(2 \cdot (2^{2^{{k}}-1})^2, 2^{2^{k}-1} \cdot 2^{2^{k}}) = 2^{2^{k+1}-1})$ vakaata paritusta \cite[p. 24]{gusfield1989stable}. $\square$
+
 
 
 
