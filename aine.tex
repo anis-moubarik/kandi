@@ -120,7 +120,7 @@
 Vakaa avioliitto -ongelma on Galen ja Shapleyn vuonna 1962 tulleessa artikkelissa \cite{gale62a}, esille tuoma ongelma joka sivuuttaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava. Olkoon meillä $n$ miestä ja $n$ naista, miehet ovat pistäneet naiset järjestykseen mieluisimmasta parista huonoimpaan ja jokainen nainen on pistänyt miehet vastaavaan järjestykseen. Tehtävänä on pariuttaa miehet ja naiset niin, että meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pysyisivät nykyisessä avioliitossaan pariutuksessa. Avioliitot ovat vakaita, kun näitä pareja ei esiinny. Pariutuksessa on siis tarkoitus pariuttaa kahden joukon alkiot niin että jokin kriteeri täyttyy, vakaassa avioliitto -ongelmassa tuo kriteeri on parien vakaus.
 Ongelmalla on monia käytännön sovelluksia, kuten elinluovutukset, joissa osapuolina on miesten ja naisten sijaan luovuttajat ja vastaanottajat sekä omien mieltymysten sijaan vastaanottajien kriteerit ovat elinten sopivuus heille. Ongelma voidaan yleistää kaikkiin \emph{kaksipuolisiin markkinoihin}, joissa eettisistä tai laillisista syistä ei käytetä vaihtovälineenä rahaa, seuraavat markkinat ovat hyviä esimerkkejä; em. elinluovuttajat ja vastaanottajat, työntekijät ja työnantajat sekä opiskelijat ja korkeakoulut, näitä \emph{kaksipuolisia pariutus markkinoita} tutkimme paperissa. Tarkoituksena on myös esitellä vakaan avioliitto -ongelman ratkaisut ja sovellukset, vastaan tulee myös pieniä variaatioita klassiseen avioliitto-ongelmaan, kuten erisuuret joukot ja alkioiden hyvin erilaiset mieltymykset, eli tapaukset joissa he eivät halua pariutua tietyn henkilön kanssa ollenkaan.
 
-Gale ja Shapley esittivät algoritmin alkuperäiselle ongelmalle, joka toteuttaa yhden vakaan pariutuksen jokaiselle olemassa olevalle avioliittopelille, jokaisella avioliittopelillä on siis vähintään yksi vakaa pariutus. Algoritmi toimii oletuksena miehet kosii; naiset hylkää periaatteella, tämä antaa kosijalle, tässä tapauksessa siis miehille, aina parhaan mahdollisen parin mitä he voivat pelin kontekstissa saada.
+Gale ja Shapley esittivät algoritmin alkuperäiselle ongelmalle, joka toteuttaa yhden vakaan pariutuksen jokaiselle olemassa olevalle avioliittopelille. Jokaisella avioliittopelillä on siis vähintään yksi vakaa pariutus. Algoritmi toimii oletuksena, miehet kosii; naiset hylkää, periaatteella tämä antaa kosijalle, tässä tapauksessa siis miehille, aina parhaan mahdollisen parin mitä he voivat pelin kontekstissa saada. Naisten kosiessa roolit tietysti vaihtuvat ja pariutukset ovat silloin naisille optimoituja.
 Peliteoria nousee esille ongelmassa, koska joukkojen alkiot voivat vääristellä mieltymyksiään, tästä nousee kysymyksiä kuinka tähän olisi reagoitava, algoritmi ei pysty siihen, ja kuinka alkiot vääristelystä hyötyvät.
 
 Notaatio on matemaattisesti kevyttä ja ongelma on, sovellusten kautta, helposti lähestyttävissä, ongelma on kuvattavissa luonnollisella kielellä muutamassa lauseessa ja yksi aineen todistus on tehty luonnollisella kielellä. Tämä ei tarkoita etteikö ongelma olisi monimutkainen ja vaatisi hyvin formaalista esittelyä ja tutkimista. Koska ongelman ja sen ratkaisun sovellukset ovat hyvin laajat on se kohteena hyvin suosittu ja tutkimustulokset ovat tuoreita, ja uusia tuloksia saadaan jatkuvasti.
@@ -138,12 +138,12 @@ Pariutus $\mu$ on \emph{vakaa}, jos ei ole olemassa paria $(m_1, n_2)$, jolle
 Ongelma on löytää pariutus joukoille $N$ ja $M$, joka olisi vakaa.
 \end{maar}
 Pariutuksilla ja pareilla on erillaisia ominaisuuksia. Paras-miehelle pari on pari, jossa mies saa haluamansa naisen ja vastaavasti paras-naiselle pari on pari, jossa nainen saa haluamansa miehen. Pariutuksissa voi esiintyä jommankumman joukon ylivaltaa, jos kaikilla $j \in N$, $j$ saavat haluamansa parin, tätä kutsutaan $N$-joukon ylivallaksi ja samoin kaikilla $i \in M$, $i$ saavat haluamansa parin, tällöin se on $M$-joukon ylivalta. Joskus ylivaltoja kutsutaan myös \emph{nais}- tai \emph{miesylivallaksi}. Jos ylivaltaa ei synny pariutuksessa, voidaan pariutusta kutsua ylivaltavapaaksi.
-Päinvastoin jos mies tai nainen saa huonoimman tai vähiten haluamansa parin, kutsutaan sitä \emph{huonoin-naiselle} tai -\emph{miehelle} pariksi. Samoin pariutusta kutsutaan huonoin-naiselle tai -miehelle pariksi jos kaikki jommankumman joukon alkioista saavat vähiten haluamansa parit.
+Päinvastoin jos mies tai nainen saa huonoimman tai vähiten haluamansa parin, kutsutaan sitä \emph{huonoin-naiselle} tai -\emph{miehelle} pariksi. Samoin paria kutsutaan huonoin-naiselle tai -miehelle pariksi jos kaikki jommankumman joukon alkioista saavat vähiten haluamansa parit.
 
 Esittelemme myöhemmin teoreeman, jonka mukaan jokaisesta avioliittopelistä löytyy ainakin yksi vakaa pariutus. Ensin kuitenkin esittelemme algoritmin joka tarkastaa pariutuksen vakauden.
 Olkoon $m \in M$ ja $n \in N$. Olkoon $\mu$ meidän pariutus ja jos $n$ ja $m$ on pariutettu $\mu$:ssa, niin merkitään sitä $n = p_\mu(m)$.
 \begin{enumerate}
-	\item Kaikilla $n$, siten että $m$ suosii naista $n$ enemmän kuin omaa paria $p_{\mu}(m)$
+	\item Kaikilla $n$ siten että $m$ suosii naista $n$ enemmän kuin omaa paria $p_{\mu}(m)$
 	\item Jos $n$ suosii miestä $m$ enemmän kuin omaa paria $p_{\mu}(n)$, ilmoitetaan että pariutus $\mu$ ei ole vakaa.
 	\item Muuten ilmoitetaan että pariutus on vakaa.
 \end{enumerate}
@@ -153,7 +153,7 @@ Jos löydämme tälläisen miehen, tarkastelemme jos nainen jota hän suosii, su
 Huonoimmassa tapauksessa käymme läpi kaikki miehet ja kaikki naiset paitsi yhden, eli $x\cdot(x-1)$, tästä saamme aikavaativuudeksi $O(x^2)$.
 
 \section{Gale--Shapley-algoritmi}
-Avioliittopelistä löytyy aina ainakin yksi vakaa pariutus. Gale--Shapley algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliittopelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
+Avioliittopelistä löytyy aina ainakin yksi vakaa pariutus. Gale--Shapley-algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliittopelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
 \begin{alg} \cite[p. 13]{gale62a}.
 \begin{enumerate}
 	\item Miehet aloittavat kosimalla mieltymyksiltään parasta naista.
@@ -168,16 +168,15 @@ Avioliittopelistä löytyy aina ainakin yksi vakaa pariutus. Gale--Shapley algor
 
 Mies ei voi jäädä ilman paria. Nainen voi hylätä vain jos hänellä on langan päässä mies (ensimäisellä kierroksella naisen on siis valittava paras vaihtoehto langan päähän, hän ei voi hylätä kaikkia kosijoita), ja kun hänellä on langan päässä mies hänestä ei tule missään vaiheessa vapaata algoritmin suorittamisessa.
 Jos viimeinen nainen jota kositaan hylkää miehen, tarkoittaisi tämä sitä, että jokaisella naisella olisi mies jo langan päässä. Mutta naisia ja miehiä on sama määrä ja yksikään mies ei voi olla kahden naisen langan päässä, niin jokainen miehistäkin pitäisi olla lankojen päässä, mikä on ristiriita.
-Jokainen iteraatio sisältää yhden kosinnan eikä yksikään mies kosi samaa naista kahta kertaa, joten iteraatioiden määrä on $n^2$. Algoritmi on siis päättyvä.
+Jokainen iteraatio sisältää yhden kosinnan eikä yksikään mies kosi samaa naista kahta kertaa, joten iteraatioiden määrä on $n^2$. Algoritmi on siis päättyvä. Nyt siis päättyminen on selvää, mutta onko pariutukset aina vakaita?
 
-Nyt siis päättyminen on selvää, mutta onko pariutukset aina vakaita?
-Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Maria hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä \cite[p. 588]{gale62a}.
+Todistetaan tämä. Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Maria hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä \cite[p. 588]{gale62a}.
 Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
 Naisille optimaalisia tuloksia voidaan saada, kun osat vaihdetaan päittäin algoritmissä.
 
-\section{Vakaitten pariutuksien joukko}
+\section{Vakaitten pariutusten joukko}
 Gale-Shapley algoritmi tuottaa meille yhden vakaan pariutuksen, mutta niitä voi olla enemmän.
-Olkoon meillä pariutus $\mu$ ja $\mu^{'}$. Henkilö $x$ suosii pariutusta $\mu$ pariutukseen $\mu^{'}$ nähden, jos $x$ suosii enemmän pariaan $\mu$ pariutuksessa kuin $\mu^{'}$ pariutuksessa. Henkilölle voi olla myös välinpitämätön pariutuksista, jos molemmat antavat hänelle yhtä hyvän parin.
+Olkoon meillä pariutus $\mu$ ja $\delta$. Henkilö $x$ suosii pariutusta $\mu$ pariutukseen $\delta$ nähden, jos $x$ suosii enemmän pariaan $\mu$ pariutuksessa kuin $\delta$ pariutuksessa. Henkilölle voi olla myös välinpitämätön pariutuksista, jos molemmat antavat hänelle yhtä hyvän parin.
 
 \begin{lau} \cite[p. 18]{gusfield1989stable}
 	Olkoon $\mu$ ja $\delta$ vakaita pariutuksia, ja oletetaan että $m$ ja $n$ ovat pari pariutuksessa $\mu$ muttei $\delta$:ssa. Nyt jompikumpi henkilöistä $m$ ja $n$ suosii pariutusta $\mu$ enemmän kuin pariutusta $\delta$ ja toinen pariutusta $\delta$ enemmän kuin pariutusta $\mu$.
@@ -197,13 +196,13 @@ Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä
 Lemman todistus löytyy lähteestä, sivuutamme sen tässä.
 
 \begin{lem}
-Jokaiselle $n \geq 0$, $n$ kahden potenssi, on olemassa vakaa avioliittopeli jonka koko on $n$ ja sisältää vähintään $2^{n-1}$ vakaata pariutusta
+Jokaiselle $n \geq 0$, missä $n$ on kahden potenssi, on olemassa vakaa avioliittopeli jonka koko on $n$ ja sisältää vähintään $2^{n-1}$ vakaata pariutusta
 \end{lem}
 Todistus induktiolla. Kun pelin koko on 1, niin $n = 2^0$, eli meillä on yksi vakaa pariutus. Induktio-oletus $n = 2^k$, käytämme Lemmaa 1, missä $i = 2$. Löydämme kaksi vakaata pariutusta, joten $x = 2$ ja induktio-oletuksen mukaan $y = 2^{2^{k-1}}$. Joten Lemman 3 perusteella on olemassa peli jonka koko on $2 \cdot 2^k = 2^{k+1}$, jolla on vähintään $\max(2 \cdot (2^{2^{{k}}-1})^2, 2^{2^{k}-1} \cdot 2^{2^{k}}) = 2^{2^{k+1}-1})$ vakaata paritusta \cite[p. 24]{gusfield1989stable}. $\square$
 
 \section{Erisuuruiset joukot}
 Aikaisemmat tulokset pätevät myös, kun meillä on kaksi joukkoa joiden alkioiden määrä on erisuuri. Oletamme, että henkilö haluaa olla ennemmin naimisissa kuin naimaton.
-Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m \in X$ ja nainen $n \in Y$, siten että
+Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m \in X$ ja nainen $n \in Y$ siten että
 
 \begin{enumerate}
 	\item $m$ ja $w$ eivät ole pari pariutuksessa $\mu$,
@@ -219,7 +218,7 @@ Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintää
 \section{Parien kieltäminen}
 Jos henkilön on mahdollista ilmoittaa, että yksi tai useampi ei kelpaa hänelle vastakkaisen sukupuolen joukosta, on hänen mieltymyslistansa aito osajoukko vastakkaisen sukupuolen joukosta. Näinollen mies ja nainen voidaan pariuttaa ainoastaan jos he ovat hyväksyttäviä toisillensa.
 
-Tässä tapauksessa vakaa pariutus voi olla osittainen, siten että kaikkien henkilöiden ei tarvitse olla pariutettu, jotta pariutus olisi vakaa. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m$ ja nainen $n$, siten että
+Tässä tapauksessa vakaa pariutus voi olla osittainen tarkoittaen että kaikkien henkilöiden ei tarvitse olla pariutettu, jotta pariutus olisi vakaa. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m$ ja nainen $n$ siten että
 \begin{enumerate}
 	\item $m$ ja $n$ eivät ole pari pariutuksessa $\mu$, mutta molemmat hyväksyisivät toisensa,
 	\item $m$ on joko pariuttamaton tai suosii naista $n$ enemmän kuin hänen pariaan pariutuksessa $\mu$,
