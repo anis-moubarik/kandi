@@ -11,12 +11,14 @@
     \end{itemize}
   \end{frame}
   \begin{frame}
+  	\frametitle{Pariutusten notaatio}
+  	Pariutus $\mu$ on joukko $\mu \subseteq M \times N$, joka tulkittuna funktioksi on injektio $\mu: M \rightarrow N$. Alkion $m$ paria pariutuksessa $\mu$ merkitään $p_{\mu}(m)$. \\Mieltymyksiä voidaan kuvailla transitiivisella relaatiolla, esim. $n_1 >_{m} n_2$, $n_1 \in N$ $n_2 \in N$.
+  \end{frame}
+  \begin{frame}
     \frametitle{Vakaat pariutukset}
     \begin{itemize}
-    	\item Avioliittopelissä joukkojen $M$ ja $N$ alkiot pistävät vastapuolen alkiot järjestykseen parhaimmasta parista huonoimpaan
 		\item Ongelma on löytää vakaa pariutus joukoille $M$ ja $N$.
-		\item Pariutus on vakaa, kun meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pitäisivät nykyisen parinsa.
-		\item Jos meillä on tälläinen pari sitä kutsutaan estepariksi. 
+		\item Pariutus on vakaa, kun meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pitäisivät nykyisen parinsa. 
     \end{itemize}
   \end{frame}
   \begin {frame}
@@ -41,25 +43,24 @@
   \end{frame}
   \begin{frame}
   	\frametitle{Vakaitten pariutuksien joukko}
+  	\begin{itemize}
+  		\item Gale--Shapley tuottaa yhden vakaan pariutuksen, niitä voi olla kuitenkin enemmän.
+  		\item Niitä voi olla enintään eksponentiaalinen määrä.
+  	\end{itemize}
   \end{frame}
   \begin{frame}
   	\frametitle{Erisuuruiset joukot}
   	\begin{itemize}
-  		\item Voimme laajentaa ongelmaa erisuuruisten joukkojen kohdalle.
-  		\item Tässä tapauksessa oletamme, että henkilö haluaa parin mielummin kuin olla yksin.
-  		\item Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m \in X$ ja nainen $n \in Y$ siten että
-
-\begin{enumerate}
-	\item $m$ ja $w$ eivät ole pari pariutuksessa $\mu$,
-	\item $m$ on joko ilman paria $\mu$:ssä tai suosii naista $w$ enemmän kuin pariaan pariutuksessa $\mu$, ja
-	\item $w$ on joko ilman paria $\mu$:ssä tai suosii miestä $m$ enemmän kuin pariaan pariutuksessa $\mu$.
-\end{enumerate}
-Jokainen vakaa pariutus koostuu $n_x$:stä järjestettyjä pareja, missä $n_x - n_y$ on naimattomien naisten määrä.
-  		
+  		\item Erisuuruisten joukkojen tapauksessa oletamme, että henkilö haluaa parin mielummin kuin olla yksin.
+  		\item Isomman joukon alkioista jää parittomaksi pienemmän ja isomman joukon erotuksen verran alkioita.	
   	\end{itemize}
   \end{frame}
   \begin{frame}
   	\frametitle{Pareista kieltäytyminen}
+  	\begin{itemize}
+  		\item Parin on mahdollista ilmoittaa, että yksi tai useampi pari ei kelpaa hänelle.
+  		\item Pariutus voi olla osittainen.
+  	\end{itemize}
   \end{frame}
   \begin{frame}
   	\frametitle{Sovellukset}
