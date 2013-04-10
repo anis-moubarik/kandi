@@ -115,40 +115,14 @@
 % --- Main matter ---
 
 \section{Johdanto}
-Vakaa avioliitto -ongelma on Galen ja Shapleyn vuonna 1962 tulleessa artikkelissa \cite{gale62a}, esille tuoma ongelma joka sivuuttaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava. Olkoon meillä $n$ miestä ja $n$ naista, miehet ovat pistäneet naiset järjestykseen mieluisimmasta morsiammesta huonoimpaan ja vastaavasti jokainen nainen on pistänyt miehet järjestykseen mieluisimmasta sulhasesta huonoimpaan. Tehtävänä on pariuttaa miehet ja naiset niin, että meillä ei ole estepareja, ja kun näitä ei esiinny ovat avioliitot vakaita.\\
-Ongelmalla on monia käytännön sovelluksia, kuten elinluovutukset, joissa osapuolina ovat miesten ja naisten sijaan luovuttajat ja vastaanottajat sekä omien mieltymysten sijaan vastaanottajien kriteerit ovat elinten sopivuus heille. 
+Vakaa avioliitto -ongelma sivuaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava: Olkoon olemassa $n$ miestä ja $n$ naista ja miehet ovat pistäneet naiset järjestykseen mieluisimmasta parista huonoimpaan ja jokainen nainen on pistänyt miehet vastaavaan järjestykseen, tätä tilannetta kutsutaan \emph{avioliittopeliksi}. \emph{Pari} on tässä kontekstissa siis mies-nais pari, tätä kutsutaan myös \emph{avioliitoksi}. Tehtävänä on pariuttaa miehet ja naiset niin, että meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pysyisivät avioliitossaan nykyisessä pariutuksessa. Avioliitot ovat vakaita, kun näitä \emph{estepareja} ei esiinny. Pariutus on joukko pareja ja parit voidaan pariuttaa Gale--Shapley-algoritmilla, joka esitellään myöhemmin. Vakaassa pariutuksessa on siis tarkoitus pariuttaa kahden joukon alkiot niin että jokin kriteeri täyttyy, alkuperäisessä vakaa avioliitto -ongelmassa tuo kriteeri on parien vakaus suhteessa alkioiden mieltymyksiin.
 
-Gale ja Shapley esittivät algoritmin, joka toteuttaa yhden vakaan pariutuksen jokaiselle olemassa olevalle avioliittopelille, tämä tarkoittaa sitä että jokainen avioliittopeli sisältää vakaan pariutuksen. Algoritmi toimii oletuksena miehet kosii; naiset hylkää periaatteella, tämä antaa kosijalle, tässä tapauksessa siis miehille, aina parhaan mahdollisen parin mitä he voivat pelin kontekstissa saada.
-Peliteoria nousee esille ongelmassa, koska joukkojen alkiot voivat vääristellä mieltymyksiään, tästä nousee kysymyksiä kuinka tähän olisi reagoitava, algoritmi ei pysty siihen, ja kuinka alkiot vääristelystä hyötyvät.
+Ongelmalla on monia käytännön sovelluksia. Se voidaan yleistää kaikkiin \emph{kaksipuolisiin markkinoihin}, joissa eettisistä tai laillisista syistä ei käytetä vaihtovälineenä rahaa. Kaksipuolisilla markkinoilla tarkoitetaan tilannetta, jossa on olemassa alusta joka palvelee kahta erillistä ryhmää, jotka toimittavat toisilleen hyödykkeitä. Seuraavat markkinat ovat hyviä esimerkkejä: elinluovuttajat ja vastaanottajat, työntekijät ja työnantajat sekä opiskelijat ja korkeakoulut. Elinluovutusten tapauksessa haaste on se, että luovuttaja-potilas kaksikot eivät ole yhteensopivia, voimme kuitenkin käyttää vakaa avioliitto -ongelman ratkaisuja elinluovutuksissa. Jos on olemassa kaksikot $A$, $B$ ja $C$, eli jokainen kaksikoista sisältää luovuttajan ja potilaan, mutta syystä tai toisesta elin ei sovi potilaalle, voidaan soveltaa ratkaisuja tähän tapaukseen ja saada vakaita pariutuksia potilaitten ja luovuttajien välille. Oletetaan, että $A$:n luovuttaja sopii $B$:lle, $B$:n $C$:lle ja $C$:n $A$:lle, nyt saamme ketjun ja vakaan pariutuksen, jossa jokainen potilas saa uuden elimen. Näitä \emph{kaksipuolisia pariutusmarkkinoita} tutkimme paperissa.
 
-Tekstin tarkoituksena on esitellä vakaa avioliitto -ongelma, sen ratkaisut ja sovellukset. Notaatio on matemaattisesti kevyttä ja ongelma on, sovellusten kautta, helposti lähestyttävissä.
+Vastaan tulee myös pieniä variaatioita klassiseen avioliitto-ongelmaan, kuten erisuuruiset joukot ja alkioiden hyvin erilaiset mieltymykset, eli tapaukset joissa he eivät halua pariutua tietyn henkilön kanssa ollenkaan. Näissä tapauksissa vakauden määritelmää muokataan niin että pariutukset joissa alkio on ilman paria voi olla myös vakaa. Erisuuruisten joukkojen tapauksessa suuremman joukon alkioista jää pariuttamatta suuremman ja pienemmän joukon alkioiden lukumärään erotuksen verran alkioita.
 
-\section{Vakaat pariutukset}
-Olkooon $M$ \emph{miesten} joukko ja $N$ naisten joukko, missä $|M| = |N| = n$. Avioliitosta tai parista puhuttaessa tarkoitamme paria $(m, n) \in M \times N$. Avioliittopelissä jokaisella joukkojen alkiolla on mieltymykset toisen joukon alkioista parhaimmasta kumppanista huonoinmpaan. Olkoon meillä alkiot $\{x, y, z\} \subset N$ mieltymykset $m$:lle voidaan kuvata seuraavasti; $x >_m y >_m z$ mieltymykset ovat myös transitiivisia eli $x >_m z$ pätee. Merkitään pariutusten joukkoa $\mu$:llä, eli $(m,n) \in \mu$. Pariutus $\mu$ on joukko $\mu \subseteq M \times N$, missä pariutus on injektio $\mu : M \mapsto N$
-
-\begin{maar}
-\emph{Vakaa} pariutus on ekvivalentti \emph{esteparin} poissaololle. Esteparin määritelmä; olkoon meillä neljä alkiota avioliittopelistä $\{n_1, n_2\} \subset N, \{m_1, m_2\} \subset M$ ja pariutus $\{(n_1, m_1), (n_2, m_2)\} \subset \mu$. Jos $m_2 >_{n_1} m_1$ ja $n_1 >_{m_2} n_2$,niin $(n_1, m_2)$ on estepari. Haluamme välttää epävakautta, jotta pariutukset olisivat mahdollisimman kestäviä. Ongelma on löytää pariutus $\delta$ joukoille $N$ ja $M$, joka olisi vakaa.
-\end{maar}
-Pariutuksilla ja pareilla on erillaisia ominaisuuksia. Paras-miehelle pari on pari, jossa mies saa haluamansa naisen ja vastaavasti paras-naiselle pari on pari, jossa nainen saa haluamansa miehen. Pariutuksissa voi esiintyä jommankumman joukon ylivaltaa, jos $\forall j \in N$, $j$ saavat haluamansa parin, tätä kutsutaan $N$-joukon ylivallaksi ja samoin $\forall i \in M$, $i$ saavat haluamansa parin, tällöin se on $M$-joukon ylivalta. Joskus ylivaltoja kutsutaan myös \emph{Nais}- tai \emph{Miesylivallaksi}. Jos ylivaltaa ei synny pariutuksessa, voidaan pariutusta kutsua ylivaltavapaaksi.
-Päinvastoin jos mies tai nainen saa huonoimman tai vähiten haluamansa parin, kutsutaan sitä \emph{huonoin-naiselle} tai -\emph{miehelle} pariksi. Samoin pariutusta kutsutaan huonoin-naiselle tai -miehelle pariksi jos kaikki jommankumman joukon alkioista saavat vähiten haluamansa parit.
-
-Esittelemme myöhemmin teoreeman, jonka mukaan jokaisesta avioliittopelistä löytyy ainakin yksi vakaa pariutus. Ensin kuitenkin esittelemme algoritmin joka tarkastaa pariutuksen vakauden.
-Olkoon $x = |M|$, $m \in M$ ja $n \in N$. Olkoon $\mu$ meidän pariutus ja jos $n$ ja $m$ on pariutettu $\mu$:ssa, niin merkitään sitä $n = p_\mu(m)$.
-\begin{algorithmic}
-	\For{$i = 1$ to $x$}
-		\ForAll {$n$ niin että $m$ suosii $n$:ää ennemmin kuin $p_\mu(m)$}
-			\If{$n$ suosii $m$:ää ennemmin kuin $p_\mu(n)$}
-				\State \Return pariutus on epävakaa
-			\EndIf
-		\EndFor
-	\EndFor\\
-	\Return pariutus on vakaa
-	\cite[p. 8]{gusfield1989stable}.
-\end{algorithmic}
-
-Etsimme siis tapauksia jossa mies suosii naista enemmän kuin omaa pariaan pariutuksessa $p_\mu$.
-Jos löydämme tälläisen miehen, tarkastelemme jos nainen jota hän suosii, suosii myös miestä enemmän kuin pariaan, jos tämä pitää paikkansa, ei pariutus voi olla vakaa.
-Huonoimmassa tapauksessa käymme läpi kaikki miehet ja kaikki naiset paitsi yhden, eli $x\cdot(x-1)$, tästä saamme aikavaativuudeksi $O(x^2)$.
+Gale ja Shapley esittivät vuonna 1962 ilmestyneessä artikkelissa \cite{gale62a} algoritmin alkuperäiselle ongelmalle, joka löytää yhden vakaan pariutuksen jokaiselle olemassa olevalle avioliittopelille. Jokaisella avioliittopelillä on siis vähintään yksi vakaa pariutus. Algoritmi toimii oletuksena "miehet kosii, naiset hylkää" periaatteella. Tämä antaa kosijalle, tässä tapauksessa siis miehille, aina parhaan mahdollisen parin mitä he voivat pelin kontekstissa saada. Naisten kosiessa roolit tietysti vaihtuvat ja pariutukset ovat silloin naisille optimoituja.
+Peliteoria tulee esille, kun joukkojen alkiot vääristelevät mieltymyksiään. Tähän vääristelyyn Gale--Shapley-algoritmi ei osaa puuttua ja se nostaakin kysymyksiä kuinka siihen pitäisi reagoida ja miten ylipäätään alkiot vääristelystä hyötyvät, jos hyötyvät ollenkaan.
 
 
 % --- Back matter ---

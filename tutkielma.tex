@@ -1,0 +1,309 @@
+% --- Template for thesis / report with tktltiki2 class ---
+% 
+% last updated 2013/02/15 for tkltiki2 v1.02
+
+\documentclass[finnish]{tktltiki2}
+
+% tktltiki2 automatically loads babel, so you can simply
+% give the language parameter (e.g. finnish, swedish, english, british) as
+% a parameter for the class: \documentclass[finnish]{tktltiki2}.
+% The information on title and abstract is generated automatically depending on
+% the language, see below if you need to change any of these manually.
+% 
+% Class options:
+% - grading                 -- Print labels for grading information on the front page.
+% - disablelastpagecounter  -- Disables the automatic generation of page number information
+%                              in the abstract. See also \numberofpagesinformation{} command below.
+%
+% The class also respects the following options of article class:
+%   10pt, 11pt, 12pt, final, draft, oneside, twoside,
+%   openright, openany, onecolumn, twocolumn, leqno, fleqn
+%
+% The default font size is 11pt. The paper size used is A4, other sizes are not supported.
+%
+% rubber: module pdftex
+
+% --- General packages ---
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsfonts,amsmath,amssymb,amsthm,booktabs,color,enumitem,graphicx}
+\usepackage[pdftex,hidelinks]{hyperref}
+ \usepackage{algpseudocode}
+
+% Automatically set the PDF metadata fields
+\makeatletter
+\AtBeginDocument{\hypersetup{pdftitle = {\@title}, pdfauthor = {\@author}}}
+\makeatother
+
+% --- Language-related settings ---
+%
+% these should be modified according to your language
+
+% babelbib for non-english bibliography using bibtex
+\usepackage[fixlanguage]{babelbib}
+\selectbiblanguage{finnish}
+
+% add bibliography to the table of contents
+\usepackage[nottoc]{tocbibind}
+% tocbibind renames the bibliography, use the following to change it back
+\settocbibname{Lähteet}
+
+% --- Theorem environment definitions ---
+
+\newtheorem{lau}{Lause}
+\newtheorem{lem}[lau]{Lemma}
+\newtheorem{kor}[lau]{Korollaari}
+
+\theoremstyle{definition}
+\newtheorem{maar}[lau]{Määritelmä}
+\newtheorem{ong}{Ongelma}
+\newtheorem{alg}[lau]{Algoritmi}
+\newtheorem{esim}[lau]{Esimerkki}
+
+\theoremstyle{remark}
+\newtheorem*{huom}{Huomautus}
+
+
+% --- tktltiki2 options ---
+%
+% The following commands define the information used to generate title and
+% abstract pages. The following entries should be always specified:
+
+\title{Vakaa avioliitto -ongelma}
+\author{Anis Moubarik}
+\date{\today}
+\level{Tutkielma}
+\abstract{}
+
+% The following can be used to specify keywords and classification of the paper:
+
+\keywords{pariutus, gale-shapley, avioliitto-peli}
+\classification{} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
+                  % This is probably mostly relevant for computer scientists
+
+% If the automatic page number counting is not working as desired in your case,
+% uncomment the following to manually set the number of pages displayed in the abstract page:
+%
+% \numberofpagesinformation{16 sivua + 10 sivua liitteissä}
+%
+% If you are not a computer scientist, you will want to uncomment the following by hand and specify
+% your department, faculty and subject by hand:
+%
+% \faculty{Matemaattis-luonnontieteellinen}
+% \department{Tietojenkäsittelytieteen laitos}
+% \subject{Tietojenkäsittelytiede}
+%
+% If you are not from the University of Helsinki, then you will most likely want to set these also:
+%
+% \university{Helsingin Yliopisto}
+% \universitylong{HELSINGIN YLIOPISTO --- HELSINGFORS UNIVERSITET --- UNIVERSITY OF HELSINKI} % displayed on the top of the abstract page
+% \city{Helsinki}
+%
+
+
+\begin{document}
+
+% --- Front matter ---
+
+\maketitle        % title page
+
+\tableofcontents  % table of contents
+\newpage          % clear page after the table of contents
+
+
+% --- Main matter ---
+
+\section{Johdanto}
+Vakaa avioliitto -ongelma sivuaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava: Olkoon olemassa $n$ miestä ja $n$ naista ja miehet ovat pistäneet naiset järjestykseen mieluisimmasta parista huonoimpaan ja jokainen nainen on pistänyt miehet vastaavaan järjestykseen, tätä tilannetta kutsutaan \emph{avioliittopeliksi}. \emph{Pari} on tässä kontekstissa siis mies-nais pari, tätä kutsutaan myös \emph{avioliitoksi}. Tehtävänä on pariuttaa miehet ja naiset niin, että meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pysyisivät avioliitossaan nykyisessä pariutuksessa. Avioliitot ovat vakaita, kun näitä \emph{estepareja} ei esiinny. Pariutus on joukko pareja ja parit voidaan pariuttaa Gale--Shapley-algoritmilla, joka esitellään myöhemmin. Vakaassa pariutuksessa on siis tarkoitus pariuttaa kahden joukon alkiot niin että jokin kriteeri täyttyy, alkuperäisessä vakaa avioliitto -ongelmassa tuo kriteeri on parien vakaus suhteessa alkioiden mieltymyksiin.
+
+Ongelmalla on monia käytännön sovelluksia. Se voidaan yleistää kaikkiin \emph{kaksipuolisiin markkinoihin}, joissa eettisistä tai laillisista syistä ei käytetä vaihtovälineenä rahaa. Kaksipuolisilla markkinoilla tarkoitetaan tilannetta, jossa on olemassa alusta joka palvelee kahta erillistä ryhmää, jotka toimittavat toisilleen hyödykkeitä. Seuraavat markkinat ovat hyviä esimerkkejä: elinluovuttajat ja vastaanottajat, työntekijät ja työnantajat sekä opiskelijat ja korkeakoulut. Elinluovutusten tapauksessa haaste on se, että luovuttaja-potilas kaksikot eivät ole yhteensopivia, voimme kuitenkin käyttää vakaa avioliitto -ongelman ratkaisuja elinluovutuksissa. Jos on olemassa kaksikot $A$, $B$ ja $C$, eli jokainen kaksikoista sisältää luovuttajan ja potilaan, mutta syystä tai toisesta elin ei sovi potilaalle, voidaan soveltaa ratkaisuja tähän tapaukseen ja saada vakaita pariutuksia potilaitten ja luovuttajien välille. Oletetaan, että $A$:n luovuttaja sopii $B$:lle, $B$:n $C$:lle ja $C$:n $A$:lle, nyt saamme ketjun ja vakaan pariutuksen, jossa jokainen potilas saa uuden elimen. Näitä \emph{kaksipuolisia pariutusmarkkinoita} tutkimme paperissa.
+
+Vastaan tulee myös pieniä variaatioita klassiseen avioliitto-ongelmaan, kuten erisuuruiset joukot ja alkioiden hyvin erilaiset mieltymykset, eli tapaukset joissa he eivät halua pariutua tietyn henkilön kanssa ollenkaan. Näissä tapauksissa vakauden määritelmää muokataan niin että pariutukset joissa alkio on ilman paria voi olla myös vakaa. Erisuuruisten joukkojen tapauksessa suuremman joukon alkioista jää pariuttamatta suuremman ja pienemmän joukon alkioiden lukumärään erotuksen verran alkioita.
+
+Gale ja Shapley esittivät vuonna 1962 ilmestyneessä artikkelissa \cite{gale62a} algoritmin alkuperäiselle ongelmalle, joka löytää yhden vakaan pariutuksen jokaiselle olemassa olevalle avioliittopelille. Jokaisella avioliittopelillä on siis vähintään yksi vakaa pariutus. Algoritmi toimii oletuksena "miehet kosii, naiset hylkää" periaatteella. Tämä antaa kosijalle, tässä tapauksessa siis miehille, aina parhaan mahdollisen parin mitä he voivat pelin kontekstissa saada. Naisten kosiessa roolit tietysti vaihtuvat ja pariutukset ovat silloin naisille optimoituja.
+Peliteoria tulee esille, kun joukkojen alkiot vääristelevät mieltymyksiään. Tähän vääristelyyn Gale--Shapley-algoritmi ei osaa puuttua ja se nostaakin kysymyksiä kuinka siihen pitäisi reagoida ja miten ylipäätään alkiot vääristelystä hyötyvät, jos hyötyvät ollenkaan.
+
+
+\section{Vakaat pariutukset}
+Olkooon $M$ \emph{miesten} joukko ja $N$ naisten joukko, missä $|M| = |N| = n$. Avioliitosta tai parista puhuttaessa tarkoitamme paria $(m, n) \in M \times N$. Avioliittopelissä jokaisella joukkojen alkiolla on mieltymykset toisen joukon alkioista parhaimmasta kumppanista huonoinpaan.
+
+Olkoon meillä $m_1, m_2, m_3 \in M$ ja $n_1, n_2, n_3 \in N$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys on vasemmalta oikealle laskevassa järjestyksessä, eli miehelle $m_1$ miellyttävin pari olisi $n_2$.
+\begin{table}[h!]
+	\begin{tabular}{ l | *{2}{c} r }
+	 &  \\
+	 \hline
+ 	 $m_{1}$ & $n_{2}$ & $n_{1}$ & $n_{3}$ \\
+ 	 $m_{2}$ & $n_{1}$ & $n_{2}$ & $n_{3}$ \\
+ 	 $m_{3}$ & $n_{3}$ & $n_{1}$ & $n_{2}$ \\
+	\end{tabular}
+	\caption{Miesten mieltymykset}
+\end{table}
+
+Mieltymyksiä voidaan myös kuvata transitiivisella relaatiolla $>$. Esimerkiksi miehen $m_1$ mieltymykset voidaan näyttää seuraavasti: $n_2 >_{m} n_1 >_{m} n_3$, relaatio on myös transitiivinen eli $n_2 >_{m} n_3$ pätee.
+
+Pariutus $\mu$ on joukko $\mu \subseteq M \times N$,joka tulkittuna funktioksi on  $\mu : M \mapsto N$. Alkion $m$ paria pariutuksessa $\mu$ merkitään seuraavasti $p_{\mu}(m)$.
+
+\begin{maar}
+Pariutus $\mu$ on \emph{vakaa}, jos ei ole olemassa kaksikkoa $m_1$ja  $n_2$, jolle
+\begin{enumerate}
+	\item $n_2 >_{m_{1}} p_{\mu}(m_1)$, ja
+	\item $m_1 >_{n_{2}} p_{\mu}(n_2)$
+\end{enumerate}
+\begin{ong}[Vakaa pariutus]
+Löytää  vakaa pariutus joukoille $N$ ja $M$.
+\end{ong}
+
+\end{maar}
+Pariutuksilla ja pareilla on erillaisia ominaisuuksia. Paras-miehelle pari on pari, jossa mies saa haluamansa naisen ja vastaavasti paras-naiselle pari on pari, jossa nainen saa haluamansa miehen. Pariutuksissa voi esiintyä jommankumman joukon ylivaltaa, jos kaikilla $j \in N$, $j$ saavat haluamansa parin, tätä kutsutaan $N$-joukon ylivallaksi ja samoin kaikilla $i \in M$, $i$ saavat haluamansa parin, tällöin se on $M$-joukon ylivalta. Joskus ylivaltoja kutsutaan myös \emph{nais}- tai \emph{miesylivallaksi}. Jos ylivaltaa ei synny pariutuksessa, voidaan pariutusta kutsua ylivaltavapaaksi.
+Päinvastoin jos mies tai nainen saa huonoimman tai vähiten haluamansa parin, kutsutaan sitä \emph{huonoin-naiselle} tai -\emph{miehelle} pariksi. Samoin paria kutsutaan huonoin-naiselle tai -miehelle pariksi jos kaikki jommankumman joukon alkioista saavat vähiten haluamansa parit.
+
+Esittelemme myöhemmin teoreeman, jonka mukaan jokaisesta avioliittopelistä löytyy ainakin yksi vakaa pariutus. Ensin kuitenkin esittelemme algoritmin joka tarkastaa pariutuksen vakauden.
+Olkoon $m \in M$ ja $n \in N$ ja $\mu$ pariutus.
+\begin{alg}
+\begin{enumerate}
+	\item Kaikilla $n$ siten että $m$ suosii naista $n$ enemmän kuin omaa paria $p_{\mu}(m)$
+	\item Jos $n$ suosii miestä $m$ enemmän kuin omaa paria $p_{\mu}(n)$, ilmoitetaan että pariutus $\mu$ ei ole vakaa.
+	\item Muuten ilmoitetaan että pariutus on vakaa.
+\end{enumerate}
+\end{alg}
+
+Etsimme siis tapauksia jossa mies suosii naista enemmän kuin omaa pariaan pariutuksessa $p_\mu$.
+Jos löydämme tälläisen miehen, tarkastelemme jos nainen jota hän suosii, suosii myös miestä enemmän kuin pariaan, jos tämä pitää paikkansa, ei pariutus voi olla vakaa.
+Huonoimmassa tapauksessa käymme läpi kaikki miehet ja kaikki naiset paitsi yhden, eli $x\cdot(x-1)$, tästä saamme aikavaativuudeksi $O(x^2)$.
+
+\section{Gale--Shapley-algoritmi}
+Avioliittopelistä löytyy aina ainakin yksi vakaa pariutus. Gale--Shapley-algoritmi on yksinkertainen algoritmi, joka tuottaa vakaan parituksen avioliittopelille. Esittelemme algoritmin ja näytämme, että se päättyy aina.
+\begin{alg} \cite[p. 13]{gale62a} \label{gsalg}.
+\begin{enumerate}
+	\item Miehet aloittavat kosimalla mieltymyksiltään parasta naista.
+	\item Naiset hylkäävät kaikki paitsi parhaiten sijoitetun miehen.
+	\item Nainen ei hyväksy miestä vaan odottaa, jos parempi mies kosisi häntä
+	\item Hylätyt miehet kosivat mieltymyksiltään toisiksi parasta naista.
+	\item Naiset hylkäävät kaikki paitsi parhaan vaihtoehdon
+	\item Niin kauan kuin joku naisista ei ole saanut kosintaa, tulee hylkäyksiä ja uusia kosintoja. Lopuksi jokaista naista on kosittu, koska mies ei voi kuin kerran kosia samaa naista.
+	\item Viimeinen nainen on saanut kosinnan ja kosimisvaihe on päättynyt. Jokainen nainen hyväksyy langan päässä olevan kosijan
+\end{enumerate}
+\end{alg}
+
+
+\begin{lau}
+Algoritmi \ref{gsalg} pysähtyy kaikilla söytteillä
+\begin{proof}
+Mies ei voi jäädä ilman paria. Nainen voi hylätä vain jos hänellä on langan päässä mies (ensimäisellä kierroksella naisen on siis valittava paras vaihtoehto langan päähän, hän ei voi hylätä kaikkia kosijoita), ja kun hänellä on langan päässä mies hänestä ei tule missään vaiheessa vapaata algoritmin suorittamisessa.
+Jos viimeinen nainen jota kositaan hylkää miehen, tarkoittaisi tämä sitä, että jokaisella naisella olisi mies jo langan päässä. Mutta naisia ja miehiä on sama määrä ja yksikään mies ei voi olla kahden naisen langan päässä, niin jokainen miehistäkin pitäisi olla lankojen päässä, mikä on ristiriita.
+Jokainen iteraatio sisältää yhden kosinnan eikä yksikään mies kosi samaa naista kahta kertaa, joten iteraatioiden määrä on $n^2$.
+\end{proof}
+\end{lau}
+Algoritmi on siis päättyvä. Nyt siis päättyminen on selvää, mutta onko pariutukset aina vakaita?
+Todistetaan tämä.
+\begin{lau}
+Ovatko Algoritmin \ref{gsalg} tuottamat pariutukset aina vakaita?
+\begin{proof}\cite[p. 588]{gale62a}
+Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Maria hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä.
+\end{proof}
+\end{lau}
+Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
+Naisille optimaalisia tuloksia voidaan saada, kun osat vaihdetaan päittäin algoritmissä.
+
+\section{Vakaitten pariutusten joukko}
+Gale-Shapley algoritmi tuottaa meille yhden vakaan pariutuksen, mutta niitä voi olla enemmän.
+Olkoon meillä pariutus $\mu$ ja $\delta$. Henkilö $x$ suosii pariutusta $\mu$ pariutukseen $\delta$ nähden, jos $x$ suosii enemmän pariaan $\mu$ pariutuksessa kuin $\delta$ pariutuksessa. Henkilölle voi olla myös välinpitämätön pariutuksista, jos molemmat antavat hänelle yhtä hyvän parin.
+
+\begin{lau} \cite[p. 18]{gusfield1989stable}\label{lause-guspref}
+	Olkoon $\mu$ ja $\delta$ vakaita pariutuksia, ja oletetaan että $m$ ja $n$ ovat pari pariutuksessa $\mu$ muttei $\delta$:ssa. Nyt jompikumpi henkilöistä $m$ ja $n$ suosii pariutusta $\mu$ enemmän kuin pariutusta $\delta$ ja toinen pariutusta $\delta$ enemmän kuin pariutusta $\mu$.
+\end{lau}
+Sivuutamme todistuksen.
+Tästä seuraa nyt, se että jos $\mu$ ja $\delta$ ovat vakaita pariutuksia samalle avioliittopelille, niin henkilöiden määrä jotka suosivat pariutusta $\mu$ on sama kuin henkilöiden määrä jotka suosivat pariutusta $\delta$.
+Esitellään hieman myös notaatiota ylivalloille, tässä yhteydessä keskitymme miesylivaltaan.
+Vakaa pariutus $\mu$ dominoi vakaata pariutusta $\delta$, merkitään $\mu \preceq \delta$, jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\delta$.
+Jos meillä on yo. miesylivalta, se tarkoittaa että toiseen suuntaan meillä on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \delta$. Olkoon $\mathcal{M}$ kaikkien pelin vakaiden pariutusten joukko avioliittopelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko. Naisylivalta $(\mathcal{M}, \succeq)$ on kaksinkertainen osittain järjestetty joukko.
+
+\subsection{Vakaitten pariutusten määrä}
+Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä. Joten jos käytämme brute-force algoritmia löytääksemme kaikki vakaat pariutukset, joudumme tyytymään eksponentiaaliseen aikavaativuuteen.
+
+\begin{lem} \cite[p. 23]{gusfield1989stable} \label{lemma-koko}
+Olkoon meillä vakaat avioliittopelit kooltaan $m$ ja $n$ ja vastaavasti olkoon $x$ ja $y$ vakaiden pariutuksien määrä avioliittopeleissä. On olemassa peli jonka koko on $m \cdot n$, jolla on vähintään $\max(xy^m, yx^n)$ vakaata pariutusta.
+\end{lem}
+Lemman todistus löytyy lähteestä, sivuutamme sen tässä.
+
+\begin{lem}\cite[p. 24]{gusfield1989stable}
+Jokaiselle $n \geq 0$, missä $n$ on kahden potenssi, on olemassa vakaa avioliittopeli jonka koko on $n$ ja sisältää vähintään $2^{n-1}$ vakaata pariutusta
+\end{lem}
+\begin{proof}
+Todistus induktiolla. Kun pelin koko on 1, eli alkioiden lukumäärä on 1, niin $n = 2^0$ triviaali tapaus, eli vakaita pariutuksia on yksi. Oletetaan tulos todeksi tapauksessa $n = 2^k$, käytämme Lemmaa \ref{lemma-koko}, missä $i = 2$, avioliittopeli jonka koko on siis 2. Molemmat mahdolliset pariutukset ovat vakaita, joten $x = 2$ ja induktio-oletuksen mukaan $y = 2^{2^{k-1}}$. Joten Lemman \ref{lemma-koko} perusteella on olemassa peli jonka koko on $2 \cdot 2^k = 2^{k+1}$, jolla on vähintään $\max(2 \cdot (2^{2^{{k}}-1})^2, 2^{2^{k}-1} \cdot 2^{2^{k}}) = 2^{2^{k+1}-1})$ vakaata paritusta.
+\end{proof}
+
+\section{Erisuuruiset joukot}
+Aikaisemmat tulokset pätevät myös, kun meillä on kaksi joukkoa joiden alkioiden määrä on erisuuri. Oletamme, että henkilö haluaa olla ennemmin naimisissa kuin naimaton.
+Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m \in X$ ja nainen $n \in Y$ siten että
+
+\begin{enumerate}
+	\item $m$ ja $w$ eivät ole pari pariutuksessa $\mu$,
+	\item $m$ on joko ilman paria $\mu$:ssä tai suosii naista $w$ enemmän kuin pariaan pariutuksessa $\mu$, ja
+	\item $w$ on joko ilman paria $\mu$:ssä tai suosii miestä $m$ enemmän kuin pariaan pariutuksessa $\mu$.
+\end{enumerate}
+Jokainen vakaa pariutus koostuu $n_x$:stä järjestettyjä pareja, missä $n_x - n_y$ on naimattomien naisten määrä.
+
+\begin{lau}\cite[p. 26]{gusfield1989stable}.
+Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintään yksi vakaa pariutus, jossa pienemmän joukon kaikki alkiot saavat parin.
+\end{lau}
+
+\section{Parien kieltäminen}
+Jos henkilön on mahdollista ilmoittaa, että yksi tai useampi ei kelpaa hänelle vastakkaisen sukupuolen joukosta, on hänen mieltymyslistansa aito osajoukko vastakkaisen sukupuolen joukosta. Näinollen mies ja nainen voidaan pariuttaa ainoastaan jos he ovat hyväksyttäviä toisillensa.
+
+Tässä tapauksessa vakaa pariutus voi olla osittainen tarkoittaen että kaikkien henkilöiden ei tarvitse olla pariutettu, jotta pariutus olisi vakaa. Osittainen pariutus $\mu$ on epävakaa, jos on olemassa mies $m$ ja nainen $n$ siten että
+\begin{enumerate}
+	\item $m$ ja $n$ eivät ole pari pariutuksessa $\mu$, mutta molemmat hyväksyisivät toisensa,
+	\item $m$ on joko pariuttamaton tai suosii naista $n$ enemmän kuin hänen pariaan pariutuksessa $\mu$,
+	\item $n$ on joko pariuttamaton tai suosii miestä $m$ enemmän kuin hänen pariaan pariutuksessa $\mu$.
+\end{enumerate} 
+Mieltymykset voidaan myös laajentaa koskemaan pariutuksia, eli henkilö suosii pariutusta jossa hänellä on pari verratuna pariutukseen jossa hän jää ilman paria.
+
+\begin{lau}
+Avioliittopelissä, joka sallii parien kieltämisen on miehet ja naiset jaettu kahteen joukkoon -- niihin joilla on pari kaikissa pariutuksissa ja niihin joilla ei ole yhtään paria missään pariutuksessa.
+\end{lau}
+
+\begin{proof}\cite[p. 27]{gusfield1989stable}
+Olkoon kaksi eri vakaata pariutusta $\mu$ ja $\delta$, määrittelemme suunatun verkon $G = G(\mu, \delta)$, jossa solmu esittää yhtä henkilöä. Jokaiselle miehelle $m$ jolla on pari pariutuksessa $\mu$ on olemassa suunnattu kaari $m$:stä pariin $p_{\mu}(m)$. Ja jokaiselle naiselle $n$ jolla on pari pariutuksessa $\delta$ on olemassa suunnattu kaari $n$:stä pariin $p_{\delta}(n)$.
+Jokaisella solmulla on verkossa $G$ enintään yksi tuleva ja lähtevä kaari.
+
+Oletetaan nyt ristiriitaisesti, että $m$ on pariutettu naisen $n$ kanssa pariutuksessa $\mu$ muttei pariutuksessa $\delta$. On olemassa uniikki suunnaattu polku verkossa $G$ joka alkaa solmusta $m$ ja koska jokaisella solmulla on enintään yksi sisääntuleva kaari, ja $m$:llä on 0 sisääntulevaa kaarta, polku ei voi olla syklinen. Joten polun on päätyttävä mieheen joka on pariutettu $\delta$:ssa muttei $\mu$:ssa, eli $m$ suosii pariutusta $\delta$ ennemmin kuin pariutusta $\mu$, tai naiseen $n$ joka on pariutettu $\mu$:ssa muttei $\delta$:ssa $n$ suosii siis pariutusta $\mu$ ennemmin kuin pariutusta $\delta$.
+
+Mutta koska $m$ suosii pariutusta $\mu$ pariutuksen $\delta$ sijaan, seuraa Lauseen \ref{lause-guspref} mukaan, että $n$ suosii pariutusta $\delta$ pariutuksen $\mu$ sijaan, ja Lausetta \ref{lause-guspref} soveltamalla polkuun huomaamme, että jokainen mies suosii pariutusta $\mu$ ja jokainen nainen pariutusta $\delta$. Joten kahdesta mahdollisesta reitistä, jossa polku voisi päättyä johtaa molemmat ristiriitaan.
+\end{proof}
+
+
+\section{Sovellukset}
+\subsection{Elinluovutus}
+Alkuperäisessä sovelluksessa molemmat osapuolet ovat aktiivisia parin haun osalta. Elinluovutusten yhteydessä päätösten tekeminen on yksipuolista sillä ainoa asia joka vaikuttaa parien vakauteen on elimen yhteensopivuus vastaanottajalle. Meillä voi olla tilanne jossa $A$ haluaa luovuttaa elimen $A^{'}$:lle ja $B$ luovuttaa $B^{'}$:lle, mutta esim. eri verityyppien takia eivät voi luovuttaa toisilleen, voivat $A$ luovuttaa $B^{'}$:lle ja $B$ luovuttaa $A^{'}$:lle, jos ne ovat sopivia keskenään.
+
+Algoritmiä ja ongelmaa joudutaan kuitenkin hieman muokkaamaan tätä ongelmaa varten, jos mikään elin ei sovi vastaanottajalle pidetään häntä odotuslistalla kunnes sopiva löytyy. Jos meillä on siis parit $(A, A^{'}), (B, B^{'}), (C, C^{'})$, jotka haluavat luovuttaa toisillensa elimen, mutta eivät syystä tai toisesta voi, voimme tehdä vaihtosyklin parien välille. Suora vaihtosykli ei kelpaa, koska esimerkiksi $A$:n elin voi sopia $B^{'}$:lle, mutta $B$:n elin ei sovi kummallekkaan $A^{'}$ tai $C^{'}$:lle, jos näin tapahtuu asetetaan $A^{'}$ ja $C^{'}$ korkealla prioriteetillä jonotuslistaan.
+
+\subsection{Koulujen valinnat}
+Alkuperäisessä Gale--Shapleyn paperissa \cite{gale62a} viitattiin koulujen ja opiskelijoiden keskinäiseen pariutukseen ja niiden vakauteen. $n$ hakijaa on jaettava $m$ kouluun, missä $q_{i}$ on $i$:nnen koulun kiintiö. Opiskelija pistää koulut järjestykseen aloittaen suosikistaan. Koulut tekevät samoin ja järjestävät hakevat opiskelijat. Gale--Shapley-algoritmi ratkaisee tämän, mutta se tuottaa aina jommallekummalle optimoituja tuloksia, eli tilanteessa, jossa meillä on kaksi opiskelijaa ja kaksi koulua ja preferenssit menevät juuri päinvastoin, päädymme tilanteeseen jossa voi olla kaksi vakaata pariutusta, mutta toinen on optimoitu opiskelijalle ja toinen kouluille.
+
+\subsection{Lääketieteen opiskelijat ja opetussairaalat}
+Jo ennen Gale--Shapley-algoritmiä ja ongelman formalisointia amerikkalainen AAMC (Association of American Medical Colleges) ja AHA (American Hospital Association) käyttivät NIMP (National Intern Matching Program) pariutus algoritmiä, tätä käytetään vielä nykyäänkin opiskelijoiden ja sairaaloiden pariutuksessa \cite{roth84}. Tehtävänä on siis pariuttaa opiskelija opetussairaalaan hänen ja sairaalan preferenssien mukaan ja sellaisenaan se tuottaa sairaalalle optimoituja pariutuksia.
+
+Ennen algoritmin käyttöönottoa sairaalat värväsivät oppilaita vuosia ennen harjoittelun alkua, tällä oli muutamia negatiivisiä seurauksia. Sairaalat eivät tienneet opiskelijan menestystä ja hänen tasoaan, kun hänet oli värvätty ja epäpäteviä yksilöitä värvättiin eikä opiskelijoiden kiinnostukset vielä tarjouksen ajankohtana olleet selviä. Tämä aiheutti myös ruuhkaa, silä jos opiskelija hylkäsi tarjouksen tarkoitti se yleensä sitä, että sairaala ei ehtinyt tarjota paikkaa muille opiskelijoille. Sairaalat panivat käytäntöön määräajan johon mennessä opiskelijoiden oli vastattava, tämä puolestaan pakotti opiskelijat tekemään päätöksiä hätiköidysti ja saamatta tietää mitä muita tarjouksia he olisivat voineet saada.
+
+
+
+% --- Back matter ---
+%
+% bibtex is used to generate the bibliography. The babplain style
+% will generate numeric references (e.g. [1]) appropriate for theoretical
+% computer science. If you need alphanumeric references (e.g [Tur90]), use
+%
+% \bibliographystyle{babalpha-lf}
+%
+% instead.
+
+\bibliographystyle{babplain-lf}
+\bibliography{ref}
+
+
+\end{document}
