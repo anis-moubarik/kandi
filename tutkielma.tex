@@ -109,7 +109,7 @@
 % --- Front matter ---
 
 \maketitle        % title page
-
+\makeabstract
 \tableofcontents  % table of contents
 \newpage          % clear page after the table of contents
 
@@ -132,6 +132,7 @@ Olkooon $M$ \emph{miesten} joukko ja $N$ naisten joukko, missä $|M| = |N| = n$.
 
 Olkoon meillä $m_1, m_2, m_3 \in M$ ja $n_1, n_2, n_3 \in N$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys on vasemmalta oikealle laskevassa järjestyksessä, eli miehelle $m_1$ miellyttävin pari olisi $n_2$.
 \begin{table}[h!]
+\begin{center}
 	\begin{tabular}{ l | *{2}{c} r }
 	 &  \\
 	 \hline
@@ -140,6 +141,7 @@ Olkoon meillä $m_1, m_2, m_3 \in M$ ja $n_1, n_2, n_3 \in N$. Mieltymykset void
  	 $m_{3}$ & $n_{3}$ & $n_{1}$ & $n_{2}$ \\
 	\end{tabular}
 	\caption{Miesten mieltymykset}
+\end{center}
 \end{table}
 
 Mieltymyksiä voidaan myös kuvata transitiivisella relaatiolla $>$. Esimerkiksi miehen $m_1$ mieltymykset voidaan näyttää seuraavasti: $n_2 >_{m} n_1 >_{m} n_3$, relaatio on myös transitiivinen eli $n_2 >_{m} n_3$ pätee.
@@ -180,7 +182,7 @@ Avioliittopelistä löytyy aina ainakin yksi vakaa pariutus. Gale--Shapley-algor
 \begin{enumerate}
 	\item Miehet aloittavat kosimalla mieltymyksiltään parasta naista.
 	\item Naiset hylkäävät kaikki paitsi parhaiten sijoitetun miehen.
-	\item Nainen ei hyväksy miestä vaan odottaa, jos parempi mies kosisi häntä
+	\item Nainen ei hyväksy miestä vaan jättää miehen \emph{langan} päähän siltä varalta että parempi mies kosisi häntä
 	\item Hylätyt miehet kosivat mieltymyksiltään toisiksi parasta naista.
 	\item Naiset hylkäävät kaikki paitsi parhaan vaihtoehdon
 	\item Niin kauan kuin joku naisista ei ole saanut kosintaa, tulee hylkäyksiä ja uusia kosintoja. Lopuksi jokaista naista on kosittu, koska mies ei voi kuin kerran kosia samaa naista.
@@ -202,7 +204,7 @@ Todistetaan tämä.
 \begin{lau}
 Ovatko Algoritmin \ref{gsalg} tuottamat pariutukset aina vakaita?
 \begin{proof}\cite[p. 588]{gale62a}
-Oletetaan, että Matti ja Mari eivät ole pari, mutta Matti suosii Maria hänen oman parinsa yli. Matin on siis jossain vaiheessa peliä (algoritmiä) pitänyt kosia Maria ja Marin jossain vaiheessa hylätä Matti paremman miehen edestä. On siis selvää, että Mari suosii omaa aviomiestään Matin sijaan eikä epävakautta voi syntyä.
+Olkoon meillä mies $m$ ja nainen $n$ ja oletetaan, että he eivät ole pari pariutuksessa $\mu$. Oletetaan myös, että $n >_{m} p_{\mu}(m)$. Miehen $m$ on siis jossain vaiheessa algoritmiä kosia naista $n$ ja naisen $n$ on pitänyt jossain vaiheessa hylkää $m$ paremman miehen tieltä. On siis selvää, että $n$ suosii omaa pariaan pariutuksessa $\mu$ miehen $m$ sijaan, eikä epävakautta voi syntyä.
 \end{proof}
 \end{lau}
 Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
@@ -236,6 +238,34 @@ Jokaiselle $n \geq 0$, missä $n$ on kahden potenssi, on olemassa vakaa avioliit
 Todistus induktiolla. Kun pelin koko on 1, eli alkioiden lukumäärä on 1, niin $n = 2^0$ triviaali tapaus, eli vakaita pariutuksia on yksi. Oletetaan tulos todeksi tapauksessa $n = 2^k$, käytämme Lemmaa \ref{lemma-koko}, missä $i = 2$, avioliittopeli jonka koko on siis 2. Molemmat mahdolliset pariutukset ovat vakaita, joten $x = 2$ ja induktio-oletuksen mukaan $y = 2^{2^{k-1}}$. Joten Lemman \ref{lemma-koko} perusteella on olemassa peli jonka koko on $2 \cdot 2^k = 2^{k+1}$, jolla on vähintään $\max(2 \cdot (2^{2^{{k}}-1})^2, 2^{2^{k}-1} \cdot 2^{2^{k}}) = 2^{2^{k+1}-1})$ vakaata paritusta.
 \end{proof}
 
+\section{Laajennettu Gale--Shapley-algoritmi}
+Tämä algoritmi sieventää alkioiden mieltymyslistoja poistamalla pareja, jotka eivät kuulu mihinkään vakaaseen pariutukseen. Poistamalla pari $(m, n)$ tarkoitetaan sillä sitä että $n$ poistetaan miehen $m$ mieltymyslistalta ja $m$ naisen $n$ listalta.
+
+\begin{alg}\cite{gusfield1989stable}[p. 16]\label{alg2}
+	\begin{enumerate}
+		\item Alustetaan jokainen henkilö vapaaksi.
+		\item Niin kauan kuin joku mies $m$ on vapaa,
+		\item valitaan ensimmäinen nainen miehen listalta.
+		\item Jos nainen $n$ on jo "kihloissa" miehen $p$ kanssa, vapautetaan $p$ ja pariutetaan $m$ kihloihin naisen $n$ kanssa.
+		\item Poistetaan jokainen pari $(m^{'}, n)$, missä $m^{'}$ on $m$:n seuraaja $n$ mieltymyslistalla.
+	\end{enumerate}
+\end{alg}
+
+Tässä algoritmissä, kun mies kosii naista kosinta hyväksytään aina. Koska jos nainen $n$ on jo kihloissa jonkun miellyttävämmän miehen kanssa, kuin $m$ olisi pari $(m, n)$ poistettu.
+Algoritmi pysähtyy, kun jokainen on kihloissa. Huomaamme myös, että algoritmin lopettaessa jokainen mies on kihloissa listalla ensimmäisenä olevan naisen kanssa ja jokainen nainen taas kihloissa listalla viimeisenä olevan miehen kanssa.
+
+Kutsumme algoritmin tuottamaa mieltymyslistaa, jossa miehet kosivat, \emph{mies-orientoituneeksi Gale--Shapley listaksi} tai \emph{MGS-listaksi}. Vastaavasti, jos miesten ja naisten roolit algoritmissä vaihdetaan kutsutaan tuotettua listaa \emph{NGS-listaksi}. Lopuksi jos otamme henkilön MGS- ja NGS-listasta leikkauksen saamme GS-listan.
+
+\begin{lau}\cite{gusfield1989stable}[p. 16]
+	Annettulle avioliittopelille pätee, että
+	\begin{itemize}
+		\item kaikki vakaat pariutukset ovat GS-listassa,
+		\item Yksikään pari, joka ei ole GS-listalla ei voi estää pariutusta GS-listalta,
+		\item mies-optimaalisissa (vastaavasti nais-optimaalisissa) pariutuksissa jokainen mies on pariutettu ensimmäisen (vastaavasti viimeisen) naisen kanssa hänen GS-listalta ja jokainen nainen viimeisen (vastaavasti ensimmäisen) miehen kanssa naisen listalta.
+	\end{itemize}
+\end{lau}
+
+
 \section{Erisuuruiset joukot}
 Aikaisemmat tulokset pätevät myös, kun meillä on kaksi joukkoa joiden alkioiden määrä on erisuuri. Oletamme, että henkilö haluaa olla ennemmin naimisissa kuin naimaton.
 Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Pariutus $\mu$ on epävakaa, jos on olemassa mies $m \in X$ ja nainen $n \in Y$ siten että
@@ -248,8 +278,11 @@ Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Par
 Jokainen vakaa pariutus koostuu $n_x$:stä järjestettyjä pareja, missä $n_x - n_y$ on naimattomien naisten määrä.
 
 \begin{lau}\cite[p. 26]{gusfield1989stable}.
-Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintään yksi vakaa pariutus, jossa pienemmän joukon kaikki alkiot saavat parin.
+Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintään yksi vakaa pariutus, jossa pienemmän joukon kaikki alkiot saavat parin. Jokainen pienemmän joukon alkio on vakaassa pariutuksessa ja suuremman joukon alkiot on jaettu kahteen osajoukkoon, toisen osajoukon alkiot ovat vakaassa pariutuksessa ja toisen osajoukon alkiot eivät ole pariutuksessa ollenkaan.
 \end{lau}
+
+Voimme muokata algoritmia \ref{gsalg}. Jos meillä on $x$ määrä miehiä ja $y$ määrä naisia, ja $x > y$, muokataan algoritmin 6. kohtaa ja päätetään, kun $x$ määrä naisia on kosittu. Jos taas $x < y$, niin algoritmi toimii normaalisti.
+
 
 \section{Parien kieltäminen}
 Jos henkilön on mahdollista ilmoittaa, että yksi tai useampi ei kelpaa hänelle vastakkaisen sukupuolen joukosta, on hänen mieltymyslistansa aito osajoukko vastakkaisen sukupuolen joukosta. Näinollen mies ja nainen voidaan pariuttaa ainoastaan jos he ovat hyväksyttäviä toisillensa.
@@ -275,6 +308,14 @@ Oletetaan nyt ristiriitaisesti, että $m$ on pariutettu naisen $n$ kanssa pariut
 Mutta koska $m$ suosii pariutusta $\mu$ pariutuksen $\delta$ sijaan, seuraa Lauseen \ref{lause-guspref} mukaan, että $n$ suosii pariutusta $\delta$ pariutuksen $\mu$ sijaan, ja Lausetta \ref{lause-guspref} soveltamalla polkuun huomaamme, että jokainen mies suosii pariutusta $\mu$ ja jokainen nainen pariutusta $\delta$. Joten kahdesta mahdollisesta reitistä, jossa polku voisi päättyä johtaa molemmat ristiriitaan.
 \end{proof}
 
+\section{Parien välinpitämättömyys}
+Voidaan hyväksyä myös tilanteita, joissa alkioiden mieltymyslistat eivät ole tiukasti sijoitettjua, eli alkio voi pitää yhdestä alkiosta yhtä paljon kuin toisesta. Toisin sanoen alkiolle on yhdentekevää kumman parin kanssa hänet pariutetaan. Avataan vakauden määritelmää. Jos meillä on nainen ja mies, jotka eivät ole pari, mutta pitävät toisistaan enemmän/yhtäpaljon kuin omista pareistaan kyseisessä pariutuksessa, on pariutus epävakaa. Kutsutaan pariutusta tämän kriteerin perusteella \emph{super-vakaaksi} \cite{gusfield1989stable}. Tilanteessa jossa on olemassa täysi välinpitämättömyys emme voi löytää yhtään super-vakaata pariutusta.
+
+Toinen tapaus on vielä vapaamuotoisempi. Jos on olemassa mies ja nainen, jotka eivät ole pari, joista toinen pitää toisesta enemmän kuin omasta paristaan pariutuksessa ja toinen on vähintään välinpitämätön paristaan, on pariutus epävakaa. Kutsutaan pariutusta tämän kriteerin perusteella \emph{vahvasti-vakaaksi}.
+
+Laajennettua Gale--Shapley-algoritmia voidaan käyttää löytämään super- ja vahvasti-vakaita pariutuksia jokaiselle avioliittopelille, joka sallii välinpitämättömyyttä.
+
+Algoritmi toimii niin, että miehet kosivat naisia listaltaan ja kun törmäävät tilanteeseen jossa hänellä on kaksi tai enemmän naista listallaan, joista hän on neutraali ja he ovat tasoissa, kosii hän kaikkia naisia samanaikaisesti. Jos nainen saa kosinnan poistetaan kaikki huonommat parit naisen listalta ja nainen miesten listoilta. Nainen voi kuitenkin pitää montaa miestä kihloissa, jos he ovat naisen listalla tasoissa. Kosinta vaihe voi jättää miesten listat tyhjiksi, joka tarkoittaa sitä että super- tai vahvaa-pariutusta ei löytynyt. Muussa tapauksessa jokainen mies on kihloissa yhden tai useamman naisen kanssa.
 
 \section{Sovellukset}
 \subsection{Elinluovutus}
