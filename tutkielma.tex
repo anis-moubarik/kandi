@@ -220,8 +220,13 @@ Olkoon meillä pariutus $\mu$ ja $\delta$. Henkilö $x$ suosii pariutusta $\mu$ 
 Sivuutamme todistuksen.
 Tästä seuraa nyt, se että jos $\mu$ ja $\delta$ ovat vakaita pariutuksia samalle avioliittopelille, niin henkilöiden määrä jotka suosivat pariutusta $\mu$ on sama kuin henkilöiden määrä jotka suosivat pariutusta $\delta$.
 Esitellään hieman myös notaatiota ylivalloille, tässä yhteydessä keskitymme miesylivaltaan.
-Vakaa pariutus $\mu$ dominoi vakaata pariutusta $\delta$, merkitään $\mu \preceq \delta$, jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\delta$.
-Jos meillä on yo. miesylivalta, se tarkoittaa että toiseen suuntaan meillä on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \delta$. Olkoon $\mathcal{M}$ kaikkien pelin vakaiden pariutusten joukko avioliittopelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko. Naisylivalta $(\mathcal{M}, \succeq)$ on kaksinkertainen osittain järjestetty joukko.
+Vakaa pariutus $\mu$ dominoi vakaata pariutusta $\delta$,jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\delta$, merkitään sitä $\mu \preceq \delta$.
+Jos meillä on miesylivalta se tarkoittaa sitä, että naisten kosiessa on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \delta$. Olkoon $\mathcal{M}$ kaikkien pelin vakaiden pariutusten joukko avioliittopelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko.  Merkitsemme sitä seuraavasti $(\mathcal{M}, \preceq)$.
+Seuraava korollaari seuraa teoreemasta \ref{lause-guspref}
+
+\begin{kor}
+Miehen näkökulmasta pariutus $\mu$ hallitsee pariutusta $\delta$, joss pariutus $\delta$ hallitsee pariutusta $\mu$ naisten näkökulmasta. \emph{Nais-orientoitunut} ylivalta relaatio on käänteinen, merkinnällä $\succeq$, mies-orientoituneeseen nähden. Tämä on myös osittain järjestetty joukko ja se merkitään seuraavasti $(\mathcal{M}, \succeq)$. 
+\end{kor}
 
 \subsection{Vakaitten pariutusten määrä}
 Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä. Joten jos käytämme brute-force algoritmia löytääksemme kaikki vakaat pariutukset, joudumme tyytymään eksponentiaaliseen aikavaativuuteen.
