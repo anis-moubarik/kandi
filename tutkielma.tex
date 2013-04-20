@@ -207,7 +207,7 @@ Ovatko Algoritmin \ref{gsalg} tuottamat pariutukset aina vakaita?
 Olkoon meillä mies $m$ ja nainen $n$ ja oletetaan, että he eivät ole pari pariutuksessa $\mu$. Oletetaan myös, että $n >_{m} p_{\mu}(m)$. Miehen $m$ on siis jossain vaiheessa algoritmiä kosia naista $n$ ja naisen $n$ on pitänyt jossain vaiheessa hylkää $m$ paremman miehen tieltä. On siis selvää, että $n$ suosii omaa pariaan pariutuksessa $\mu$ miehen $m$ sijaan, eikä epävakautta voi syntyä.
 \end{proof}
 \end{lau}
-Algoritmi tuottaa tälläisenään optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
+Algoritmi tuottaa tälläisenään miehelle optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
 Naisille optimaalisia tuloksia voidaan saada, kun osat vaihdetaan päittäin algoritmissä.
 
 \section{Vakaitten pariutusten joukko}
@@ -334,9 +334,27 @@ Alkuperäisessä Gale--Shapleyn paperissa \cite{gale62a} viitattiin koulujen ja 
 \subsection{Lääketieteen opiskelijat ja opetussairaalat}
 Jo ennen Gale--Shapley-algoritmiä ja ongelman formalisointia amerikkalainen AAMC (Association of American Medical Colleges) ja AHA (American Hospital Association) käyttivät NIMP (National Intern Matching Program) pariutus algoritmiä, tätä käytetään vielä nykyäänkin opiskelijoiden ja sairaaloiden pariutuksessa \cite{roth84}. Tehtävänä on siis pariuttaa opiskelija opetussairaalaan hänen ja sairaalan preferenssien mukaan ja sellaisenaan se tuottaa sairaalalle optimoituja pariutuksia.
 
-Ennen algoritmin käyttöönottoa sairaalat värväsivät oppilaita vuosia ennen harjoittelun alkua, tällä oli muutamia negatiivisiä seurauksia. Sairaalat eivät tienneet opiskelijan menestystä ja hänen tasoaan, kun hänet oli värvätty ja epäpäteviä yksilöitä värvättiin eikä opiskelijoiden kiinnostukset vielä tarjouksen ajankohtana olleet selviä. Tämä aiheutti myös ruuhkaa, silä jos opiskelija hylkäsi tarjouksen tarkoitti se yleensä sitä, että sairaala ei ehtinyt tarjota paikkaa muille opiskelijoille. Sairaalat panivat käytäntöön määräajan johon mennessä opiskelijoiden oli vastattava, tämä puolestaan pakotti opiskelijat tekemään päätöksiä hätiköidysti ja saamatta tietää mitä muita tarjouksia he olisivat voineet saada.
+Tätä tilannetta voidaan mallintaa usean-agentin vangin dilemmaksi \cite{roth84}, jossa sairaalat kilpailivat oppilaista ja yrittivät saada heitä harjoittelijoiksi yhä aikaisemmin. Pahimmassa tapauksessa oppilaat olivat jaettu opetussairaaloille jopa kaksi vuotta ennen harjoittelun alkua. Tästä seurasi sitä, että sairaalat eivät tienneet oppilaiden kiinnostuksia ja opiskelumenestystä, joten sairaala-oppilas pariutuksissa nähtiin hyvin paljon epävakautta, missä oppilas ei halunnut harjoitella kyseisessä sairaalassa tai sairaala ei katsonut oppilaan olevan tarpeeksi hyvä sairaalalle. Tämä valintamenettely aiheutti myös ruuhkaa, sillä jos opiskelija sai paikan esimerkiksi kolmanneksi sijoitetultaan sairaalalta jai sai tiedon toiseksi sijoitetulta, että hänet on jätetty jonotuslistalle, oli hän yleensä halukas odottamaan tuota paikkaa. Oppilaat jotka hyväksyivät saamansa paikan pettyivät, jos sairaala jonka odotuslistalla he olivat tarjosivat hänelle myöhemmin paikkaa, ja sairaalat olivat tyytymättömiä, jos oppilas kieltäytyi paikasta viime hetkellä paremman paikan tarjouksen tullessa.
 
+Vuoteen 1950 mennessä huomattiin, että pariutuksen viimeisessä vaiheessa oli vakavia ongelmia, juurikin pariutusten epävakauden takia. Sairaalat ja oppilaat olivat tyytymättömiä omiin pareihinsa ja valinnoissa kohdistui suuri paine oppilaalle. Ratkaisuksi ehdotettiin pariutus algoritmiä, joka otti huomioon sairaalan ja oppilaan mieltymykset, ja jo vuonna 1950 tehtiin kokeilu, jossa varsinaista pariutusta ei tehty \cite{roth84}, mutta jossa oppilaat ja sairaalat antoivat mieltymyksensä, kuin olisivat päättäneet lopullisia pareja. Vuodesta 1952 lähtien algoritmia käytetään vapaaehtoisessa muodossa, sairaalat ja oppilaat ovat vapaita osallistumaan tähän pariutukseen tai löytämään harjoittelupaikkoja/harjoittelijaa omillaan. Vaikka kyseinen markkina on kokenut muutoksia tuottaa \emph{NIMP-algoritmi} hyviä tuloksia.
+Jokainen sairaala luo listan hakijoista mieltymystensä mukaan, samoin oppilaat luovat listan haetuista sairaaloista omien mieltymyksien mukaan. Nämä listat prosessoidaan lista-algoritmillä jonka jälkeen ne jatkavat alustava pari ja päivitys -vaiheeseen.
 
+$1:1$ vaihe on vaihe jossa pariutetaan opiskelija ja sairaala, jos ne ovat toistensa listojen kärjessä. $2:1$ vaihe tarkoittaa vaihetta jossa opiskelija pariutetaan listallaan toisena olevaan sairaalaan, jos opiskelija on ensimmäisenä sairaalan listalla. $k:1$ vaihe on vaihe jossa jossa opiskelija pariutetaan listallaan $k$:nnen sairaalan kanssa, jos opiskelija on ensimmäisenä sairaalan listalla.
+\begin{alg} (NIMP-algoritmi) \cite{roth84} \label{nimp}
+	\begin{enumerate}
+		\item Onko yhtään uusia $1:1$ pareja? Jos on niin tehdään näistä alustavia parejaj a aloitetaan algoritmi alusta, muuten jatketaan.
+		\item Onko uusia $2:1$ pareja? Jos on niin poistetaan opiskelijan listalta kaikki huonommin listatut sairaalat ja aloitetaan algoritmi alusta, muuten jatketaan.
+		\item Onko uusia $k:1$ pareja? Jos on niin poistetaan alustavasti pariutetut opiskelijat sairaaloiden listalta, jotka sairaalat listasivat alemmaksi kuin heidän nykyisen alustavan parin ja aloitetaan algoritmi alusta, muuten jatketaan.
+		\item Onko uusia $n:1$ pareja, missä n on maksimi määrä sairaaloita opiskelijan listalla. Jos on niin aloitetaan algoritmi alusta ja aloitetaan algoritmi alusta, muuten jatketaan.
+		\item Jos uusia pareja ei löydy enää mistään vaiheesta on algoritmi päättynyt ja opiskelijat ovat pariutettu vakaasti sairaaloiden kanssa.
+	\end{enumerate}
+\end{alg}
+\begin{figure}[h!]
+\caption{Vuokaavio Algoritmistä \ref{nimp}}
+\centering
+	\includegraphics[scale=0.5]{NIMP}
+\end{figure}
+Verrattuna Gale--Shapley-algoritmiin toimintaperiaate on hyvin erilainen, mutta molemmat tuottavat vakaita pariutuksia. Algoritmin \ref{nimp} pariutuksien vakauden todistus löytyy lähteestä ja se sivuutetaan tässä.
 
 % --- Back matter ---
 %
