@@ -33,6 +33,7 @@
 \usepackage[pdftex,hidelinks]{hyperref}
 \usepackage{algpseudocode}
 \usepackage{float}
+\usepackage{subcaption}
 
 % Automatically set the PDF metadata fields
 \makeatletter
@@ -135,14 +136,20 @@ Peliteoria tulee esille, kun joukkojen alkiot vääristelevät mieltymyksiään.
 \section{Vakaat pariutukset}
 Olkooon $M$ \emph{miesten} joukko ja $N$ naisten joukko, missä $|M| = |N| = n$. Avioliitosta tai parista puhuttaessa tarkoitamme paria $(m, n) \in M \times N$. Avioliittopelissä jokaisella joukkojen alkiolla on mieltymykset toisen joukon alkioista parhaimmasta kumppanista huonoinpaan.
 
-\begin{figure}[h!]
-\caption{Yksi mahdollinen pari joukoista $M$ ja $N$}
-\centering
-	\includegraphics[scale=1.2]{paritutk}
+\begin{figure}[t]
+	\begin{subfigure}{.6\textwidth}
+	\includegraphics[scale=0.6]{paritutk}
+	\caption{Yksi mahdollinen pari joukoista $M$ ja $N$}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+	\includegraphics[scale=0.6]{vakaatutk}\label{epävakaa}
+	\caption{Kuva epävakautta aiheuttavasta kaksikosta}
+	\end{subfigure}
 \end{figure}
 
-Olkoon meillä $m_1, m_2, m_3 \in M$ ja $n_1, n_2, n_3 \in N$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys on vasemmalta oikealle laskevassa järjestyksessä, eli miehelle $m_1$ miellyttävin pari olisi $n_2$.
-\begin{table}[h!]
+
+Olkoon $M = {m_1, m_2, m_3}$ ja $N = {n_1, n_2, n_3}$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys taulukossa \ref{mieltymyksettaul} on vasemmalta oikealle laskevassa järjestyksessä, eli miehelle $m_1$ miellyttävin pari olisi $n_2$. Henkilön mieltymyksia kuvaavaa järjestystä kutsutaan mieltymyslistaksi (\emph{preference list}), jossa toisen joukon alkiot ovat mieltymysjärjestyksessä.
+\begin{table}[t]\label{mieltymyksettaul}
 \begin{center}
 	\begin{tabular}{ l | *{2}{c} r }
 	 &  \\
@@ -155,7 +162,7 @@ Olkoon meillä $m_1, m_2, m_3 \in M$ ja $n_1, n_2, n_3 \in N$. Mieltymykset void
 \end{center}
 \end{table}
 
-Mieltymyksiä voidaan myös kuvata transitiivisella relaatiolla $>$. Esimerkiksi miehen $m_1$ mieltymykset voidaan näyttää seuraavasti: $n_2 >_{m} n_1 >_{m} n_3$, relaatio on myös transitiivinen eli $n_2 >_{m} n_3$ pätee.
+Mieltymyksiä voidaan myös kuvata transitiivisella relaatiolla $>$. Esimerkiksi miehen $m_1$ mieltymykset voidaan esittää seuraavasti: $n_2 >_{m} n_1 >_{m} n_3$, relaatio on myös transitiivinen eli $n_2 >_{m} n_3$ pätee.
 
 Pariutus $\mu$ on joukko $\mu \subseteq M \times N$,joka tulkittuna funktioksi on  $\mu : M \mapsto N$. Alkion $m$ paria pariutuksessa $\mu$ merkitään seuraavasti $p_{\mu}(m)$.
 
@@ -165,11 +172,7 @@ Pariutus $\mu$ on \emph{vakaa}, jos ei ole olemassa kaksikkoa $m_1$ja  $n_2$, jo
 	\item $n_2 >_{m_{1}} p_{\mu}(m_1)$, ja
 	\item $m_1 >_{n_{2}} p_{\mu}(n_2)$
 \end{enumerate}
-\begin{figure}[h!]
-\caption{Kuva epävakautta aiheuttavasta kaksikosta}
-\centering
-	\includegraphics[scale=1.2]{vakaatutk}\label{epävakaa}
-\end{figure}
+
 
 Kuvassa \ref{epävakaa} meillä on pariutus, jossa on kaksi paria. Ensimmäisen parin nainen ja toisen parin mies pitävät toisistaan enemmän kuin omista pareistaan ja tämä aiheuttaa epävakautta.
 
@@ -235,25 +238,66 @@ Olkoon meillä pariutus $\mu$ ja $\delta$. Henkilö $x$ suosii pariutusta $\mu$ 
 
 \begin{lau} \cite[p. 18]{gusfield1989stable}\label{lause-guspref}
 	Olkoon $\mu$ ja $\delta$ vakaita pariutuksia, ja oletetaan että $m$ ja $n$ ovat pari pariutuksessa $\mu$ muttei $\delta$:ssa. Nyt jompikumpi henkilöistä $m$ ja $n$ suosii pariutusta $\mu$ enemmän kuin pariutusta $\delta$ ja toinen pariutusta $\delta$ enemmän kuin pariutusta $\mu$.
-\end{lau}
-Sivuutamme todistuksen.
-Tästä seuraa nyt, se että jos $\mu$ ja $\delta$ ovat vakaita pariutuksia samalle avioliittopelille, niin henkilöiden määrä jotka suosivat pariutusta $\mu$ on sama kuin henkilöiden määrä jotka suosivat pariutusta $\delta$.
-Esitellään hieman myös notaatiota ylivalloille, tässä yhteydessä keskitymme miesylivaltaan.
-Vakaa pariutus $\mu$ dominoi vakaata pariutusta $\delta$,jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\delta$, merkitään sitä $\mu \preceq \delta$.
-Jos meillä on miesylivalta se tarkoittaa sitä, että naisten kosiessa on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \delta$. Olkoon $\mathcal{M}$ kaikkien pelin vakaiden pariutusten joukko avioliittopelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko.  Merkitsemme sitä seuraavasti $(\mathcal{M}, \preceq)$.
-Seuraava korollaari seuraa teoreemasta \ref{lause-guspref}
+\begin{proof} \cite[s. 18]{gusfield1989stable}
+Olkoon $\mathcal{X}$ ja $\mathcal{Y}$ naisten ja miesten joukot jotka pitävät pariutusta $\mu$ parempana, kuin pariutusta $\delta$. Vastaavasti joukot $\mathcal{X}'$ ja $\mathcal{Y}'$ pitävät pariutusta $\delta$ parempana, kuin pariutusta $\mu$.
 
-\begin{kor}
+Pariutuksessa $\mu$ ei voi olla paria $(m, n)$ missä $m \in \mathcal{X}$ ja $n \in \mathcal{Y}$, koska tämä pari estäisi pariutuksen $\delta$. Joten jokaisella miehellä joukossa $\mathcal{X}$ on $\mu$-pari (\emph{$\mu$-partner}) joukosta $\mathcal{Y'}$, näin ollen $|\mathcal{X}| \leq |\mathcal{Y'}|$.
+
+Samoin pariutuksessa $\delta$ ei voi olla paria $(m, n)$ missä $m \in \mathcal{X}'$ ja $n \in \mathcal{Y}'$, koska tämä pari estäisi pariutuksen $\mu$. Joten jokaisella miehellä joukossa $\mathcal{X}'$ on $\delta$-pari joukosta $\mathcal{Y}$, näin ollen $|\mathcal{X}'| \leq |\mathcal{Y}|$.
+
+Huomataan, että $|\mathcal{X}| + |\mathcal{X}'| = |\mathcal{Y}| + |\mathcal{Y}'|$, koska vasen puoli on miesten lukumäärä ja oikea puoli naisten lukumäärä, joilla en eri parit kyseisissä pariutuksissa. Tästä seuraa $|\mathcal{X}'| = |\mathcal{Y}|$ ja $|\mathcal{X}| = |\mathcal{Y}'|$. Näin ollen jokaisella miehellä joukossa $\mathcal{X}'$ on $\mu$-pari joukosta $\mathcal{Y}$, ja koska jokaisella miehellä joukossa $\mathcal{X}$ on $\mu$-pari joukosta $\mathcal{Y}'$ lemma \ref{lause-guspref} pitää paikkansa.
+\end{proof}
+\end{lau}
+
+Tästä seuraa nyt korollaari \ref{eqkor}.
+
+\begin{kor}\cite[s. 18]{gusfield1989stable}\label{eqkor}
+Jos $\mu$ ja $\delta$ ovat vakaita pariutuksia samalle avioliittopelille, niin henkilöiden määrä jotka suosivat pariutusta $\mu$ on sama kuin henkilöiden määrä jotka suosivat pariutusta $\delta$.
+\end{kor}
+
+Esitellään hieman myös notaatiota (mies-orientoitunut) ylivalloille,  $\mu$ dominoi vakaata pariutusta $\delta$,jos jokainen mies saa vähintään yhtä hyvän parin pariutuksessa $\mu$ kuin $\delta$, merkitään sitä $\mu \preceq \delta$.
+Jos meillä on miesylivalta se tarkoittaa sitä, että naisten kosiessa on oltava naisylivalta, joka merkitään seuraavasti $\mu \succeq \delta$. Olkoon $\mathcal{M}$ kaikkien pelin vakaiden pariutusten joukko avioliittopelissä. $(\mathcal{M}, \preceq)$ on osittain järjestetty joukko.
+Nais-orientoitunut ylivalta voidaan myös määritellä ja seuraava korollaari seuraakin lauseesta \ref{lause-guspref}.
+
+\begin{kor}\cite[s. 19]{gusfield1989stable}
 Miehen näkökulmasta pariutus $\mu$ hallitsee pariutusta $\delta$, joss pariutus $\delta$ hallitsee pariutusta $\mu$ naisten näkökulmasta. \emph{Nais-orientoitunut} ylivalta relaatio on käänteinen, merkinnällä $\succeq$, mies-orientoituneeseen nähden. Tämä on myös osittain järjestetty joukko ja se merkitään seuraavasti $(\mathcal{M}, \succeq)$. 
 \end{kor}
 
 \subsection{Vakaitten pariutusten määrä}
-Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä. Joten jos käytämme brute-force algoritmia löytääksemme kaikki vakaat pariutukset, joudumme tyytymään eksponentiaaliseen aikavaativuuteen.
+Haluamme nyt näyttää, että vakaita pariutuksia on eksponentiaalinen määrä. Joten jos käytämme brute-force-algoritmia löytääksemme kaikki vakaat pariutukset, joudumme tyytymään eksponentiaaliseen aikavaativuuteen.
 
-\begin{lem} \cite[p. 23]{gusfield1989stable} \label{lemma-koko}
+\begin{lem} \cite[s. 23]{gusfield1989stable} \label{lemma-koko}
 Olkoon meillä vakaat avioliittopelit kooltaan $m$ ja $n$ ja vastaavasti olkoon $x$ ja $y$ vakaiden pariutuksien määrä avioliittopeleissä. On olemassa peli jonka koko on $m \cdot n$, jolla on vähintään $\max(xy^m, yx^n)$ vakaata pariutusta.
+
+\begin{proof}\cite[s. 23]{gusfield1989stable}
+Merkitään miehiä ja naisia lemman \ref{lemma-koko} avioliittopeleissä seuraavasti, $a_1,...,a_{m}, c_1,...,c_{m}$ ja $b_1,...,b_{n}, d_1,...,d_{n}$. Tarkistellaan $mn$ kokoista peliä, missä
+\begin{enumerate}
+\item miehet on merkitty seuraavasti $(a_i,b_j), i = 1,...,m, j = 1,...,n$,
+\item naiset on merkitty seuraavasti $(c_i,d_j), i = 1,...,m, j = 1,...,n$,
+\item mies $(a_i, b_j)$ suosii naista $(c_k, d_l)$ enemmän kuin naista $(c_k',d_l')$, jos $b_j$ suosii enemmän naista $d_l$ kuin naista $d_{l'}$, tai $l = l'$ ja $a_i$ suosii naista $c_k$ enemmän kuin naista $c_{k'}$,
+\item nainen $(c_i, d_j)$ suosii miestä $(a_k, b_l)$ enemmän kuin miestä $(a_{k'}, b_{l'})$, jos $d_j$ suosii miestä $b_l$ enemmän kuin miestä $b_{l'}$, tai jos $l = l'$ ja $c_i$ suosii miestä $a_k$ enemmän kuin miestä $a_{k'}$.
+\end{enumerate}
+
+Olkoon $\mu_{1},...,\mu_{n}$ mikä tahansa sarja vakaita pariutuksia avioliittopelissä, jonka koko on $m$, ja olkoon $\mu$ mikä tahansa vakaa pariutus avioliittopelissä, jonka koko on $n$. Mahdollisten pariutusten määrä pariutuksille $\mu_{1},...,\mu_{n}$ ja $\mu$ on $yx^n$. Väitämme, että kuvaus
+
+$(a_i, b_j) \longrightarrow (p_{\mu_{j}}(a_i),p_{\mu}(b_j))$
+
+on vakaa pariutus yhdistetyssä avioliittopelissä.
+
+Tämä kuvaus on pariutus , koska molemmat, $\mu_j$ ja $\mu$ ovat pariutuksia. Oletetaan, että tässä pariutuksessa on seuraava estepari $((a,b),(c,d))$. Nyt seuraavista ehdoista täytyy olla voimassa joko 1. ja 2. tai 3. ja 4.
+
+\begin{enumerate}
+	\item $b$ suosii enemmän henkilö $d$ kuin $p_\mu(b)$,
+	\item $d = p_\mu(b)$ ja $a$ suosii enemmän henkilöä $c$ kuin $p_{\mu_{j}}(a)$,
+	\item $d$ suosii enemmän henkilöä $b$ kuin $p_\mu(d)$,
+	\item $b = p_\mu(d)$ ja $c$ suosii enemmän henkilöä $a$ kuin $p_{\mu_{j}}(c)$.
+\end{enumerate}
+
+Neljästä mahdollisesta kombinaatiosta, kombinaatio ehdoilla 1 ja 3 on esteenä pariutuksen $\mu$ vakaudelle, kombinaatio ehdoilla 2 ja 4 on esteenä pariutuksen $\mu_j$ vakaudelle ja muut kombinaatiot ovat yhteensopimattomia.
+
+Näin ollen väittämämme on oikeutettu, ja olemme näyttäneet avioliittopelin missä on vähintään $yx^n$ vakaata pariutusta. Samalla tavoin, vaihtamalla rooleja alkuperäisissä avioliittopeleissä, vahvistetaan vastaava tulos määrälle $xy^m$.
+\end{proof}
 \end{lem}
-Lemman todistus löytyy lähteestä, sivuutamme sen tässä.
 
 \begin{lem}\cite[p. 24]{gusfield1989stable}
 Jokaiselle $n \geq 0$, missä $n$ on kahden potenssi, on olemassa vakaa avioliittopeli jonka koko on $n$ ja sisältää vähintään $2^{n-1}$ vakaata pariutusta
@@ -263,7 +307,7 @@ Todistus induktiolla. Kun pelin koko on 1, eli alkioiden lukumäärä on 1, niin
 \end{proof}
 
 \section{Laajennettu Gale--Shapley-algoritmi}
-Tämä algoritmi sieventää alkioiden mieltymyslistoja poistamalla pareja, jotka eivät kuulu mihinkään vakaaseen pariutukseen. Poistamalla pari $(m, n)$ tarkoitetaan sillä sitä että $n$ poistetaan miehen $m$ mieltymyslistalta (\emph{preference list}) ja $m$ naisen $n$ listalta.
+Tämä algoritmi sieventää alkioiden mieltymyslistoja poistamalla pareja, jotka eivät kuulu mihinkään vakaaseen pariutukseen. Poistamalla pari $(m, n)$ tarkoitetaan sillä sitä että $n$ poistetaan miehen $m$ mieltymyslistalta ja $m$ naisen $n$ listalta.
 
 \begin{alg}\cite{gusfield1989stable}[p. 16]\label{alg2}
 	\begin{enumerate}
@@ -341,13 +385,10 @@ Laajennettua Gale--Shapley-algoritmia voidaan käyttää löytämään super- ja
 
 Algoritmi toimii niin, että miehet kosivat naisia listaltaan ja kun törmäävät tilanteeseen jossa hänellä on kaksi tai enemmän naista listallaan, joista hän on neutraali ja he ovat tasoissa, kosii hän kaikkia naisia samanaikaisesti. Jos nainen saa kosinnan poistetaan kaikki huonommat parit naisen listalta ja nainen miesten listoilta. Nainen voi kuitenkin pitää montaa miestä kihloissa, jos he ovat naisen listalla tasoissa. Kosinta vaihe voi jättää miesten listat tyhjiksi, joka tarkoittaa sitä että super- tai vahvaa-pariutusta ei löytynyt. Muussa tapauksessa jokainen mies on kihloissa yhden tai useamman naisen kanssa.
 
-\section{Sovellukset}
-\subsection{Elinluovutus}
-Alkuperäisessä sovelluksessa molemmat osapuolet ovat aktiivisia parin haun osalta. Elinluovutusten yhteydessä päätösten tekeminen on yksipuolista sillä ainoa asia joka vaikuttaa parien vakauteen on elimen yhteensopivuus vastaanottajalle. Voi olla tilanne jossa $A$ haluaa luovuttaa elimen $A^{'}$:lle ja $B$ luovuttaa $B^{'}$:lle, mutta esim. eri verityyppien takia eivät voi luovuttaa toisilleen, voivat $A$ luovuttaa $B^{'}$:lle ja $B$ luovuttaa $A^{'}$:lle, jos ne ovat sopivia keskenään. Tästä syntyy eräänlaisia ketjuja tai \emph{syklejä} joilla saamme jokaiselle osallistuvalle elimen ja näinollen lyhennettyä elinjonotusta muille potilaille.
+\section{Vakaa huonetoveri -ongelma}
+Vakaa huonetoveri -ongelma (\emph{Stable Roommate Problem}) on yleistetty vakaa avioliitto -ongelma, missä on vain yksi joukko, josta jokainen henkilö pistää toisensa mieltymys järjestykseen. Mieltymysten perusteella tehdään pariutukset, kuten vakaa avioliitto -ongelmassa. Vakaa huonetoveri -ongelmaa käytetään elinluovutuksissa, joista puhutaan myöhemmin omassa kappaleessa.
 
-Algoritmiä ja ongelmaa joudutaan kuitenkin hieman muokkaamaan tätä ongelmaa varten, jos mikään elin ei sovi vastaanottajalle pidetään häntä odotuslistalla kunnes sopiva löytyy. Jos meillä on siis parit $(A, A^{'}), (B, B^{'}), (C, C^{'})$, jotka haluavat luovuttaa toisillensa elimen, mutta eivät syystä tai toisesta voi, voimme tehdä vaihtosyklin parien välille. Suora vaihtosykli ei aina kelpaa, koska esimerkiksi $A$:n elin voi sopia $B^{'}$:lle, mutta $B$:n elin ei sovi kummallekkaan $A^{'}$ tai $C^{'}$:lle, jos näin tapahtuu asetetaan $A^{'}$ ja $C^{'}$ korkealla prioriteetillä jonotuslistaan. Elinluovutus on hieman mukautettu tapaus vakaasta huonetoveri -ongelmasta (\emph{stable roommate problem}), ja käymme sen nopeasti läpi tässä.
-
-Pariutus on tässäkin tapauksessa epävakaa, jos on olemassa kaksi henkilöä jotka olisivat mielummin keskenään yhdessä kuin omien pariensa kanssa. Käytämme parien notaatiossa aaltosulkuja tavallisten sulkujen sijaan, seuraavasti jos $x$ ja $y$ ovat parit niin sitä merkitään näin $\{x, y\}$. Suurin ero tavalliseen vakaa avioliitto -ongelmaan on se, että vakaa huonetoveri -ongelmassa voi olla tilanteita joissa ei ole ainuttakaan vakaata pariutusta.
+Pariutus on tässäkin tapauksessa epävakaa, jos on olemassa kaksi henkilöä jotka olisivat mielummin keskenään yhdessä kuin omien pariensa kanssa. Käytämme parien notaatiossa aaltosulkuja tavallisten sulkujen sijaan, seuraavasti jos $x$ ja $y$ ovat parit niin sitä merkitään näin $\{x, y\}$. Koska parit eivät ole järjestyksessä merkitään pareja tässä tapauksessa aaltosuluilla, eikä tavallisilla suluilla niinkuin alkuperäisessä vakaa avioliitto -ongelmassa \cite[s. 163]{gusfield1989stable} .Suurin ero tavalliseen vakaa avioliitto -ongelmaan on se, että vakaa huonetoveri -ongelmassa voi olla tilanteita joissa ei ole ainuttakaan vakaata pariutusta.
 
 \begin{table}[H]\label{room-table}
 \begin{center}
@@ -359,25 +400,32 @@ Pariutus on tässäkin tapauksessa epävakaa, jos on olemassa kaksi henkilöä j
  	 $3$ & $2$ & $1$ & $4$ \\
  	 $4$ & &mielivaltainen
 	\end{tabular}
-	\caption{Huonetoveri ongelman mieltymykset}\cite[p, 164]{gusfield1989stable}
+	\caption{Huonetoveri ongelman mieltymykset \cite[s. 164]{gusfield1989stable}}
 \end{center}
 \end{table}
 
 Taulukko \ref{room-table} edustaa peliä jossa ei ole yhtään vakaata pariutusta. Kolmessa mahdollisessa pariutuksessa meillä on vastaavasti parit $\{1,4\}$, $\{2,4\}$, $\{3,4\}$ ja nämä ovat vastaavasti estetty seuraavilla pareilla: $\{1,2\}$, $\{2,3\}$, $\{3,1\}$.
 
-Käydään algoritmin toiminta yleisellä tasolla läpi. Merkintöjä poistetaan progressiivisesti läpi mieltymyslistoilta kunnes jompikumpi päättävistä ehdoista toteutuu. \cite[p, 165]{gusfield1989stable}
+Käydään algoritmin toiminta yleisellä tasolla läpi. Merkintöjä poistetaan etenevästi mieltymyslistoilta kunnes jompikumpi päättävistä ehdoista toteutuu. \cite[p, 165]{gusfield1989stable}
+\begin{alg}\label{srp1}
 \begin{enumerate}
 	\item Jokin mieltymyslistoista tyhjenee tarkoittaen, että yhtäkään vakaata pariutusta ei ole kyseiselle pelille, tai
 	\item jokainen lista on sievennetty yhteen merkintään, missä tapauksessa nämä merkinnät koostavat vakaan pariutuksen.
 \end{enumerate}
+\end{alg}
 
-Esimerkiksi voidaan ottaa munuaisenluovutukset. Munuaistenluovutuksissa on olemassa kaksi lähdettä munuaisille siirtoa varten:
+\section{Sovellukset}
+\subsection{Elinluovutus}
+Alkuperäisessä sovelluksessa molemmat osapuolet ovat aktiivisia parin haun osalta. Elinluovutusten yhteydessä päätösten tekeminen on yksipuolista sillä ainoa asia joka vaikuttaa parien vakauteen on elimen yhteensopivuus vastaanottajalle. Voi olla tilanne jossa $A$ haluaa luovuttaa elimen $A^{'}$:lle ja $B$ luovuttaa $B^{'}$:lle, mutta esim. eri verityyppien takia eivät voi luovuttaa toisilleen, voivat $A$ luovuttaa $B^{'}$:lle ja $B$ luovuttaa $A^{'}$:lle, jos ne ovat sopivia keskenään. Tästä syntyy eräänlaisia ketjuja tai \emph{syklejä} joilla saamme jokaiselle osallistuvalle elimen ja näinollen lyhennettyä elinjonotusta muille potilaille.
+Esimerkiksi munuaistenluovutuksissa on olemassa kaksi lähdettä munuaisille siirtoa varten:
 \begin{enumerate}
 	\item Ruumis elinluovutukset, ja
-	\item Elävät munuaisluovutukset sukulaisilta, puolisolta tai muilta luovuttajilta. \cite[p, 6]{NBERw10002}
+	\item Elävät munuaisluovutukset sukulaisilta, puolisolta tai muilta luovuttajilta. \cite[s. 6]{NBERw10002}
 \end{enumerate}
 
-Kriteereihin joiden mukaan munuaisia luovutetaan ovat mm. seuraavat, verityyppi, HLA-molekyylien sopivuus (\emph{HLA antigen-match}), odotusaika ja munuaisen luovutuspaikka. Munuainen tarjotaan potilaalle jolla on korkein prioriteetti. Mediaani odotusaika ruumis elinluovutukselle on kolme vuotta ja se on kasvamassa \cite[p, 7]{NBERw10002}. Tästä syystä läheisten luovutukset ovat olleet nousussa ja jonojen helpottamiseksi käytetään yllä esiteltyä algoritmiä syklien muodostamiseksi. Kun syklien potilaat ovat saaneet munuaisensa poistuvat he luonnollisesti jonosta ja helpottavat potilaiden tilannetta joilla ei ole läheistä luovuttajaa ja ovat ruumis luovuttajien varassa.
+Algoritmiä \ref{srp1} ja vakaa huonetoveri -ongelmaa joudutaan kuitenkin hieman muokkaamaan tätä sovellusta varten. Alkio tai "henkilö" tässä tapauksessa on vastaanottaja-luovuttaja kaksikko, jotka eivät voi luovuttaa toisilleen, eli ${x, y}$ on neljän henkilön pari. Toinen muutos on tapaus jossa mikään elin ei sovi vastaanottajalle, jos näin käy pidetään häntä odotuslistalla kunnes sopiva löytyy. Jos on olemassa luovuttaja-vastaanottaja kaksikot ${A, A^{'}}, {B, B^{'}}, {C, C^{'}}$, jotka haluavat luovuttaa toisillensa elimen, mutta eivät syystä tai toisesta voi, voimme tehdä vaihtosyklin parien välille. Suora vaihtosykli ei aina kelpaa, koska esimerkiksi $A$:n elin voi sopia $B^{'}$:lle, mutta $B$:n elin ei sovi kummallekkaan $A^{'}$ tai $C^{'}$:lle, jos näin tapahtuu asetetaan $A^{'}$ ja $C^{'}$ korkealla prioriteetillä jonotuslistaan.
+
+Kriteereihin joiden mukaan munuaisia luovutetaan ovat mm. seuraavat, verityyppi, HLA-molekyylien sopivuus (\emph{HLA antigen-match}), odotusaika ja munuaisen luovutuspaikka. Munuainen tarjotaan potilaalle jolla on korkein prioriteetti. Mediaani odotusaika ruumiselinluovutukselle on kolme vuotta ja se on kasvamassa \cite[s. 7]{NBERw10002}. Tästä syystä läheisten luovutukset ovat olleet nousussa ja jonojen helpottamiseksi käytetään yllä esiteltyä algoritmiä syklien muodostamiseksi. Kun syklien potilaat ovat saaneet munuaisensa poistuvat he luonnollisesti jonosta ja helpottavat potilaiden tilannetta joilla ei ole läheistä luovuttajaa ja ovat ruumis luovuttajien varassa.
 
 
 \subsection{Koulujen valinnat}
@@ -401,10 +449,9 @@ $1:1$ vaihe on vaihe jossa pariutetaan opiskelija ja sairaala, jos ne ovat toist
 		\item Jos uusia pareja ei löydy enää mistään vaiheesta on algoritmi päättynyt ja opiskelijat ovat pariutettu vakaasti sairaaloiden kanssa.
 	\end{enumerate}
 \end{alg}
-\begin{figure}[H]
+\begin{figure}[t]
+\includegraphics[scale=0.9]{NIMP}
 \caption{Vuokaavio Algoritmistä \ref{nimp} \cite[p, 1009]{roth84}}
-\centering
-	\includegraphics[scale=0.9]{NIMP}
 \end{figure}
 Verrattuna Gale--Shapley-algoritmiin toimintaperiaate on hyvin erilainen, mutta molemmat tuottavat vakaita pariutuksia. Algoritmin \ref{nimp} pariutuksien vakauden todistus löytyy lähteestä ja se sivuutetaan tässä.
 
