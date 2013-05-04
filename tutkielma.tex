@@ -87,7 +87,8 @@ Lopuksi käydään läpi strategioita sekä koalitioita avioliittopeleissä, kui
 % The following can be used to specify keywords and classification of the paper:
 
 \keywords{vakaat pariutukset, avioliittopeli, Gale--Shapley}
-\classification{\textbf{Theory of computation} $\rightarrow$ \textbf{Algorithmic game theory}; \emph{Mathematics of computing} $\rightarrow$ \emph{Combinatoric problems;}} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
+\classification{
+\textbf{Theory of computation} $\rightarrow$ \textbf{Algorithmic game theory}; \emph{Mathematics of computing} $\rightarrow$ \emph{Combinatoric problems;}} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
                   % This is probably mostly relevant for computer scientists
 
 % If the automatic page number counting is not working as desired in your case,
@@ -502,14 +503,12 @@ $\Gamma$ edustaa todellista mieltymyslistaa, joukko $M'$ miehiä, jotka väären
 \end{proof}
 
 \begin{lem}\cite[s. 56]{gusfield1989stable}\label{strategy-gus}
-	Ei ole olemassa vakaata pariutuksia suhteessa mieltymyksiin $\Gamma'$, missä jokainen mies joukosta $M'$ saa parin jota suosii ehdottomasti enemmän kuin pariaan pariutuksessa $M_0$.
+	Ei ole olemassa vakaata pariutuksia suhteessa mieltymyksiin $M'$, missä jokainen mies joukosta $M'$ saa parin jota suosii ehdottomasti enemmän kuin pariaan pariutuksessa $M_0$.
 \end{lem}
 
 \begin{proof}\cite[s. 56]{gusfield1989stable}
-	
+	Olkoon $\mu$ pariutus missä jokin joukko miehiä $M' \supseteq M$ saavat parit joita he suosivat enemmän kuin parejaan pariutuksessa $M_0$. Lemman \ref{strategy-blocking} mukaan on olemassa kaksikko $m$ ja $n$, joka estää pariutuksen $\mu$ suhteessa mieltymyksiinn $\Gamma$, niin että $m$ ei ole joukossa $M'$. Mutta nyt $m$ ei ole joukossa $M$, joten $\Gamma'$ sisältää molempien, miehen $m$ ja naisen $n$, todelliset mieltymykset, ja näin ollen heidän on estettävä pariutus $\mu$ myös suhteessa mieltymyksiin $\Gamma'$. Joten ei ole olemassa vakaata pariutusta missä jokainen mies joukosta $M$ parantaisi hänen pariaan verrattuna pariutukseen $M_0$. 
 \end{proof}
-
-
 
 \begin{lau}\cite[p, 593]{Balinski}
 	Oletetaan, että $\Gamma$ edustaa jokaisen henkilön aitoa mieltymystä ja $\Gamma'$ samoin, paitsi miesten $M'$ osajoukon, joilla on vaihtoehtoinen mieltymys $\Gamma'$:ssa. Ei ole olemassa vakaata pariutusta $\mu'$ $\Gamma'$:ssa jota kaikki miehet pitäisivät parempana kuin pariutusta $\mu$.
@@ -531,7 +530,7 @@ Monessa avioliittopelissä tuloksia voidaan muunnella strategioilla vain silloin
 Ylläolevalla strategialla on eräs vakaus ominaisuus joka rohkaisee miehiä toteuttamaan sovittu strategia. Oletetaan, että miehet sopivat keskenään ylläolevan kaltaisesta strategiasta, mutta ennen kuin väärennetty mieltymyslista julkaistaan jokin osajoukko koalitiosta päättää pettää koalition. Nämä miehet olettavat, että loput koalition miehet toteuttavat alkuperäisen strategian ja naiset antavat todelliset mieltymyksensä. Ongelmana pettäjillä on löytää optimoitu mieltymyslista, joka tuottaa heille vielä parempia pareja. Vaikka tälläistä petosta ei tapahdu jokainen mies voi olla huolissaan, että tälläinen petos tapahtuu hänen selkänsä takana ja epäröi osallistumistaan alkuperäiseen strategiaan, jossa kaikki miehet antoivat väärennetyt mieltymyslistat. Seuraava lause kertoo, että koalition on turha etsiä parempaa strategiaa ja näinollen miesten ei tarvitse huolehtia petoksista koalitioissa \cite{gusfield1989stable}.
 
 \begin{lau}\cite[p, 58]{gusfield1989stable}
-	Olkoon $M'$ miesten osajoukko ja olkoon $\mu$ mikä tahansa pariutus missä jokainen mies joukosta $M^{'}$ suosii $\mu$-pariaan enemmän kuin $M_0$-pariaan. Olettaen, että jokainen mies joka ei ole joukossa $M^{'}$ ilmoittaa hänen $\Gamma'$ listansa, ja jokainen nainen ilmoittaa heidän $\Gamma$ listansa, ei ole olemassa sellaista listojen joukkoja minkä $M'$ voi ilmoittaa niin että $\mu$ olisi vakaa suhteessa ilmoitettuihin listoihin.
+	Olkoon $M'$ miesten osajoukko ja olkoon $\mu$ mikä tahansa pariutus missä jokainen mies joukosta $M'$ suosii $\mu$-pariaan enemmän kuin $M_0$-pariaan. Olettaen, että jokainen mies joka ei ole joukossa $M'$ ilmoittaa hänen $\Gamma'$ listansa, ja jokainen nainen ilmoittaa heidän $\Gamma$ listansa, ei ole olemassa sellaista listojen joukkoja minkä $M'$ voi ilmoittaa niin että $\mu$ olisi vakaa suhteessa ilmoitettuihin listoihin.
 \end{lau}
 
 \begin{proof}
