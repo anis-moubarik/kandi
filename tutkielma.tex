@@ -148,18 +148,26 @@ Olkooon $M$ \emph{miesten} joukko ja $N$ naisten joukko, missä $|M| = |N| = n$.
 \end{figure}
 
 
-Olkoon $M = {m_1, m_2, m_3}$ ja $N = {n_1, n_2, n_3}$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys taulukossa \ref{mieltymyksettaul} on vasemmalta oikealle laskevassa järjestyksessä, eli miehelle $m_1$ miellyttävin pari olisi $n_2$. Henkilön mieltymyksia kuvaavaa järjestystä kutsutaan mieltymyslistaksi (\emph{preference list}), jossa toisen joukon alkiot ovat mieltymysjärjestyksessä.
+Olkoon $M = {m_1, m_2, m_3}$ ja $N = {n_1, n_2, n_3}$. Mieltymykset voidaan kuvata esimerkiksi taulukossa. Järjestys taulukossa \ref{mieltymyksettaul} on vasemmalta oikealle laskevassa järjestyksessä, eli esimerkiksi miehelle $m_1$ miellyttävin pari olisi $n_2$. Henkilön mieltymyksia kuvaavaa järjestystä kutsutaan mieltymyslistaksi (\emph{preference list}), jossa toisen joukon alkiot ovat mieltymysjärjestyksessä.
+
 \begin{table}[t]\label{mieltymyksettaul}
-\begin{center}
+\centering
 	\begin{tabular}{ l | *{2}{c} r }
 	 &  \\
 	 \hline
- 	 $m_{1}$ & $n_{2}$ & $n_{1}$ & $n_{3}$ \\
+ 	 $m_{1}$ & $n_{1}$ & $n_{3}$ & $n_{2}$ \\
  	 $m_{2}$ & $n_{1}$ & $n_{2}$ & $n_{3}$ \\
  	 $m_{3}$ & $n_{3}$ & $n_{1}$ & $n_{2}$ \\
 	\end{tabular}
-	\caption{Miesten mieltymykset}
-\end{center}
+	\quad
+	\begin{tabular}{ l | *{2}{c} r }
+	 &  \\
+	 \hline
+ 	 $n_{1}$ & $m_{1}$ & $m_{2}$ & $m_{3}$ \\
+ 	 $n_{2}$ & $m_{2}$ & $m_{1}$ & $m_{3}$ \\
+ 	 $n_{3}$ & $m_{3}$ & $m_{2}$ & $m_{1}$ \\
+	\end{tabular}
+	\caption{Miesten ja naisten mieltymykset}
 \end{table}
 
 Mieltymyksiä voidaan myös kuvata transitiivisella relaatiolla $>$. Esimerkiksi miehen $m_1$ mieltymykset voidaan esittää seuraavasti: $n_2 >_{m} n_1 >_{m} n_3$, relaatio on myös transitiivinen eli $n_2 >_{m} n_3$ pätee.
@@ -231,6 +239,12 @@ Olkoon meillä mies $m$ ja nainen $n$ ja oletetaan, että he eivät ole pari par
 \end{lau}
 Algoritmi tuottaa tälläisenään miehelle optimaalisia tuloksia, eli tällä algoritmilla tuotettu pariutus on kyseiselle miehille paras mahdollinen mitä he siinä kyseisessä avioliittopelissä tulevat saamaan.
 Naisille optimaalisia tuloksia voidaan saada, kun osat vaihdetaan päittäin algoritmissä.
+
+\begin{esim}
+	Katsotaan 3 kokoista avioliittopeliä ja mieltymyslistaa taulukosta \ref{mieltymyksettaul}.
+	
+	Yksi mahdollinen suoritus olisi seuraava: mies $m_1$ aloittaa kosimalla naista $n_1$ (nainen hyväksyy); mies $m_2$ kosii naista $n_1$ (nainen hylkää, hänellä on parempi mies langan päässä); mies $m_3$ kosii naista $n_3$ (nainen hyväksyy); mies $m_2$ kosii uudestaan, nyt listalla toista olevaa naista $n_2$ (nainen hyväksyy). Jokaista naista on kosittu ja jokaisella on joku mies langan päässä, kosinta on päättynyt ja naiset hyväksyvät langan päässä olevan miehen lopullisesti. Lopullinen vakaa pariutus on seuraava $\{(m_1, n_1), (m_2, n_2), (m_3, n_3)\}$.
+\end{esim}
 
 \section{Vakaitten pariutusten joukko}
 Gale-Shapley algoritmi tuottaa meille yhden vakaan pariutuksen, mutta niitä voi olla enemmän.
@@ -307,31 +321,35 @@ Todistus induktiolla. Kun pelin koko on 1, eli alkioiden lukumäärä on 1, niin
 \end{proof}
 
 \section{Laajennettu Gale--Shapley-algoritmi}
-Tämä algoritmi sieventää alkioiden mieltymyslistoja poistamalla pareja, jotka eivät kuulu mihinkään vakaaseen pariutukseen. Poistamalla pari $(m, n)$ tarkoitetaan sillä sitä että $n$ poistetaan miehen $m$ mieltymyslistalta ja $m$ naisen $n$ listalta.
+Tämän algoritmin tarkoituksena on yksinkertaistaa vakaa avioliitto -ongelman eri ongelmakohtien kertomista, algoritmi on suunniteltu tekemään enemmän, kuin vain löytää yksi vaka pariutus. Laajennettua algoritmia tullaan tarvitsemaan vakaa avioliitto -ongelman sovelluksissa, erityisesti tapauksissa, joissa parille on kahdesta alkiosta yhdentekevää kumman kanssa pariutuu, tämä tulee esille myöhemmässä kappaleessa. Algoritmi sieventää alkioiden mieltymyslistoja poistamalla pareja, jotka eivät kuulu mihinkään vakaaseen pariutukseen. Poistamalla pari $(m, n)$ tarkoitetaan sillä sitä että $n$ poistetaan miehen $m$ mieltymyslistalta ja $m$ naisen $n$ listalta.
 
-\begin{alg}\cite{gusfield1989stable}[p. 16]\label{alg2}
+\begin{alg}\cite[s. 16]{gusfield1989stable}\label{alg2}
 	\begin{enumerate}
 		\item Alustetaan jokainen henkilö vapaaksi.
 		\item Niin kauan kuin joku mies $m$ on vapaa,
 		\item valitaan ensimmäinen nainen miehen listalta.
-		\item Jos nainen $n$ on jo "kihloissa" miehen $p$ kanssa, vapautetaan $p$ ja pariutetaan $m$ kihloihin naisen $n$ kanssa.
-		\item Poistetaan jokainen pari $(m^{'}, n)$, missä $m^{'}$ on $m$:n seuraaja $n$ mieltymyslistalla.
+		\item Jos naisella $n$ on jo langan päässä mies $p$, vapautetaan $p$ ja asetetaan $m$ naisen $n$ langan päähän.
+		\item Poistetaan jokainen pari $(m', n)$, missä $m'$ on $m$:n seuraaja $n$ mieltymyslistalla.
 	\end{enumerate}
 \end{alg}
 
-Tässä algoritmissä, kun mies kosii naista kosinta hyväksytään aina. Koska jos nainen $n$ on jo kihloissa jonkun miellyttävämmän miehen kanssa, kuin $m$ olisi pari $(m, n)$ poistettu.
-Algoritmi pysähtyy, kun jokainen on kihloissa. Huomaamme myös, että algoritmin lopettaessa jokainen mies on kihloissa listalla ensimmäisenä olevan naisen kanssa ja jokainen nainen taas kihloissa listalla viimeisenä olevan miehen kanssa.
+Tässä algoritmissä, kun mies kosii naista kosinta hyväksytään aina. Koska jos naisella $n$ on jo langan päässä joku miellyttävämpi mies, kuin $m$ olisi pari $(m, n)$ poistettu.
+Algoritmi pysähtyy, kun jokaisella naisella on jokin mies langan päässä. Huomaamme myös, että algoritmin lopettaessa jokainen mies on listalla ensimmäisenä olevan naisen langan päässä ja jokaisella naisella taas langan päässä viimeisenä listalla oleva mies.
 
 Kutsumme algoritmin tuottamaa mieltymyslistaa, jossa miehet kosivat, \emph{mies-orientoituneeksi Gale--Shapley listaksi} tai \emph{MGS-listaksi}. Vastaavasti, jos miesten ja naisten roolit algoritmissä vaihdetaan kutsutaan tuotettua listaa \emph{NGS-listaksi}. Lopuksi jos otamme henkilön MGS- ja NGS-listasta leikkauksen saamme GS-listan.
 
-\begin{lau}\cite{gusfield1989stable}[p. 16]
+\begin{lau}\cite[s. 17]{gusfield1989stable}\label{laajlause}
 	Annettulle avioliittopelille pätee, että
 	\begin{itemize}
 		\item kaikki vakaat pariutukset ovat GS-listassa,
-		\item Yksikään pari, joka ei ole GS-listalla ei voi estää pariutusta GS-listalta,
+		\item yksikään pari, joka ei ole GS-listalla ei voi estää pariutusta GS-listalta,
 		\item mies-optimaalisissa (vastaavasti nais-optimaalisissa) pariutuksissa jokainen mies on pariutettu ensimmäisen (vastaavasti viimeisen) naisen kanssa hänen GS-listalta ja jokainen nainen viimeisen (vastaavasti ensimmäisen) miehen kanssa naisen listalta.
 	\end{itemize}
 \end{lau}
+
+\begin{esim}
+	Taulukossa \ref{mieltymyksettaul} jokaisen henkilön GS-lista sisältää vain hänen vakaan parinsa, sillä molemmat mies- ja nais-optimaaliset pariutukset ovat samat tässä tapauksessa.
+\end{esim}
 
 
 \section{Erisuuruiset joukot}
@@ -345,11 +363,16 @@ Olkoon $M$ miesten joukko ja $N$ naisten joukko, ja $|M| = n_x < n_y = |N|$. Par
 \end{enumerate}
 Jokainen vakaa pariutus koostuu $n_x$:stä järjestettyjä pareja, missä $n_x - n_y$ on naimattomien naisten määrä.
 
-\begin{lau}\cite[p. 26]{gusfield1989stable}.
-Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintään yksi vakaa pariutus, jossa pienemmän joukon kaikki alkiot saavat parin. Jokainen pienemmän joukon alkio on vakaassa pariutuksessa ja suuremman joukon alkiot on jaettu kahteen osajoukkoon, toisen osajoukon alkiot ovat vakaassa pariutuksessa ja toisen osajoukon alkiot eivät ole pariutuksessa ollenkaan.
-\end{lau}
+Käyttämällä mies-orientoitunutta laajennettua Gale--Shapley-algoritmiä, päättyy  se niin että jokainen mies on langan päässä ja tuloksena oleva pariutus on vakaa. Pariutus on mies-optimaalinen ja $n_x - n_y$ naista jää parittomaksi.
 
-Voimme muokata algoritmia \ref{gsalg}. Jos meillä on $x$ määrä miehiä ja $y$ määrä naisia, ja $x > y$, muokataan algoritmin 6. kohtaa ja päätetään, kun $x$ määrä naisia on kosittu. Jos taas $x < y$, niin algoritmi toimii normaalisti.
+Jos käytämme nais-orientoitunutta versiota algoritmistä se päättyy taas siihen, että jokaisella miehellä on langan päässä jokin nainen, ja pariutus on vakaa. Huomataan kuitenkin, että jokaisen pariuttamattoman naisen WGS-lista on tyhjä ja seurauksena lauseesta \ref{laajlause}(1) nämä naiset eivät voi olla pariutettuna missään vakaassa pariutuksessa \cite[s. 26]{gusfield1989stable}.
+
+\begin{lau}\cite[p. 26]{gusfield1989stable}.
+Avioliittopelissä jossa meillä on erisuuruiset joukot, on olemassa vähintään yksi vakaa pariutus, jossa pienemmän joukon kaikki alkiot saavat parin.
+\end{lau}
+Jos avioliittopeli, jossa on erisuuruiset joukot tuottaa saman GS-listan kuin avioliittopeli, jossa on samansuuruiset joukot, niin molempien vakaat pariutukset ovat samoja.
+
+Alkuperäistä algoritmiä \ref{gsalg} voidaan myös muokata yksinkertaisilla muutoksilla. Jos meillä on $x$ määrä miehiä ja $y$ määrä naisia, ja $x > y$, muokataan algoritmin 6. kohtaa, kun $x$ määrä naisia on kosittu päätetään algoritmin suoritus siihen. Jos taas $x < y$, niin algoritmi toimii normaalisti.
 
 
 \section{Parien kieltäminen}
@@ -361,7 +384,7 @@ Tässä tapauksessa vakaa pariutus voi olla osittainen tarkoittaen että kaikkie
 	\item $m$ on joko pariuttamaton tai suosii naista $n$ enemmän kuin hänen pariaan pariutuksessa $\mu$,
 	\item $n$ on joko pariuttamaton tai suosii miestä $m$ enemmän kuin hänen pariaan pariutuksessa $\mu$.
 \end{enumerate} 
-Mieltymykset voidaan myös laajentaa koskemaan pariutuksia, eli henkilö suosii pariutusta jossa hänellä on pari verratuna pariutukseen jossa hän jää ilman paria.
+Mieltymykset voidaan myös laajentaa koskemaan pariutuksia, eli henkilö suosii pariutusta jossa hänellä on pari verratuna pariutukseen jossa hän jää ilman paria. Käytämme samaa notaatiota, kuin parien mieltymyksissä, eli jos mies $m$ pitää pariutusta $\mu$ parempana kuin $\mu'$, niin merkitsemme sitä $\mu >_m \mu'$.
 
 \begin{lau}
 Avioliittopelissä, joka sallii parien kieltämisen on miehet ja naiset jaettu kahteen joukkoon -- niihin joilla on pari kaikissa pariutuksissa ja niihin joilla ei ole yhtään paria missään pariutuksessa.
@@ -373,17 +396,17 @@ Jokaisella solmulla on verkossa $G$ enintään yksi tuleva ja lähtevä kaari.
 
 Oletetaan nyt ristiriitaisesti, että $m$ on pariutettu naisen $n$ kanssa pariutuksessa $\mu$ muttei pariutuksessa $\delta$. On olemassa uniikki suunnaattu polku verkossa $G$ joka alkaa solmusta $m$ ja koska jokaisella solmulla on enintään yksi sisääntuleva kaari, ja $m$:llä on 0 sisääntulevaa kaarta, polku ei voi olla syklinen. Joten polun on päätyttävä mieheen joka on pariutettu $\delta$:ssa muttei $\mu$:ssa, eli $m$ suosii pariutusta $\delta$ ennemmin kuin pariutusta $\mu$, tai naiseen $n$ joka on pariutettu $\mu$:ssa muttei $\delta$:ssa $n$ suosii siis pariutusta $\mu$ ennemmin kuin pariutusta $\delta$.
 
-Mutta koska $m$ suosii pariutusta $\mu$ pariutuksen $\delta$ sijaan, seuraa Lauseen \ref{lause-guspref} mukaan, että $n$ suosii pariutusta $\delta$ pariutuksen $\mu$ sijaan, ja Lausetta \ref{lause-guspref} soveltamalla polkuun huomaamme, että jokainen mies suosii pariutusta $\mu$ ja jokainen nainen pariutusta $\delta$. Joten kahdesta mahdollisesta reitistä, jossa polku voisi päättyä johtaa molemmat ristiriitaan.
+Mutta koska $m$ suosii pariutusta $\mu$ pariutuksen $\delta$ sijaan, seuraa lauseen \ref{lause-guspref} mukaan, että $n$ suosii pariutusta $\delta$ pariutuksen $\mu$ sijaan, ja lausetta \ref{lause-guspref} soveltamalla polkuun huomaamme, että jokainen mies suosii pariutusta $\mu$ ja jokainen nainen pariutusta $\delta$. Joten kahdesta mahdollisesta reitistä, jossa polku voisi päättyä johtaa molemmat ristiriitaan.
 \end{proof}
 
 \section{Parien yhdentekeväisyys}
-Voidaan hyväksyä myös tilanteita, joissa alkioiden mieltymyslistat eivät ole ehdottomasti sijoitettuja, eli alkio voi pitää yhdestä alkiosta yhtä paljon kuin toisesta. Toisin sanoen alkiolle on yhdentekevää kumman parin kanssa hänet pariutetaan. Avataan vakauden määritelmää. Jos meillä on nainen ja mies, jotka eivät ole pari, mutta pitävät toisistaan enemmän/yhtäpaljon kuin omista pareistaan kyseisessä pariutuksessa, on pariutus epävakaa. Kutsutaan pariutusta tämän kriteerin perusteella \emph{super-vakaaksi} (\emph{super-stable}) \cite{gusfield1989stable}. Tilanteessa jossa on olemassa täysi välinpitämättömyys emme voi löytää yhtään super-vakaata pariutusta.
+Parien yhdentekeväisyydellä tarkoitetaan tilanteita, joissa alkioiden mieltymyslistat eivät ole ehdottomasti sijoitettuja, eli alkio voi pitää yhdestä alkiosta yhtä paljon kuin toisesta. Toisin sanoen alkiolle on yhdentekevää kumman parin kanssa hänet pariutetaan. Täsmennetään vakauden määritelmää. Ensimmäinen käsitys vakaudesta on, jos meillä on nainen ja mies, jotka eivät ole pari, mutta pitävät toisistaan enemmän tai yhtäpaljon kuin omista pareistaan kyseisessä pariutuksessa, on pariutus epävakaa. Jos pariutus on edellisen kriteerin perusteella vakaa, kutsutaan sitä \emph{super-vakaaksi} (\emph{super-stable}) \cite{gusfield1989stable}. Tilanteessa jossa on olemassa täysi välinpitämättömyys emme voi löytää yhtään super-vakaata pariutusta \cite[s. 29]{gusfield1989stable}.
 
-Toinen tapaus on vielä vapaamuotoisempi. Jos on olemassa mies ja nainen, jotka eivät ole pari, joista toinen pitää toisesta enemmän kuin omasta paristaan pariutuksessa ja toinen on vähintään välinpitämätön paristaan, on pariutus epävakaa. Kutsutaan pariutusta tämän kriteerin perusteella \emph{vahvasti-vakaaksi} (\emph{strongly-stable}).
+Toinen, vapaamuotoisempi, käsitys vakaudesta on seuraava: Jos on olemassa mies ja nainen, jotka eivät ole pari, joista toinen pitää toisesta enemmän kuin omasta paristaan pariutuksessa ja toinen on vähintään välinpitämätön paristaan, on pariutus epävakaa. Jos pariutus on edellisen kriteerin perusteella vakaa, kutsutaan sitä \emph{vahvastivakaaksi} (\emph{strongly-stable}) \cite[s. 29]{gusfield1989stable}.
 
 Laajennettua Gale--Shapley-algoritmia voidaan käyttää löytämään super- ja vahvasti-vakaita pariutuksia jokaiselle avioliittopelille, joka sallii välinpitämättömyyttä.
 
-Algoritmi toimii niin, että miehet kosivat naisia listaltaan ja kun törmäävät tilanteeseen jossa hänellä on kaksi tai enemmän naista listallaan, joista hän on neutraali ja he ovat tasoissa, kosii hän kaikkia naisia samanaikaisesti. Jos nainen saa kosinnan poistetaan kaikki huonommat parit naisen listalta ja nainen miesten listoilta. Nainen voi kuitenkin pitää montaa miestä kihloissa, jos he ovat naisen listalla tasoissa. Kosinta vaihe voi jättää miesten listat tyhjiksi, joka tarkoittaa sitä että super- tai vahvaa-pariutusta ei löytynyt. Muussa tapauksessa jokainen mies on kihloissa yhden tai useamman naisen kanssa.
+Algoritmi toimii niin, että miehet kosivat naisia listaltaan ja kun törmäävät tilanteeseen jossa hänellä on kaksi tai enemmän naista listallaan, joista hän on neutraali ja he ovat tasoissa, kosii hän kaikkia naisia samanaikaisesti. Jos nainen saa kosinnan poistetaan kaikki huonommat parit naisen listalta ja nainen miesten listoilta. Nainen voi kuitenkin pitää montaa miestä langan päässä, jos he ovat naisen listalla tasoissa. Kosinta vaihe voi jättää miesten listat tyhjiksi, joka tarkoittaa sitä että super- tai vahvaa-pariutusta ei löytynyt. Muussa tapauksessa jokainen mies on yhden tai useamman naisen langan päässä.
 
 \section{Vakaa huonetoveri -ongelma}
 Vakaa huonetoveri -ongelma (\emph{Stable Roommate Problem}) on yleistetty vakaa avioliitto -ongelma, missä on vain yksi joukko, josta jokainen henkilö pistää toisensa mieltymys järjestykseen. Mieltymysten perusteella tehdään pariutukset, kuten vakaa avioliitto -ongelmassa. Vakaa huonetoveri -ongelmaa käytetään elinluovutuksissa, joista puhutaan myöhemmin omassa kappaleessa.
@@ -432,9 +455,9 @@ Kriteereihin joiden mukaan munuaisia luovutetaan ovat mm. seuraavat, verityyppi,
 Alkuperäisessä Gale--Shapleyn paperissa \cite{gale62a} viitattiin koulujen ja opiskelijoiden keskinäiseen pariutukseen ja niiden vakauteen. $n$ hakijaa on jaettava $m$ kouluun, missä $q_{i}$ on $i$:nnen koulun kiintiö. Opiskelija pistää koulut järjestykseen aloittaen suosikistaan. Koulut tekevät samoin ja järjestävät hakevat opiskelijat. Gale--Shapley-algoritmi ratkaisee tämän, mutta se tuottaa aina jommallekummalle optimoituja tuloksia, eli tilanteessa, jossa meillä on kaksi opiskelijaa ja kaksi koulua ja preferenssit menevät juuri päinvastoin, päädymme tilanteeseen jossa voi olla kaksi vakaata pariutusta, mutta toinen on optimoitu opiskelijalle ja toinen kouluille.
 
 \subsection{Lääketieteen opiskelijat ja opetussairaalat}
-Jo ennen Gale--Shapley-algoritmiä ja ongelman formalisointia amerikkalainen AAMC (Association of American Medical Colleges) ja AHA (American Hospital Association) käyttivät NIMP (National Intern Matching Program) pariutus algoritmiä, tätä käytetään vielä nykyäänkin opiskelijoiden ja sairaaloiden pariutuksessa \cite{roth84}. Tehtävänä on siis pariuttaa opiskelija opetussairaalaan hänen ja sairaalan preferenssien mukaan ja sellaisenaan se tuottaa sairaalalle optimoituja pariutuksia.
+Jo ennen Gale--Shapley-algoritmiä ja ongelman formalisointia amerikkalainen AAMC (Association of American Medical Colleges) ja AHA (American Hospital Association) ratkaisivat vakaa avioliitto -ongelman käyttämällä NIMP (National Intern Matching Program) -pariutusalgoritmiä. Tätä käytetään vielä nykyäänkin opiskelijoiden ja sairaaloiden pariutuksessa \cite{roth84}. Tehtävänä on pariuttaa opiskelija opetussairaalaan hänen ja sairaalan preferenssien mukaan ja sellaisenaan se tuottaa sairaalalle optimoituja pariutuksia.
 
-Tätä tilannetta voidaan mallintaa usean-agentin vangin dilemmaksi \cite{roth84}, jossa sairaalat kilpailivat oppilaista ja yrittivät saada heitä harjoittelijoiksi yhä aikaisemmin. Pahimmassa tapauksessa oppilaat olivat jaettu opetussairaaloille jopa kaksi vuotta ennen harjoittelun alkua. Tästä seurasi sitä, että sairaalat eivät tienneet oppilaiden kiinnostuksia ja opiskelumenestystä, joten sairaala-oppilas pariutuksissa nähtiin hyvin paljon epävakautta, missä oppilas ei halunnut harjoitella kyseisessä sairaalassa tai sairaala ei katsonut oppilaan olevan tarpeeksi hyvä sairaalalle. Tämä valintamenettely aiheutti myös ruuhkaa, sillä jos opiskelija sai paikan esimerkiksi kolmanneksi sijoitetultaan sairaalalta jai sai tiedon toiseksi sijoitetulta, että hänet on jätetty jonotuslistalle, oli hän yleensä halukas odottamaan tuota paikkaa. Oppilaat jotka hyväksyivät saamansa paikan pettyivät, jos sairaala jonka odotuslistalla he olivat tarjosivat hänelle myöhemmin paikkaa, ja sairaalat olivat tyytymättömiä, jos oppilas kieltäytyi paikasta viime hetkellä paremman paikan tarjouksen tullessa.
+Tilannetta ennen NIMP-algoritmiä voidaan mallintaa usean-agentin vangin dilemmalla \cite{roth84}, jossa sairaalat kilpailivat oppilaista ja yrittivät saada heitä harjoittelijoiksi yhä aikaisemmin. Pahimmassa tapauksessa oppilaat olivat jaettu opetussairaaloille jopa kaksi vuotta ennen harjoittelun alkua. Tästä seurasi sitä, että sairaalat eivät tienneet oppilaiden kiinnostuksia ja opiskelumenestystä, joten sairaala-oppilas pariutuksissa nähtiin hyvin paljon epävakautta, missä oppilas ei halunnut harjoitella kyseisessä sairaalassa tai sairaala ei katsonut oppilaan olevan tarpeeksi hyvä sairaalalle. Tämä valintamenettely aiheutti myös ruuhkaa, sillä jos opiskelija sai paikan esimerkiksi kolmanneksi sijoitetultaan sairaalalta ja sai tiedon toiseksi sijoitetulta, että hänet on jätetty jonotuslistalle, oli hän yleensä halukas odottamaan tuota paikkaa. Oppilaat jotka hyväksyivät saamansa paikan pettyivät, jos sairaala jonka odotuslistalla he olivat tarjosivat hänelle myöhemmin paikkaa, ja sairaalat olivat tyytymättömiä, jos oppilas kieltäytyi paikasta viime hetkellä paremman paikan tarjouksen tullessa.
 
 Vuoteen 1950 mennessä huomattiin, että pariutuksen viimeisessä vaiheessa oli vakavia ongelmia, juurikin pariutusten epävakauden takia. Sairaalat ja oppilaat olivat tyytymättömiä omiin pareihinsa ja valinnoissa kohdistui suuri paine oppilaalle. Ratkaisuksi ehdotettiin pariutus algoritmiä, joka otti huomioon sairaalan ja oppilaan mieltymykset, ja jo vuonna 1950 tehtiin kokeilu, jossa varsinaista pariutusta ei tehty \cite{roth84}, mutta jossa oppilaat ja sairaalat antoivat mieltymyksensä, kuin olisivat päättäneet lopullisia pareja. Vuodesta 1952 lähtien algoritmia käytetään vapaaehtoisessa muodossa, sairaalat ja oppilaat ovat vapaita osallistumaan tähän pariutukseen tai löytämään harjoittelupaikkoja/harjoittelijaa omillaan. Vaikka kyseinen markkina on kokenut muutoksia tuottaa \emph{NIMP-algoritmi} hyviä tuloksia.
 Jokainen sairaala luo listan hakijoista mieltymystensä mukaan, samoin oppilaat luovat listan haetuista sairaaloista omien mieltymyksien mukaan. Nämä listat prosessoidaan lista-algoritmillä jonka jälkeen ne jatkavat alustava pari ja päivitys -vaiheeseen.
@@ -453,55 +476,67 @@ $1:1$ vaihe on vaihe jossa pariutetaan opiskelija ja sairaala, jos ne ovat toist
 \includegraphics[scale=0.9]{NIMP}
 \caption{Vuokaavio Algoritmistä \ref{nimp} \cite[p, 1009]{roth84}}
 \end{figure}
-Verrattuna Gale--Shapley-algoritmiin toimintaperiaate on hyvin erilainen, mutta molemmat tuottavat vakaita pariutuksia. Algoritmin \ref{nimp} pariutuksien vakauden todistus löytyy lähteestä ja se sivuutetaan tässä.
+Verrattuna Gale--Shapley-algoritmiin toimintaperiaate on hyvin erilainen ja monimutkainen ymmärtää, mutta molemmat tuottavat vakaita pariutuksia. Algoritmin \ref{nimp} pariutuksien vakauden todistus löytyy lähteestä ja se sivuutetaan tässä.
 
 \section{Strategiat avioliittopeleissä}
-Avioliitto peliin osallistuvan henkilön todelliset mieltymykset voivat hyvinkin erota hänen ilmoittamistaan mieltymyksistä. Mieltymykset mitkä henkilö julkisesti ilmoittaa kutsutaan strategiaksi \cite[p, 592]{Balinski}, joka muiden henkilöiden strategioiden kanssa koostavat vakaan pariutuksen kyseisessä avioliittopelissä.
+Avioliittopeliin osallistuvan henkilön todelliset mieltymykset voivat hyvinkin erota hänen ilmoittamistaan mieltymyksistä. Mieltymykset mitkä henkilö julkisesti ilmoittaa kutsutaan strategiaksi \cite[s. 592]{Balinski}, joka muiden henkilöiden strategioiden kanssa koostavat vakaan pariutuksen kyseisessä avioliittopelissä.
 
 Esimerkiksi olkoon meillä nainen $n_1$, jonka aidot mieltymykset ovat seuraavat $m_1 > m_2 > m_3 > m_4$, pelistä ja miesten mieltymyksistä riippuen naisen on mahdollista päättyä kaikkien miesten kanssa avioliittoon. Jos nainen ilmoittaa mieltymyksikseen $m_1 > m_2$, ja ei edes harkitse avioliittoa miesten $m_3$ ja $m_4$ kanssa paranee naisen tilanne selvästi, ja avioliittopelissä hänen on mahdollista päätyä avioliittoon vain miehen $m_1$ tai $m_2$ kanssa.
 
-Seuraavaksi näytetään, että rehellisyys on pätevä strategia, mutta mieltymysten muuntamisella voidaan saada henkilölle parempia pareja.
+Seuraavaksi näytetään, että rehellisyys on pätevä strategia, mutta mieltymysten muuntamisella voidaan saada henkilölle parempia pareja. Täytyy huomauttaa, että strategia on hyväksyttävä vain avioliittopeleissä joissa hyväksytään parien kieltäminen.
 
-\begin{lem}\cite[p, 587]{Balinski}\label{bal-1}
-	Olkoon olemassa pariutus $\mu$ ja $\mu^{'}$. Miehet $m \in M^{'} \subset M$ suosivat pariutusta $\mu$ verrattuna pariutukseen $\mu^{'}$, mutta miehet $m \notin M^{'}$ eivät, nyt on olemassa joku kaksikko $m$ ja $n$, missä $m \notin M^{'}$, joka estää pariutuksen $\mu$.
+$\Gamma$ edustaa todellista mieltymyslistaa, joukko $M'$ miehiä, jotka väärentelevät mieltymyksiään ja $\Gamma'$ mieltymyslistaa, joka ottaa nämä väärennetyt mieltymykset huomioon $M_0$ on mies-optimaalinen pariutus suhteessa todellisiin mieltymyksiin $\Gamma$. 
+
+\begin{lem}\cite[s. 55]{gusfield1989stable}\label{strategy-blocking}
+	Olkoon $\mu$ pariutus ja oletetaan, että miesten joukko $\mathcal{X}$, jotka suosivat parejaan pariutuksessa $\mu$ kuin pariutuksessa $M_0$, ei ole tyhjä. Siinä tapauksessa on olemassa mies $m \notin \mathcal{X}$ ja nainen $n$ joka on estepari pariutuksella $\mu$
 \end{lem}
 
-$\Gamma$ edustaa todellista mieltymyslistaa, joukko $M^{'}$ miehiä, jotka väärentelevät mieltymyksiään ja $\Gamma^{'}$ mieltymyslistaa, joka ottaa nämä väärennetyt mieltymykset huomioon.
-
-\begin{lem}\cite[p, 56]{gusfield1989stable}\label{strategy-gus}
-	Ei ole olemassa vakaata pariutuksia suhteessa mieltymyksiin $\Gamma^{'}$, missä jokainen mies joukosta $M^{'}$ saa parin jota suosii ehdottomasti enemmän kuin pariaan pariutuksessa $M_0$.
-\end{lem}
-
-Todistukset löytyvät lähteistä ja sivuutetaan tässä.
-
-\begin{lau}\cite[p, 593]{Balinski}
-	Oletetaan, että $\Gamma$ edustaa jokaisen henkilön aitoa mieltymystä ja $\Gamma^{'}$ samoin, paitsi miesten $M^{'}$ osajoukon, joilla on vaihtoehtoinen mieltymys $\Gamma^{'}$:ssa. Ei ole olemassa vakaata pariutusta $\mu^{'}$ $\Gamma^{'}$:ssa jota kaikki miehet pitäisivät parempana kuin pariutusta $\mu$.
-\end{lau}
-\begin{proof}
-	Oletetaan, että pariutus $\mu$ on miellyttävämpi kuin pariutus $\mu^{'}$ miehille $m \in M^{'} \subset M$. Lemman \ref{bal-1} mukaan täytyy olla olemassa pari $m$ ja $n$ missä $m \notin M^{'}$, joka estää pariutuksen $\mu$ mieltymyksillä $\Gamma$. Mutta miehen $m$ ja naisen $n$ strategiat ovat identtiset joukoissa $\Gamma$ ja $\Gamma^{'}$, joten $m$ ja $n$ on estepari myös mieltymyksellä $\Gamma^{'}$.
+\begin{proof}\cite[s. 55]{gusfield1989stable}\label{strategy-blockingtod}
+	Pariutus $\mu$ on epävakaa, koska on olemassa miehiä jotka suosivat sitä enemmän kuin pariutusta $M_0$, joten jonkin parin on estettävä $\mu$. Näytetään, että jokin mies joka kuuluu joukkoon $\mathcal{X}$ on estävässä parissa. Olkoon $\mathcal{Y}$ joukko naisia, jotka ovat pareja miesten $\mathcal{X}$ kanssa pariutuksessa $M_0$. Todistus on jaettu kahteen tapaukseen.
+	
+	Ensimmäisessä tapauksessa oletetaan, että meillä on mies $m'$ joukosta $\mathcal{X}$, joka on pariutettu naiseen $n$ joka ei ole joukosta $\mathcal{Y}$ pariutuksessa $\mu$. Koska $m'$ suosii paria $n$ verrattuna pariinsa pariutuksessa $M_0$, pariutus $M_0$ implikoi, että $n$ suosii $p_{M_0}(n)$ enemmän kuin $m'$. Mutta $n \notin \mathcal{Y}$ implikoi, että $m \notin \mathcal{X}$ ja $p_\mu(m) != n$, joten $m$ suosii naista $n$ enemmän kuin $p_\mu(m)$. Näinollen, ensimmäisessä tapauksessa, $m$ ja $n$ estävät pariutuksen $\mu$ ja $m \notin \mathcal{X}$.
+	
+	Toisessa tapauksessa oletetaan, että jokainen mies joukosta $\mathcal{X}$ on pariutettu parituuksessa $\mu$ naisen kanssa joukosta $\mathcal{Y}$. Pariutuksen $M_0$ vakauden takia jokainen nainen joukosta $\mathcal{Y}$ suosii pariaan pariutuksessa $M_0$ verrattuna pariutukseen $\mu$. Missä tahansa mielivaltaisessa Gale--Shapley-algoritmin suorituksessa, jokainen tälläinen yllä kuvattu nainen hylkää $\mu$-parinsa. Oletetaan, että jossain mielivaltaisessa Gale--Shapley-algoritmin suorituksessa $m'$ on viimeinen mies joukosta $\mathcal{X}$, joka tekee kosinnan, olkoon $n$ nainen jota tämä $m'$ kosii. Nyt $n = p_{M_0}(m')$, joten $n$ on joukossa $\mathcal{Y}$. Koska $n$ hylkäsi miehen $p_\mu(n)$ algoritmin suorituksen aikana, on naisella $n$ oltava jokin mies langan päässä, esimerkiksi mies $m$, kun $m'$ kosii häntä. Nainen $n$ hylkää miehen $m$ ja hyväksyy miehen $m'$ ja koska $m$ jatkaa kosimalla ei se ole joukossa $\mathcal{X}$. Määritelmän mukaisesti $m$ ei suosi pariaan pariutuksessa $\mu$ verrattuna pariinsa pariutuksessa $M_0$, joten $m$ suosii naista $n$ enemmän kuin $p_\mu(m)$.
+	
+	Samoin koska $m \notin \mathcal{X}$ on viimeinen mies, joka hylätään naisen $n$ toimesta, suorituksen aikana jolloin tuotetaan pariutus $M_0$, ja $n \in \mathcal{Y}$ hylkäsi $p_\mu(n) \in \mathcal{X}$ suorituksen aikana, niin $n$ suosii miestä $m$ enemmän kuin miestä $p_\mu(n)$. Näin ollen kaksikko $m$ ja $n$ estävät pariutuksen $\mu$ ja $m \notin \mathcal{X}$, kuten haluttiin.	
 \end{proof}
 
-Olkoon $M_0$ mies-optimaalinen pariutus suhteessa todellisiin mieltymyksiin $\Gamma$. Monessa avioliittopelissä tuloksia voidaan muunnella strategioilla vain silloin kun jokin osajoukko henkilöistä vääristelee yhdessä mieltymyksiä, eli he muodostavat \emph{koalition} ja tuottavat itselleen ja koalitiolle parempia pariutuksia.
+\begin{lem}\cite[s. 56]{gusfield1989stable}\label{strategy-gus}
+	Ei ole olemassa vakaata pariutuksia suhteessa mieltymyksiin $\Gamma'$, missä jokainen mies joukosta $M'$ saa parin jota suosii ehdottomasti enemmän kuin pariaan pariutuksessa $M_0$.
+\end{lem}
+
+\begin{proof}\cite[s. 56]{gusfield1989stable}
+	
+\end{proof}
+
+
+
+\begin{lau}\cite[p, 593]{Balinski}
+	Oletetaan, että $\Gamma$ edustaa jokaisen henkilön aitoa mieltymystä ja $\Gamma'$ samoin, paitsi miesten $M'$ osajoukon, joilla on vaihtoehtoinen mieltymys $\Gamma'$:ssa. Ei ole olemassa vakaata pariutusta $\mu'$ $\Gamma'$:ssa jota kaikki miehet pitäisivät parempana kuin pariutusta $\mu$.
+\end{lau}
+\begin{proof}
+	Oletetaan, että pariutus $\mu$ on miellyttävämpi kuin pariutus $\mu'$ miehille $m \in M' \subset M$. Lemman \ref{bal-1} mukaan täytyy olla olemassa pari $m$ ja $n$ missä $m \notin M'$, joka estää pariutuksen $\mu$ mieltymyksillä $\Gamma$. Mutta miehen $m$ ja naisen $n$ strategiat ovat identtiset joukoissa $\Gamma$ ja $\Gamma'$, joten $m$ ja $n$ on estepari myös mieltymyksellä $\Gamma'$.
+\end{proof}
+
+Monessa avioliittopelissä tuloksia voidaan muunnella strategioilla vain silloin kun jokin osajoukko henkilöistä vääristelee yhdessä mieltymyksiä, eli he muodostavat \emph{koalition} ja tuottavat itselleen ja koalitiolle parempia pariutuksia.
 
 \begin{lau}\cite[p, 58]{gusfield1989stable}
 	Vaikka nais-orientoitunutta Gale--Shapley-algoritmiä (naiset kosii, miehet päättää) käytetään, voivat miehet pakottaa algoritmin tuottamaan mies-optimaalisia tuloksia antamalla väärennettyjä mieltymyksiä.
 \end{lau}
 
 \begin{proof}
-	Jokainen mies $m$ väärentää mieltymyslistansa. Nämä miehet ilmoittavat, että huonompi nainen kuin $p_{M_0}(m)$ on hylättävä ja ei sovi miehelle pariksi, tämä tuottaa mieltymslistan $\Gamma^{'}$. Jos mies-orientoitunutta Gale--Shapley-algoritmiä käytetään mieltymyksille $\Gamma^{'}$ se tuottaa $M_0$, mies-optimaalisen pariutuksen mieltymyksille $\Gamma$. Edelleen, koska pariutuksessa $M_0$ jokaisella miehellä on huonoin mahdollinen pari suhteessa mieltymyslistaan $\Gamma^{'}$, on se ainoa mahdollinen vakaa pariutus tässä kontekstissa. Näinollen $M_0$ on vakaa pariutus jonka nais-orientoitunut Gale--Shapley-algoritmi tuottaa suhtessa mieltymyksiin $\Gamma^{'}$.
+	Jokainen mies $m$ väärentää mieltymyslistansa. Nämä miehet ilmoittavat, että huonompi nainen kuin $p_{M_0}(m)$ on hylättävä ja ei sovi miehelle pariksi, tämä tuottaa mieltymslistan $\Gamma'$. Jos mies-orientoitunutta Gale--Shapley-algoritmiä käytetään mieltymyksille $\Gamma'$ se tuottaa $M_0$, mies-optimaalisen pariutuksen mieltymyksille $\Gamma$. Edelleen, koska pariutuksessa $M_0$ jokaisella miehellä on huonoin mahdollinen pari suhteessa mieltymyslistaan $\Gamma'$, on se ainoa mahdollinen vakaa pariutus tässä kontekstissa. Näinollen $M_0$ on vakaa pariutus jonka nais-orientoitunut Gale--Shapley-algoritmi tuottaa suhtessa mieltymyksiin $\Gamma'$.
 \end{proof}
 
 Ylläolevalla strategialla on eräs vakaus ominaisuus joka rohkaisee miehiä toteuttamaan sovittu strategia. Oletetaan, että miehet sopivat keskenään ylläolevan kaltaisesta strategiasta, mutta ennen kuin väärennetty mieltymyslista julkaistaan jokin osajoukko koalitiosta päättää pettää koalition. Nämä miehet olettavat, että loput koalition miehet toteuttavat alkuperäisen strategian ja naiset antavat todelliset mieltymyksensä. Ongelmana pettäjillä on löytää optimoitu mieltymyslista, joka tuottaa heille vielä parempia pareja. Vaikka tälläistä petosta ei tapahdu jokainen mies voi olla huolissaan, että tälläinen petos tapahtuu hänen selkänsä takana ja epäröi osallistumistaan alkuperäiseen strategiaan, jossa kaikki miehet antoivat väärennetyt mieltymyslistat. Seuraava lause kertoo, että koalition on turha etsiä parempaa strategiaa ja näinollen miesten ei tarvitse huolehtia petoksista koalitioissa \cite{gusfield1989stable}.
 
 \begin{lau}\cite[p, 58]{gusfield1989stable}
-	Olkoon $M^{'}$ miesten osajoukko ja olkoon $\mu$ mikä tahansa pariutus missä jokainen mies joukosta $M^{'}$ suosii $\mu$-pariaan enemmän kuin $M_0$-pariaan. Olettaen, että jokainen mies joka ei ole joukossa $M^{'}$ ilmoittaa hänen $\Gamma^{'}$ listansa, ja jokainen nainen ilmoittaa heidän $\Gamma$ listansa, ei ole olemassa sellaista listojen joukkoja minkä $M^{'}$ voi ilmoittaa niin että $\mu$ olisi vakaa suhteessa ilmoitettuihin listoihin.
+	Olkoon $M'$ miesten osajoukko ja olkoon $\mu$ mikä tahansa pariutus missä jokainen mies joukosta $M^{'}$ suosii $\mu$-pariaan enemmän kuin $M_0$-pariaan. Olettaen, että jokainen mies joka ei ole joukossa $M^{'}$ ilmoittaa hänen $\Gamma'$ listansa, ja jokainen nainen ilmoittaa heidän $\Gamma$ listansa, ei ole olemassa sellaista listojen joukkoja minkä $M'$ voi ilmoittaa niin että $\mu$ olisi vakaa suhteessa ilmoitettuihin listoihin.
 \end{lau}
 
 \begin{proof}
-	Oletetaan, että jokin osajoukko joukosta $M^{'}$ väärentää heidän sovitut mieltymyslistat luomalla mieltymykset $\Gamma_{M^{'}}$ aikaisemman ja sovitun $\Gamma^{'}$ mieltymyslistan sijaan. Nyt $M_0$ on ainoa vakaa pariutus mieltymyksille $\Gamma^{'}$, joten se on siis mies-optimaalinen pariutus molemmissa $\Gamma$:ssa ja $\Gamma^{'}$:ssa. Näinollen jos miehet joukossa $M^{'}$ parantelevat parejaan, suhteessa mieltymyksiin $\Gamma$, petoksen johdosta on kaikkien heidän saatava paremmat parit verrattuna mies-optimaaliseen pariutukseen mieltymyksillä $\Gamma^{'}$. Mutta Lemmassa \ref{strategy-gus} sanotaan, että miesten joukossa $M^{'}$ on mahdotonta ehdottomasti parantaa pariaan mieltymyksilla $\Gamma^{'}$ valehtelemalla.
+	Oletetaan, että jokin osajoukko joukosta $M^{'}$ väärentää heidän sovitut mieltymyslistat luomalla mieltymykset $\Gamma_{M'}$ aikaisemman ja sovitun $\Gamma'$ mieltymyslistan sijaan. Nyt $M_0$ on ainoa vakaa pariutus mieltymyksille $\Gamma'$, joten se on siis mies-optimaalinen pariutus molemmissa $\Gamma$:ssa ja $\Gamma^{'}$:ssa. Näinollen jos miehet joukossa $M'$ parantelevat parejaan, suhteessa mieltymyksiin $\Gamma$, petoksen johdosta on kaikkien heidän saatava paremmat parit verrattuna mies-optimaaliseen pariutukseen mieltymyksillä $\Gamma'$. Mutta Lemmassa \ref{strategy-gus} sanotaan, että miesten joukossa $M^{'}$ on mahdotonta ehdottomasti parantaa pariaan mieltymyksilla $\Gamma'$ valehtelemalla.
 \end{proof}
-
-Täytyy huomauttaa, että ylläoleva strategia on hyväksyttävä vain avioliittopeleissä joissa hyväksytään parien kieltäminen.
 
 
 % --- Back matter ---
