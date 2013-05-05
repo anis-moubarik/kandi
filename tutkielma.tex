@@ -78,15 +78,15 @@
 \author{Anis Moubarik}
 \date{\today}
 \level{Tutkielma}
-\abstract{Vakaa avioliitto -ongelma on tilanne jossa meillä on kaksi erillistä samansuuruista joukkoa joilla on jonkilainen mieltymys vastakkaisen joukon alkioista, kutsumme tilannetta avioliittopeliksi. Tutkielmassa tulee esille vakauden määritelmä ja sen vaikutuksia pareihin ja pariutuksiin ja kuinka näitä vakaita pariutuksia löydetään avioliittopeleistä. Näiden ohella esitellään Gale--Shapley-algoritmi, joka tuottaa yhden vakaan pariutuksen jokaiselle avioliittopelille.
+\abstract{Vakaa avioliitto -ongelma on tilanne jossa meillä on kaksi erillistä samansuuruista joukkoa joilla on jonkilainen mieltymys vastakkaisen joukon alkioista, tilannetta kutsutaan avioliittopeliksi. Tutkielmassa esitellään vakauden määritelmä ja sen vaikutuksia pareihin ja pariutuksiin ja kuinka näitä vakaita pariutuksia löydetään avioliittopeleistä. Näiden ohella esitellään Gale--Shapley-algoritmi, joka tuottaa vakaan pariutuksen jokaiselle avioliittopelille.
 
-Tutkielma käy läpi myös yleisimpiä muunnoksia alkuperäiseen ongelmaan, kuten erisuuruiset joukot ja parien kieltäminen. Sovelluksista tulee esille elinluovutus tapaukset, joka on muokattu vakaa huonetoveri -ongelma (\emph{stable roommate problem}), koulujen opiskelijavalinnat sekä opetussairaaloiden ja lääkettieteen opiskelijoiden pariutus.
+Tutkielma käy läpi myös yleisimpiä muunnoksia alkuperäiseen ongelmaan, kuten erisuuruiset joukot ja parien kieltäminen, jotka johdattelevat oikean maailman sovelluksiin. Sovelluksista esitellään elinluovutus tapaukset, koulujen opiskelijavalinnat sekä opetussairaaloiden ja lääkettieteen opiskelijoiden pariutus. 
 
-Lopuksi käydään läpi strategioita sekä koalitioita avioliittopeleissä, kuinka ne vaikuttavat tai parantavatko ne strategioivien alkioiden pareja, kuinka koalitiot voivat manipuloida Gale--Shapley-algoritmiä ja onko petos kannattavaa koalitioissa.}
+Lopuksi käydään läpi strategioita sekä koalitioita avioliittopeleissä. Kuinka ne vaikuttavat pariutukseen ja parantavatko strategiat niitä käyttävien alkioiden pareja, kuinka koalitiot voivat manipuloida Gale--Shapley-algoritmiä ja onko petos kannattavaa koalitioissa.}
 
 % The following can be used to specify keywords and classification of the paper:
 
-\keywords{vakaat pariutukset, avioliittopeli, Gale--Shapley}
+\keywords{vakaa pariutus, avioliittopeli, Gale--Shapley-algoritmi}
 \classification{
 \textbf{Theory of computation} $\rightarrow$ \textbf{Algorithmic game theory}; \emph{Mathematics of computing} $\rightarrow$ \emph{Combinatoric problems;}} % classification according to ACM Computing Classification System (http://www.acm.org/about/class/)
                   % This is probably mostly relevant for computer scientists
@@ -124,9 +124,11 @@ Lopuksi käydään läpi strategioita sekä koalitioita avioliittopeleissä, kui
 % --- Main matter ---
 
 \section{Johdanto}
-Vakaa avioliitto -ongelma (\emph{stable marriage problem}) sivuaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava: Olkoon olemassa $n$ miestä ja $n$ naista ja miehet ovat pistäneet naiset järjestykseen mieluisimmasta parista huonoimpaan ja jokainen nainen on pistänyt miehet vastaavaan järjestykseen, tätä tilannetta kutsutaan \emph{avioliittopeliksi}. \emph{Pari} on tässä kontekstissa siis mies-nais pari, tätä kutsutaan myös \emph{avioliitoksi}. Tehtävänä on pariuttaa miehet ja naiset niin, että meillä ei ole kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pysyisivät avioliitossaan nykyisessä pariutuksessa. Avioliitot ovat vakaita, kun näitä \emph{estepareja} ei esiinny. Pariutus on joukko pareja ja parit voidaan pariuttaa Gale--Shapley-algoritmilla, joka esitellään myöhemmin. Vakaassa pariutuksessa on siis tarkoitus pariuttaa kahden joukon alkiot niin että jokin kriteeri täyttyy, alkuperäisessä vakaa avioliitto -ongelmassa tuo kriteeri on parien vakaus suhteessa alkioiden mieltymyksiin.
+Vakaa avioliitto -ongelma (\emph{stable marriage problem}) sivuaa kombinatoriikkaa ja peliteoriaa. Ongelma on seuraava: olkoon olemassa $n$ miestä ja $n$ naista ja miehet ovat pistäneet naiset järjestykseen mieluisimmasta parista huonoimpaan ja jokainen nainen on pistänyt miehet vastaavaan järjestykseen, tilannetta kutsutaan \emph{avioliittopeliksi}. \emph{Pari} on tässä kontekstissa siis mies-nais pari, tätä kutsutaan myös \emph{avioliitoksi}. Tehtävänä on pariuttaa miehet ja naiset niin, että ei ole olemassa kahta vastakkaisen sukupuolen henkilöä, jotka olisivat mielummin pari keskenään kuin pysyisivät avioliitossaan nykyisessä pariutuksessa. Avioliitot ovat vakaita, kun näitä \emph{estepareja} ei esiinny. Pariutus on joukko pareja ja parit voidaan pariuttaa Gale--Shapley-algoritmilla, joka esitellään myöhemmin. Vakaassa pariutuksessa on siis tarkoitus pariuttaa kahden joukon alkiot niin että jokin kriteeri täyttyy, alkuperäisessä vakaa avioliitto -ongelmassa tuo kriteeri on parien vakaus suhteessa alkioiden mieltymyksiin.
 
-Ongelmalla on monia käytännön sovelluksia. Se voidaan yleistää kaikkiin \emph{kaksipuolisiin markkinoihin}, joissa eettisistä tai laillisista syistä ei käytetä vaihtovälineenä rahaa. Kaksipuolisilla markkinoilla tarkoitetaan tilannetta, jossa on olemassa alusta joka palvelee kahta erillistä ryhmää, jotka toimittavat toisilleen hyödykkeitä. Seuraavat markkinat ovat hyviä esimerkkejä: elinluovuttajat ja vastaanottajat, työntekijät ja työnantajat sekä opiskelijat ja korkeakoulut. Elinluovutusten tapauksessa haaste on se, että luovuttaja-potilas kaksikot eivät ole yhteensopivia, voimme kuitenkin käyttää vakaa avioliitto -ongelman ratkaisuja elinluovutuksissa. Jos on olemassa kaksikot $A$, $B$ ja $C$, eli jokainen kaksikoista sisältää luovuttajan ja potilaan, mutta syystä tai toisesta elin ei sovi potilaalle, voidaan soveltaa ratkaisuja tähän tapaukseen ja saada vakaita pariutuksia potilaitten ja luovuttajien välille. Oletetaan, että $A$:n luovuttaja sopii $B$:lle, $B$:n $C$:lle ja $C$:n $A$:lle, nyt saamme ketjun ja vakaan pariutuksen, jossa jokainen potilas saa uuden elimen. Näitä \emph{kaksipuolisia pariutusmarkkinoita} tutkimme paperissa.
+Ongelmalla on monia käytännön sovelluksia. Se voidaan yleistää kaikkiin \emph{kaksipuolisiin markkinoihin} (\emph{Two-sided markets}), joissa eettisistä tai laillisista syistä ei käytetä vaihtovälineenä rahaa. Kaksipuolisilla markkinoilla tarkoitetaan tilannetta, jossa on olemassa alusta joka palvelee kahta erillistä ryhmää, jotka toimittavat toisilleen hyödykkeitä. Hyviä esimerkkejä ovat: elinluovuttajat ja vastaanottajat, työntekijät ja työnantajat sekä opiskelijat ja korkeakoulut.
+
+Elinluovutusten tapauksessa haaste on se, että luovuttaja-potilas kaksikot eivät ole yhteensopivia, voimme kuitenkin käyttää vakaa avioliitto -ongelman ratkaisuja elinluovutuksissa. Jos on olemassa kaksikot $A$, $B$ ja $C$, eli jokainen kaksikoista sisältää luovuttajan ja potilaan, mutta syystä tai toisesta elin ei sovi potilaalle, voidaan soveltaa ratkaisuja tähän tapaukseen ja saada vakaita pariutuksia potilaitten ja luovuttajien välille. Oletetaan, että $A$:n luovuttaja sopii $B$:lle, $B$:n $C$:lle ja $C$:n $A$:lle, nyt saamme ketjun ja vakaan pariutuksen, jossa jokainen potilas saa uuden elimen. Näitä \emph{kaksipuolisia pariutusmarkkinoita} tutkimme paperissa.
 
 Vastaan tulee myös pieniä variaatioita klassiseen avioliitto-ongelmaan, kuten erisuuruiset joukot ja alkioiden hyvin erilaiset mieltymykset, eli tapaukset joissa he eivät halua pariutua tietyn henkilön kanssa ollenkaan. Näissä tapauksissa vakauden määritelmää muokataan niin että pariutukset joissa alkio on ilman paria voi olla myös vakaa. Erisuuruisten joukkojen tapauksessa suuremman joukon alkioista jää pariuttamatta suuremman ja pienemmän joukon alkioiden lukumärään erotuksen verran alkioita.
 
@@ -453,7 +455,7 @@ Kriteereihin joiden mukaan munuaisia luovutetaan ovat mm. seuraavat, verityyppi,
 
 
 \subsection{Koulujen valinnat}
-Alkuperäisessä Gale--Shapleyn paperissa \cite{gale62a} viitattiin koulujen ja opiskelijoiden keskinäiseen pariutukseen ja niiden vakauteen. $n$ hakijaa on jaettava $m$ kouluun, missä $q_{i}$ on $i$:nnen koulun kiintiö. Opiskelija pistää koulut järjestykseen aloittaen suosikistaan. Koulut tekevät samoin ja järjestävät hakevat opiskelijat. Gale--Shapley-algoritmi ratkaisee tämän, mutta se tuottaa aina jommallekummalle optimoituja tuloksia, eli tilanteessa, jossa meillä on kaksi opiskelijaa ja kaksi koulua ja preferenssit menevät juuri päinvastoin, päädymme tilanteeseen jossa voi olla kaksi vakaata pariutusta, mutta toinen on optimoitu opiskelijalle ja toinen kouluille.
+Alkuperäinen Galen ja Shapleyn artikkeli \cite{gale62a} aloitettiin esittämällä koulujen valinta kysymys. Ongelmana oli pariuttaa opiskelija ja oppilaitokset keskenään, niin että saatiin molempia tyydyttävä pariutus ja siitä seuraava vakaus. Tehtävänä on jakaa $n$ hakijaa $m$ määrään kouluja, missä $q_{i}$ on $i$:nnen koulun kiintiö. Opiskelija pistää koulut järjestykseen aloittaen suosikistaan. Koulut tekevät samoin ja järjestävät hakevat opiskelijat. Gale--Shapley-algoritmi ratkaisee tämän, mutta se tuottaa aina jommallekummalle optimoituja tuloksia, eli tilanteessa, jossa meillä on kaksi opiskelijaa ja kaksi koulua ja preferenssit menevät juuri päinvastoin, päädymme tilanteeseen jossa voi olla kaksi vakaata pariutusta, mutta toinen on optimoitu opiskelijalle ja toinen kouluille.
 
 \subsection{Lääketieteen opiskelijat ja opetussairaalat}
 Jo ennen Gale--Shapley-algoritmiä ja ongelman formalisointia amerikkalainen AAMC (Association of American Medical Colleges) ja AHA (American Hospital Association) ratkaisivat vakaa avioliitto -ongelman käyttämällä NIMP (National Intern Matching Program) -pariutusalgoritmiä. Tätä käytetään vielä nykyäänkin opiskelijoiden ja sairaaloiden pariutuksessa \cite{roth84}. Tehtävänä on pariuttaa opiskelija opetussairaalaan hänen ja sairaalan preferenssien mukaan ja sellaisenaan se tuottaa sairaalalle optimoituja pariutuksia.
@@ -463,19 +465,20 @@ Tilannetta ennen NIMP-algoritmiä voidaan mallintaa usean-agentin vangin dilemma
 Vuoteen 1950 mennessä huomattiin, että pariutuksen viimeisessä vaiheessa oli vakavia ongelmia, juurikin pariutusten epävakauden takia. Sairaalat ja oppilaat olivat tyytymättömiä omiin pareihinsa ja valinnoissa kohdistui suuri paine oppilaalle. Ratkaisuksi ehdotettiin pariutus algoritmiä, joka otti huomioon sairaalan ja oppilaan mieltymykset, ja jo vuonna 1950 tehtiin kokeilu, jossa varsinaista pariutusta ei tehty \cite{roth84}, mutta jossa oppilaat ja sairaalat antoivat mieltymyksensä, kuin olisivat päättäneet lopullisia pareja. Vuodesta 1952 lähtien algoritmia käytetään vapaaehtoisessa muodossa, sairaalat ja oppilaat ovat vapaita osallistumaan tähän pariutukseen tai löytämään harjoittelupaikkoja/harjoittelijaa omillaan. Vaikka kyseinen markkina on kokenut muutoksia tuottaa \emph{NIMP-algoritmi} hyviä tuloksia.
 Jokainen sairaala luo listan hakijoista mieltymystensä mukaan, samoin oppilaat luovat listan haetuista sairaaloista omien mieltymyksien mukaan. Nämä listat prosessoidaan lista-algoritmillä jonka jälkeen ne jatkavat alustava pari ja päivitys -vaiheeseen.
 
-$1:1$ vaihe on vaihe jossa pariutetaan opiskelija ja sairaala, jos ne ovat toistensa listojen kärjessä. $2:1$ vaihe tarkoittaa vaihetta jossa opiskelija pariutetaan listallaan toisena olevaan sairaalaan, jos opiskelija on ensimmäisenä sairaalan listalla. $k:1$ vaihe on vaihe jossa jossa opiskelija pariutetaan listallaan $k$:nnen sairaalan kanssa, jos opiskelija on ensimmäisenä sairaalan listalla.
+Esitellään seuraavaksi NIMP-algoritmi. Algoritmin toiminta on hieman epäselkeä, joten esitellään ennen itse algoritmiä muutama notaatio. $1:1$ on vaihe jossa pariutetaan opiskelija ja sairaala, jos ne ovat toistensa listojen kärjessä. $2:1$ vaihe tarkoittaa vaihetta jossa opiskelija pariutetaan listallaan toisena olevaan sairaalaan, jos opiskelija on ensimmäisenä sairaalan listalla. $k:1$ vaihe on vaihe jossa jossa opiskelija pariutetaan listallaan $k$:nnen sairaalan kanssa, jos opiskelija on ensimmäisenä sairaalan listalla.
 \begin{alg} (NIMP-algoritmi) \cite{roth84} \label{nimp}
 	\begin{enumerate}
-		\item Onko yhtään uusia $1:1$ pareja? Jos on niin tehdään näistä alustavia parejaj a aloitetaan algoritmi alusta, muuten jatketaan.
+		\item Onko yhtään uusia $1:1$ pareja? Jos on niin tehdään näistä alustavia pareja ja aloitetaan algoritmi alusta, muuten jatketaan.
 		\item Onko uusia $2:1$ pareja? Jos on niin poistetaan opiskelijan listalta kaikki huonommin listatut sairaalat ja aloitetaan algoritmi alusta, muuten jatketaan.
 		\item Onko uusia $k:1$ pareja? Jos on niin poistetaan alustavasti pariutetut opiskelijat sairaaloiden listalta, jotka sairaalat listasivat alemmaksi kuin heidän nykyisen alustavan parin ja aloitetaan algoritmi alusta, muuten jatketaan.
 		\item Onko uusia $n:1$ pareja, missä n on maksimi määrä sairaaloita opiskelijan listalla. Jos on niin aloitetaan algoritmi alusta ja aloitetaan algoritmi alusta, muuten jatketaan.
 		\item Jos uusia pareja ei löydy enää mistään vaiheesta on algoritmi päättynyt ja opiskelijat ovat pariutettu vakaasti sairaaloiden kanssa.
 	\end{enumerate}
 \end{alg}
-\begin{figure}[t]
-\includegraphics[scale=0.9]{NIMP}
-\caption{Vuokaavio Algoritmistä \ref{nimp} \cite[p, 1009]{roth84}}
+\begin{figure}[H]
+\includegraphics[scale=0.8]{NIMP}
+\caption{Vuokaavio Algoritmistä \ref{nimp} \cite[s. 1009]{roth84}}
+\label{nimp-vuo}
 \end{figure}
 Verrattuna Gale--Shapley-algoritmiin toimintaperiaate on hyvin erilainen ja monimutkainen ymmärtää, mutta molemmat tuottavat vakaita pariutuksia. Algoritmin \ref{nimp} pariutuksien vakauden todistus löytyy lähteestä ja se sivuutetaan tässä.
 
